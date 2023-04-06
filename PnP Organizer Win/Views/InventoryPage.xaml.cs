@@ -37,6 +37,7 @@ namespace PnPOrganizer.Views
             SharedShadow.Receivers.Add(ItemsGridView);
         }
 
+        #region Item Detail View
         private async void BackButton_Click(object sender, RoutedEventArgs e)
         {
             ConnectedAnimation animation = ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("backwardsAnimation", destinationElement);
@@ -59,7 +60,9 @@ namespace PnPOrganizer.Views
             SmokeGrid.Visibility = Visibility.Collapsed;
             SmokeGrid.Children.Add(destinationElement);
         }
+        #endregion
 
+        #region ItemsGridView
         private void ItemsGridView_ItemClick(object sender, ItemClickEventArgs e)
         {
             if (ItemsGridView.ContainerFromItem(e.ClickedItem) is GridViewItem container)
@@ -87,6 +90,11 @@ namespace PnPOrganizer.Views
             }
         }
 
+        // A bit hacky and doesn't look that great, but it's better than nothing
+        private void ItemsGridView_DragItemsCompleted(ListViewBase sender, DragItemsCompletedEventArgs args) => ViewModel.ItemsView.Refresh();
+        #endregion
+
+        #region Edit Item Menu
         private void ShowMenu(bool isTransient, UIElement target)
         {
             var myOption = new FlyoutShowOptions
@@ -111,7 +119,9 @@ namespace PnPOrganizer.Views
         {
             Debug.WriteLine("CLICKED");
         }
+        #endregion
 
+        #region Item Search
         private void SearchItemBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
         {
             if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput)
@@ -137,7 +147,9 @@ namespace PnPOrganizer.Views
             }
             FilterItems();
         }
+        #endregion
 
+        #region Filtering
         private void FilterItems()
         {
             if (ViewModel != null)
@@ -155,8 +167,6 @@ namespace PnPOrganizer.Views
         }
 
         private void ResetFilter() => ViewModel.ItemsView.Filter = _ => true;
-
-        // A bit hacky and doesn't look that great, but it's better than nothing
-        private void ItemsGridView_DragItemsCompleted(ListViewBase sender, DragItemsCompletedEventArgs args) => ViewModel.ItemsView.Refresh();
+        #endregion
     }
 }
