@@ -16,14 +16,8 @@ using PnPOrganizer.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Windows.UI;
 
-// To learn more about WinUI, the WinUI project structure,
-// and more about our project templates, see: http://aka.ms/winui-project-info.
-
 namespace PnPOrganizer.Views
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
     [INotifyPropertyChanged]
     public sealed partial class InventoryPage : Page
     {
