@@ -15,6 +15,7 @@
         <views:AppTitleBar
             x:Name="AppTitleBar"
             x:Uid="AppTitleBar"
+            Background="Transparent"
             Grid.Row="0"
             VerticalAlignment="Center"
             Icon="../Assets/WindowsIcon.gif"
@@ -27,7 +28,7 @@
         <!--  App NavigationView  -->
         <NavigationView
             x:Name="AppNavigationView"
-            Background="{ThemeResource AcrylicBackgroundFillColorDefaultBrush}"
+            Background="Transparent"
             Grid.Row="1"
             AlwaysShowHeader="True"
             IsBackEnabled="{x:Bind ContentFrame.CanGoBack, Mode=OneWay}"
@@ -45,7 +46,7 @@
                     Tag="PnPOrganizer.Views.InventoryPage"/>
             </NavigationView.MenuItems>
             <Grid>
-                <Frame x:Name="ContentFrame" />
+                <Frame x:Name="ContentFrame"/>
             </Grid>
         </NavigationView>
     </Grid>

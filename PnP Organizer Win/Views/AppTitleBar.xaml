@@ -8,8 +8,12 @@
     mc:Ignorable="d">
 
     <Grid
-        Background="{x:Bind Background, Mode=OneWay}"
-        ColumnDefinitions="Auto,*">
+        Background="Black"
+        Height="32">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
         <Image
             Grid.Column="0"
             Width="{x:Bind IconWidth, Mode=OneWay}"

@@ -24,12 +24,6 @@ namespace PnPOrganizer.ViewModels
         private int _windowHeight;
 
         [ObservableProperty]
-        private Color _titleBarBackground;
-
-        [ObservableProperty]
-        private Color _titleBarForeground;
-
-        [ObservableProperty]
         private IEnumerable<ThemeViewModel> _availableAppThemes;
 
         [ObservableProperty]
@@ -69,18 +63,6 @@ namespace PnPOrganizer.ViewModels
             }
         }
 
-        partial void OnTitleBarBackgroundChanged(Color value)
-        {
-            _appTitleBarService.SetBackground(value);
-            _ = _appTitleBarService.SaveBackgroundSettings(value);
-        }
-
-        partial void OnTitleBarForegroundChanged(Color value)
-        {
-            _appTitleBarService.SetForeground(value);
-            _ = _appTitleBarService.SaveForegroundSettings(value);
-        }
-
         partial void OnAppThemeChanged(ThemeViewModel? value)
         {
             if (value is not null)
@@ -108,16 +90,6 @@ namespace PnPOrganizer.ViewModels
             {
                 WindowWidth = windowSize.Value.Width;
                 WindowHeight = windowSize.Value.Height;
-            }
-
-            if (_appTitleBarService.LoadBackgroundSettings() is Color background)
-            {
-                TitleBarBackground = background;
-            }
-
-            if (_appTitleBarService.LoadForegroundSettings() is Color foreground)
-            {
-                TitleBarForeground = foreground;
             }
 
             ElementTheme? theme = _appThemeService.LoadThemeSettings();
