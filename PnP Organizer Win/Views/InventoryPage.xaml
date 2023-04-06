@@ -111,7 +111,7 @@
                                         <ColumnDefinition Width = 'Auto'/>
                                         <ColumnDefinition Width = '*'/>
                                     </Grid.ColumnDefinitions>
-                                    <!-- TEMP: Remove once ItemImage is functional -->
+                                    <!-- HACK Remove once ItemImage is functional -->
                                     <Border Grid.Row="0"
                                             Grid.Column="0"
                                             Background="Black"
