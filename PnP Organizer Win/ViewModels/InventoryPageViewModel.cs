@@ -37,6 +37,7 @@ namespace PnPOrganizer.ViewModels
         
         public void Initialize()
         {
+            // HACK Placeholder until real items are fully implemented
             var random = new Random();
             for(var i = 0; i < 64; i++)
             {
