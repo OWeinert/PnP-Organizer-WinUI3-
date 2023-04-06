@@ -8,6 +8,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:viewmodels="using:PnPOrganizer.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:InventoryPageViewModel}"
       mc:Ignorable="d"
       Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+      Style="{StaticResource CommonPageStyle}"
       ScrollViewer.IsVerticalRailEnabled="False"
       ScrollViewer.VerticalScrollBarVisibility="Disabled">
 
@@ -32,7 +33,7 @@
     </Page.Resources>
 
     <Grid x:Name="ContentGrid"
-          CanBeScrollAnchor="False">
+          Style="{StaticResource PageBodyGridStyle}">
         
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -40,11 +41,8 @@
         </Grid.RowDefinitions>
 
         <CommandBar Grid.Row="0"
-                    Background="{ThemeResource AcrylicBackgroundFillColorDefaultBrush}"
                     DefaultLabelPosition="Right"
-                    IsSticky="True"
-                    Shadow="{StaticResource SharedShadow}"
-                    Translation="0,0,20">
+                    IsSticky="True">
             <CommandBar.Content>
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -100,7 +98,8 @@
                             <Border Background="{x:Bind Brush}"
                                     BorderBrush="{ThemeResource AccentAAFillColorDefaultBrush}"
                                     CornerRadius="6"
-                                    AutomationProperties.Name="{x:Bind Name}">
+                                    AutomationProperties.Name="{x:Bind Name}"
+                                    Margin="-4"> <!-- Items where too far apart. I don't know why there is a default margin between the GridViewItems -->
                                 <Grid Width="240" 
                                       Height="240">
                                     <Grid.RowDefinitions>
