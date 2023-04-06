@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "PnP_Organizer_Win (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "PnP_Organizer_Win (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}

@@ -1,0 +1,262 @@
+﻿<Page x:Class="PnPOrganizer.Views.InventoryPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:local="using:PnPOrganizer.Views"
+      xmlns:models="using:PnPOrganizer.Models"
+      xmlns:conv="using:PnPOrganizer.Converters"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:viewmodels="using:PnPOrganizer.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:InventoryPageViewModel}"
+      mc:Ignorable="d"
+      Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+      ScrollViewer.IsVerticalRailEnabled="False"
+      ScrollViewer.VerticalScrollBarVisibility="Disabled">
+
+    <Page.Resources>
+        <conv:InventoryHeightConverter x:Key="InventoryHeightConverter"/>
+
+        <CommandBarFlyout Placement="Left" x:Name="EditItemFlyout">
+            <AppBarButton Label="Color" ToolTipService.ToolTip="Choose Color" Click="OnElementClicked">
+                <AppBarButton.Icon>
+                    <FontIcon Glyph="&#xE790;"/>
+                </AppBarButton.Icon>
+            </AppBarButton>
+            <AppBarButton Label="Reset" ToolTipService.ToolTip="Reset" Click="OnElementClicked">
+                <AppBarButton.Icon>
+                    <FontIcon Glyph="&#xE75C;"/>
+                </AppBarButton.Icon>
+            </AppBarButton>
+            <AppBarButton Label="Delete" Icon="Delete" ToolTipService.ToolTip="Delete" Click="OnElementClicked" />
+        </CommandBarFlyout>
+
+        <ThemeShadow x:Name="SharedShadow"/>
+    </Page.Resources>
+
+    <Grid x:Name="ContentGrid"
+          CanBeScrollAnchor="False">
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <CommandBar Grid.Row="0"
+                    Background="{ThemeResource AcrylicBackgroundFillColorDefaultBrush}"
+                    DefaultLabelPosition="Right"
+                    IsSticky="True"
+                    Shadow="{StaticResource SharedShadow}"
+                    Translation="0,0,20">
+            <CommandBar.Content>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0"
+                               Text="Inventory"
+                           VerticalAlignment="Center"
+                           FontSize="28"
+                           FontFamily="Display"
+                           FontWeight="SemiBold"
+                           Margin="6,6,0,0"/>
+                    
+                </Grid>
+            </CommandBar.Content>
+            <AppBarElementContainer>
+                <AutoSuggestBox x:Name="SearchItemBox"  
+                                Width="320"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Center"
+                                Margin="64,6,0,0"
+                                QueryIcon="Find"
+                                PlaceholderText="Search Item"
+                                TextChanged="SearchItemBox_TextChanged"/>
+            </AppBarElementContainer>
+            <AppBarSeparator Margin="16,0,0,0"/>
+            <AppBarButton Icon="Add" Label="Add"/>
+            <AppBarButton Icon="Edit" Label="Edit"/>
+            <AppBarButton Icon="Share" Label="Share"/>
+        </CommandBar>
+
+        <ScrollViewer x:Name="ItemsScrollViewer" 
+                      Grid.Row="1"
+                      VerticalAlignment="Stretch"
+                      Margin="0,1,4,0">
+
+            <GridView x:Name="ItemsGridView"
+                      ItemsSource="{x:Bind ViewModel.ItemsView}"
+                      IsItemClickEnabled="True"
+                      CanDragItems="True"
+                      AllowDrop="True"
+                      CanReorderItems="True"
+                      SelectionMode="None"
+                      FlowDirection="LeftToRight"
+                      ItemClick="ItemsGridView_ItemClick"
+                      DragItemsCompleted="ItemsGridView_DragItemsCompleted"
+                      Margin="16,0,10,0">
+                <GridView.ItemTemplate>
+                    <DataTemplate x:DataType="models:InventoryItemModel">
+                        <Grid x:Name="connectedElement"
+                              AutomationProperties.Name="{x:Bind Name}">
+                            <Border Background="{x:Bind Brush}"
+                                    BorderBrush="{ThemeResource AccentAAFillColorDefaultBrush}"
+                                    CornerRadius="6"
+                                    AutomationProperties.Name="{x:Bind Name}">
+                                <Grid Width="240" 
+                                      Height="240">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width = 'Auto'/>
+                                        <ColumnDefinition Width = '*'/>
+                                    </Grid.ColumnDefinitions>
+                                    <!-- TEMP: Remove once ItemImage is functional -->
+                                    <Border Grid.Row="0"
+                                            Grid.Column="0"
+                                            Background="Black"
+                                            VerticalAlignment="Top"
+                                            HorizontalAlignment="Left"
+                                            Margin="4,4,0,4"
+                                            CornerRadius="4">
+                                        <Image x:Name="ItemImageControl"
+                                               Source = '{x:Bind ItemImage}'
+                                               Width="72"
+                                               Height="72"
+                                               Stretch = 'Fill' 
+                                               VerticalAlignment = 'Top'/>
+                                    </Border>
+                                    <Grid Grid.Row="0"
+                                          Grid.Column = "1"
+                                          Margin = "12,0,0,0"
+                                          HorizontalAlignment="Stretch"
+                                          VerticalAlignment="Stretch">
+                                        <Viewbox HorizontalAlignment="Left"
+                                                 MaxWidth="140">
+                                            <TextBlock Text="{x:Bind Name}" 
+                                                       Style='{ThemeResource SubtitleTextBlockStyle}' 
+                                                       VerticalAlignment="Center"
+                                                       Margin='0,0,0,4'/>
+                                        </Viewbox>
+                                    </Grid>
+                                    
+                                    <Grid Grid.Row="1"
+                                          Grid.ColumnSpan="2"
+                                          VerticalAlignment="Stretch">
+                                        <Grid.Background>
+                                            <SolidColorBrush Color="{ThemeResource SolidBackgroundFillColorBase}" 
+                                             Opacity="0.5"/>
+                                        </Grid.Background>
+                                        
+                                        <ScrollViewer HorizontalAlignment="Stretch"
+                                                      VerticalAlignment="Stretch"
+                                                      Margin="0,4,0,4">
+                                            <StackPanel Margin="6,6,36,0">
+                                                <TextBlock Text = '{x:Bind Description}' Style = '{ThemeResource CaptionTextBlockStyle}'
+                                                           FontSize="12"/>
+                                                <TextBlock Text = '{x:Bind Description}' Style = '{ThemeResource CaptionTextBlockStyle}'
+                                                           FontSize="16"/>
+                                                <TextBlock Text = '{x:Bind Description}' Style = '{ThemeResource CaptionTextBlockStyle}'
+                                                           FontSize="18"/>
+                                                <TextBlock Text = '{x:Bind Description}' Style = '{ThemeResource CaptionTextBlockStyle}'
+                                                           FontSize="20"/>
+                                                <TextBlock Text = '{x:Bind Description}' Style = '{ThemeResource CaptionTextBlockStyle}'
+                                                           FontSize="24"/>
+                                                <TextBlock Text = '{x:Bind Description}' Style = '{ThemeResource CaptionTextBlockStyle}'
+                                                           FontSize="28"/>
+                                                <TextBlock Text = '{x:Bind Description}' Style = '{ThemeResource CaptionTextBlockStyle}'
+                                                           FontSize="32"/>
+                                            </StackPanel>
+                                        </ScrollViewer>
+
+                                        <Button x:Name="EditItemButton"
+                                                HorizontalAlignment="Right"
+                                                VerticalAlignment="Bottom"
+                                                Width="32"
+                                                Height="32"
+                                                Margin="0,0,4,4"
+                                                Padding="0"
+                                                BorderThickness="0"
+                                                Click="EditItemButton_Click"
+                                                ContextRequested="EditItemButton_ContextRequested">
+                                            <FontIcon Glyph="&#xE700;"/>
+                                        </Button>
+
+                                    </Grid>
+                                </Grid>
+                            </Border>
+                        </Grid>
+                    </DataTemplate>
+                </GridView.ItemTemplate>
+                <GridView.ItemContainerStyle>
+                    <Style BasedOn="{StaticResource GridViewItemRevealStyle}" TargetType="GridViewItem">
+                        <Style.Setters>
+                            <Setter Property="Margin" Value="12" />
+                        </Style.Setters>
+                    </Style>
+                </GridView.ItemContainerStyle>
+
+            </GridView>
+        </ScrollViewer>
+
+        <Grid x:Name="SmokeGrid" 
+              HorizontalAlignment="Stretch" 
+              VerticalAlignment="Stretch" 
+              Visibility="Collapsed" 
+              Grid.RowSpan="2">
+            <Grid.Background>
+                <SolidColorBrush Color="{ThemeResource SystemChromeAltHighColor}" Opacity="0.8" />
+            </Grid.Background>
+            <Grid x:Name="destinationElement" 
+                  HorizontalAlignment="Center" 
+                  VerticalAlignment="Center" 
+                  Width="480" 
+                  Height="520"
+                  CornerRadius="8"
+                  Shadow="{StaticResource SharedShadow}"
+                  Translation="0,0,25">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid x:Name="DetailHeaderGrid"
+                      HorizontalAlignment="Stretch" 
+                      VerticalAlignment="Stretch"
+                      Height="68">
+                    <TextBlock x:Name="DetailHeaderName"
+                               Style="{ThemeResource HeaderTextBlockStyle}" 
+                               Margin="16,0,0,0" 
+                               VerticalAlignment="Top" />
+                    <Button Click="BackButton_Click" 
+                            HorizontalAlignment="Right" 
+                            VerticalAlignment="Top" 
+                            Height="40" 
+                            Width="40" 
+                            Margin="5"
+                            ToolTipService.ToolTip="Close" 
+                            AutomationProperties.Name="Close">
+                        <Button.Content>
+                            <SymbolIcon Symbol="Clear" />
+                        </Button.Content>
+                    </Button>
+                </Grid>
+                <Grid x:Name="DetailContentGrid"
+                      HorizontalAlignment="Stretch" 
+                      VerticalAlignment="Stretch"
+                      Grid.Row="1">
+                    <Grid HorizontalAlignment="Stretch" 
+                          VerticalAlignment="Stretch">
+                        <Grid.Background>
+                            <SolidColorBrush Color="{ThemeResource SolidBackgroundFillColorBase}" 
+                                             Opacity="0.5"/>
+                        </Grid.Background>
+                        <Image x:Name="DetailHeaderImage"/>
+                        <TextBlock x:Name="DetailContentDescr"
+                                   Style="{ThemeResource BaseTextBlockStyle}" 
+                                   Margin="12" />
+                    </Grid>
+                </Grid>
+            </Grid>
+        </Grid>
+    </Grid>
+</Page>
