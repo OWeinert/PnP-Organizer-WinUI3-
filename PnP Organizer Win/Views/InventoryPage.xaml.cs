@@ -32,12 +32,7 @@ namespace PnPOrganizer.Views
         [ObservableProperty]
         private InventoryItemModel? _storedItem;
 
-        [ObservableProperty]
-        private bool _isFiltering = false;
-
         private const byte DETAILCARD_ALPHA = 224;
-
-        private int _dragItemIndex = -1;
 
         public InventoryPage()
         {
