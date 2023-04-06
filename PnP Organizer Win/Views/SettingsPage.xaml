@@ -100,23 +100,6 @@
                         Style="{ThemeResource AccentButtonStyle}" />
                 </StackPanel>
             </toolkit:HeaderedContentControl>
-            <!--  Title Bar  -->
-            <toolkit:HeaderedContentControl
-                x:Uid="SettingsPage_TitleBar"
-                Style="{StaticResource MainHeaderStyle}">
-                <StackPanel Orientation="Horizontal">
-                    <toolkit:HeaderedContentControl
-                        x:Uid="SettingsPage_TitleBarForeground"
-                        Style="{StaticResource SubHeaderStyle}">
-                        <toolkit:ColorPickerButton SelectedColor="{x:Bind ViewModel.TitleBarForeground, Mode=TwoWay}" />
-                    </toolkit:HeaderedContentControl>
-                    <toolkit:HeaderedContentControl
-                        x:Uid="SettingsPage_TitleBarBackground"
-                        Style="{StaticResource SubHeaderStyle}">
-                        <toolkit:ColorPickerButton SelectedColor="{x:Bind ViewModel.TitleBarBackground, Mode=TwoWay}" />
-                    </toolkit:HeaderedContentControl>
-                </StackPanel>
-            </toolkit:HeaderedContentControl>
             <!--  Localization  -->
             <toolkit:HeaderedContentControl
                 x:Uid="SettingsPage_Localization"
