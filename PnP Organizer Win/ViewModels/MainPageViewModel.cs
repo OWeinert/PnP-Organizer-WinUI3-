@@ -17,7 +17,7 @@ namespace PnPOrganizer.ViewModels
 
         public void Initialize()
         {
-            throw new NotImplementedException();
+            
         }
     }
 }
