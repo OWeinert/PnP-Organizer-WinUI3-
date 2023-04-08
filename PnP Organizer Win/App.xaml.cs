@@ -2,6 +2,8 @@ using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.UI.Xaml;
+using PnPorganizer.Core.Character;
+using PnPOrganizer.Core.Character.SkillSystem;
 using PnPOrganizer.Interfaces;
 using PnPOrganizer.Services;
 using PnPOrganizer.ViewModels;
@@ -24,6 +26,7 @@ namespace PnPOrganizer
 
         private void App_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
+            Log.Error(e.Exception, "An unhandled exception occured!");
         }
 
         protected override void OnLaunched(LaunchActivatedEventArgs args)
@@ -61,7 +64,9 @@ namespace PnPOrganizer
                     .AddSingleton<MainWindowViewModel>()
                     .AddSingleton<SettingsPageViewModel>()
                     .AddSingleton<MainPageViewModel>()
+                    .AddSingleton<CharacterPageViewModel>()
                     .AddSingleton<InventoryPageViewModel>()
+                    .AddSingleton<SkillsPageViewModel>()
                     .AddSingleton<MainWindow>();
             })
             .Build();
