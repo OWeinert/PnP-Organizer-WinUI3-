@@ -122,7 +122,7 @@ namespace PnPOrganizer.Core
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public static Color GetColorFromArgbValue(uint value)
+        public static Color ColorFromArgbValue(uint value)
         {
             var a = (byte)(value >> 24 & 0xFF);
             var r = (byte)(value >> 16 & 0xFF);
