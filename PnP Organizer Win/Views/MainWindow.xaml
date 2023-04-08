@@ -41,9 +41,17 @@
                     Tag="PnPOrganizer.Views.MainPage"
                     />
                 <NavigationViewItem
+                    x:Uid="NavigationViewItem_Character"
+                    Icon="Account"
+                    Tag="PnPOrganizer.Views.CharacterPage"/>
+                <NavigationViewItem
                     x:Uid="NavigationViewItem_Inventory"
                     Icon="Shop"
                     Tag="PnPOrganizer.Views.InventoryPage"/>
+                <NavigationViewItem
+                    x:Uid="NavigationViewItem_Skills"
+                    Icon="Add"
+                    Tag="PnPOrganizer.Views.SkillsPage"/>
             </NavigationView.MenuItems>
             <Grid>
                 <Frame x:Name="ContentFrame"/>
