@@ -13,20 +13,58 @@
       ScrollViewer.VerticalScrollBarVisibility="Disabled">
 
     <Page.Resources>
+        <!-- Converters -->
         <conv:InventoryHeightConverter x:Key="InventoryHeightConverter"/>
 
+        <!-- Controls -->
+        <Flyout x:Key="ColorPickerFlyout">
+            <RelativePanel>
+                <ColorPicker x:Name="ItemColorPicker"
+                         ColorSpectrumShape="Ring"
+                         IsMoreButtonVisible="False"
+                         IsColorSliderVisible="False"
+                         IsColorChannelTextInputVisible="False"
+                         IsHexInputVisible="True"
+                         IsAlphaEnabled="False"
+                         IsAlphaSliderVisible="True"
+                         IsAlphaTextInputVisible="True"/>
+                <Grid RelativePanel.Below="ItemColorPicker"
+                      RelativePanel.AlignLeftWithPanel="True"
+                      RelativePanel.AlignRightWithPanel="True">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Button Content="Confirm" Click="ConfirmColor_Click"
+                        Margin="0,12,2,0" HorizontalAlignment="Stretch"/>
+                    <Button Content="Cancel" Click="CancelColor_Click"
+                        Margin="2,12,0,0" HorizontalAlignment="Stretch"
+                        Grid.Column="1"/>
+                </Grid>
+            </RelativePanel>
+        </Flyout>
+
         <CommandBarFlyout Placement="Left" x:Name="EditItemFlyout">
-            <AppBarButton Label="Color" ToolTipService.ToolTip="Choose Color" Click="OnElementClicked">
+            <AppBarButton x:Name="PickColorButton"
+                          Label="Color" 
+                          ToolTipService.ToolTip="Choose Color" 
+                          Click="CommandFlyoutColorButton_Click"
+                          Flyout="{StaticResource ColorPickerFlyout}">
                 <AppBarButton.Icon>
                     <FontIcon Glyph="&#xE790;"/>
                 </AppBarButton.Icon>
             </AppBarButton>
-            <AppBarButton Label="Reset" ToolTipService.ToolTip="Reset" Click="OnElementClicked">
+            <AppBarButton Label="Reset" 
+                          ToolTipService.ToolTip="Reset" 
+                          Click="CommandFlyoutClearButton_Click">
                 <AppBarButton.Icon>
                     <FontIcon Glyph="&#xE75C;"/>
                 </AppBarButton.Icon>
             </AppBarButton>
-            <AppBarButton Label="Delete" Icon="Delete" ToolTipService.ToolTip="Delete" Click="OnElementClicked" />
+            <AppBarButton Label="Delete" 
+                          Icon="Delete" 
+                          ToolTipService.ToolTip="Delete" 
+                          Click="CommandFlyoutDeleteButton_Click" />
         </CommandBarFlyout>
 
         <ThemeShadow x:Name="SharedShadow"/>
@@ -56,7 +94,7 @@
                            FontFamily="Display"
                            FontWeight="SemiBold"
                            Margin="6,6,0,0"/>
-                    
+
                 </Grid>
             </CommandBar.Content>
             <AppBarElementContainer>
@@ -64,7 +102,7 @@
                                 Width="320"
                                 VerticalAlignment="Center"
                                 HorizontalAlignment="Center"
-                                Margin="64,6,0,0"
+                                Margin="16,6,0,0"
                                 QueryIcon="Find"
                                 PlaceholderText="Search Item"
                                 TextChanged="SearchItemBox_TextChanged"/>
@@ -93,7 +131,7 @@
                       Margin="16,0,10,0">
                 <GridView.ItemTemplate>
                     <DataTemplate x:DataType="models:InventoryItemModel">
-                        <Grid x:Name="connectedElement"
+                        <Grid x:Name="Item"
                               AutomationProperties.Name="{x:Bind Name}">
                             <Border Background="{x:Bind Brush}"
                                     BorderBrush="{ThemeResource AccentAAFillColorDefaultBrush}"
@@ -152,19 +190,7 @@
                                                       Margin="0,4,0,4">
                                             <StackPanel Margin="6,6,36,0">
                                                 <TextBlock Text = '{x:Bind Description}' Style = '{ThemeResource CaptionTextBlockStyle}'
-                                                           FontSize="12"/>
-                                                <TextBlock Text = '{x:Bind Description}' Style = '{ThemeResource CaptionTextBlockStyle}'
                                                            FontSize="16"/>
-                                                <TextBlock Text = '{x:Bind Description}' Style = '{ThemeResource CaptionTextBlockStyle}'
-                                                           FontSize="18"/>
-                                                <TextBlock Text = '{x:Bind Description}' Style = '{ThemeResource CaptionTextBlockStyle}'
-                                                           FontSize="20"/>
-                                                <TextBlock Text = '{x:Bind Description}' Style = '{ThemeResource CaptionTextBlockStyle}'
-                                                           FontSize="24"/>
-                                                <TextBlock Text = '{x:Bind Description}' Style = '{ThemeResource CaptionTextBlockStyle}'
-                                                           FontSize="28"/>
-                                                <TextBlock Text = '{x:Bind Description}' Style = '{ThemeResource CaptionTextBlockStyle}'
-                                                           FontSize="32"/>
                                             </StackPanel>
                                         </ScrollViewer>
 
@@ -206,7 +232,7 @@
             <Grid.Background>
                 <SolidColorBrush Color="{ThemeResource SystemChromeAltHighColor}" Opacity="0.8" />
             </Grid.Background>
-            <Grid x:Name="destinationElement" 
+            <Grid x:Name="ItemDetails" 
                   HorizontalAlignment="Center" 
                   VerticalAlignment="Center" 
                   Width="480" 
@@ -250,9 +276,16 @@
                                              Opacity="0.5"/>
                         </Grid.Background>
                         <Image x:Name="DetailHeaderImage"/>
-                        <TextBlock x:Name="DetailContentDescr"
-                                   Style="{ThemeResource BaseTextBlockStyle}" 
-                                   Margin="12" />
+                        <TextBox x:Name="DetailContentDescr"
+                                 AutomationProperties.Name="DetailDescrTextBox"
+                                 HorizontalAlignment="Stretch"
+                                 VerticalAlignment="Stretch"
+                                 AcceptsReturn="True"
+                                 TextWrapping="Wrap"
+                                 PlaceholderText="Description"
+                                 Text="{x:Bind StoredItem.Description, Mode=TwoWay}"
+                                 TextChanged="DetailContentDescr_TextChanged"
+                                 Margin="12" />
                     </Grid>
                 </Grid>
             </Grid>
