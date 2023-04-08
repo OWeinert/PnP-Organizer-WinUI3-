@@ -56,7 +56,7 @@ namespace PnPOrganizer.Models
             if (inventoryWeapon.Color != Utils.GetArgbColorValue(((SolidColorBrush)Application.Current.Resources["PalettePrimaryBrush"]).Color)
                 && inventoryWeapon.Color != Utils.GetArgbColorValue(((SolidColorBrush)Application.Current.Resources["PaletteIndigoBrush"]).Color))
             {
-                Brush = new SolidColorBrush(Utils.GetColorFromArgbValue(inventoryWeapon.Color));
+                Brush = new SolidColorBrush(Utils.ColorFromArgbValue(inventoryWeapon.Color));
             }
             else
                 Brush = (SolidColorBrush)Application.Current.Resources["PaletteIndigoBrush"];

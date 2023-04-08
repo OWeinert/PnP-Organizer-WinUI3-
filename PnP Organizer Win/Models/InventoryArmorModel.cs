@@ -31,7 +31,7 @@ namespace PnPOrganizer.Models
             if (inventoryArmor.Color != Utils.GetArgbColorValue(((SolidColorBrush)Application.Current.Resources["PalettePrimaryBrush"]).Color)
                 && inventoryArmor.Color != Utils.GetArgbColorValue(((SolidColorBrush)Application.Current.Resources["PaletteBrownBrush"]).Color))
             {
-                Brush = new SolidColorBrush(Utils.GetColorFromArgbValue(inventoryArmor.Color));
+                Brush = new SolidColorBrush(Utils.ColorFromArgbValue(inventoryArmor.Color));
             }
             else
                 Brush = (SolidColorBrush)Application.Current.Resources["PaletteBrownBrush"];

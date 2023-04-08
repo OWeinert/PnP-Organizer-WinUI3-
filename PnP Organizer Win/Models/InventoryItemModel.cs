@@ -5,8 +5,6 @@ using Microsoft.UI.Xaml.Media.Imaging;
 using PnPOrganizer.Core;
 using PnPOrganizer.Core.Character.Inventory;
 using System.ComponentModel;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Graphics.Imaging;
 
 namespace PnPOrganizer.Models
 {
@@ -54,7 +52,7 @@ namespace PnPOrganizer.Models
                 ItemImage = Utils.BitmapImageFromBytesAsync(_inventoryItem.ItemImageBytes.AsBuffer()).Result;
              */
             _itemImageFileExt = inventoryItem.ItemImageFileExt;
-            Brush = new SolidColorBrush(Utils.GetColorFromArgbValue(_inventoryItem.Color));
+            Brush = new SolidColorBrush(Utils.ColorFromArgbValue(_inventoryItem.Color));
             Foreground = (SolidColorBrush)Application.Current.Resources["TextFillColorPrimaryBrush"];
 
             IsInitialized = true;
