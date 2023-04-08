@@ -41,12 +41,13 @@ namespace PnPOrganizer.ViewModels
             var random = new Random();
             for(var i = 0; i < 64; i++)
             {
-                ItemModels.Add(new InventoryItemModel()
+                var itemModel = new InventoryItemModel()
                 {
                     Name = $"Item No. {i + 1}",
                     Description = $"Description of Item No. {i + 1}",
                     Brush = new SolidColorBrush(Color.FromArgb(255, (byte)random.Next(0, 256), (byte)random.Next(0, 256), (byte)random.Next(0, 256)))
-                });
+                };
+                ItemModels.Add(itemModel);
             }
             _initialized = true;
             Initialized?.Invoke(this, new EventArgs());
