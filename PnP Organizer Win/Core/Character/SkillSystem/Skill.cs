@@ -1,154 +1,92 @@
-﻿using Microsoft.Extensions.Logging;
-using PnPOrganizer.Core.Character.SkillSystem;
-using PnPOrganizer.Core.Character.SkillSystem.EventArgs;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using PnPOrganizer.Core.Character.StatModifiers;
 using Serilog;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 
-namespace PnPOrganizer.Core.Character
+namespace PnPOrganizer.Core.Character.SkillSystem
 {
-    public class Skill
+    public partial class Skill : ObservableObject
     {
-        private SkillIdentifier _identifier;
+        public static Skill Empty => new(new SkillIdentifier() { SkillCategory = SkillCategory.Character, Name = "" }, "", 0, "");
+
         /// <summary>
         /// Internal identifier for the Skill consisting of SkillCategory and an internal unlocalized Name
         /// </summary>
-        public SkillIdentifier Identifier { 
-            get
-            {
-                return _identifier;
-            }
-            set {
-                SkillChanged?.Invoke(this, new SkillChangedEventArgs(this, Identifier, value, nameof(Identifier)));
-                _identifier = value;
-            }
-        }
+        [ObservableProperty]
+        private SkillIdentifier _identifier;
 
-        private string _displayName;
         /// <summary>
         /// Localized name visible to the User
         /// </summary>
-        public string DisplayName
-        {
-            get
-            {
-                return _displayName;
-            }
-            set
-            {
-                SkillChanged?.Invoke(this, new SkillChangedEventArgs(this, DisplayName, value, nameof(DisplayName)));
-                _displayName = value;
-            }
-        }
+        [ObservableProperty]
+        private string _displayName;
 
-        private string _description;
         /// <summary>
         /// Localized description visible to the User
         /// </summary>
-        public string Description
-        {
-            get
-            {
-                return _description;
-            }
-            set
-            {
-                SkillChanged?.Invoke(this, new SkillChangedEventArgs(this, Description, value, nameof(Description)));
-                _description = value;
-            }
-        }
+        [ObservableProperty] 
+        private string _description;
 
-        private int _skillPoints;
+        /// <summary>
+        /// Display text for SkillPoints. Formatted as "SkillPoints / MaxSkillPoints"
+        /// </summary>
+        [ObservableProperty]
+        private string _skillPointsDisplayText = string.Empty;
+
         /// <summary>
         /// Current skill points
         /// </summary>
-        public int SkillPoints
-        {
-            get
-            {
-                return _skillPoints;
-            }
-            set
-            {
-                SkillChanged?.Invoke(this, new SkillChangedEventArgs(this, SkillPoints, value, nameof(SkillPoints)));
-                _skillPoints = value;
-            }
-        }
+        [ObservableProperty]
+        private int _skillPoints;
 
-        private int _maxSkillPoints;
         /// <summary>
         /// Maximum skill points needed
         /// </summary>
-        public int MaxSkillPoints
-        {
-            get
-            {
-                return _maxSkillPoints;
-            }
-            set
-            {
-                SkillChanged?.Invoke(this, new SkillChangedEventArgs(this, MaxSkillPoints, value, nameof(MaxSkillPoints)));
-                _maxSkillPoints = value;
-            }
-        }
+        [ObservableProperty] 
+        private int _maxSkillPoints;
 
-        private int _energyCost;
         /// <summary>
         /// Used by the BattleAssistant to determine Energy usage
         /// </summary>
-        public int EnergyCost
-        {
-            get
-            {
-                return _energyCost;
-            }
-            set
-            {
-                SkillChanged?.Invoke(this, new SkillChangedEventArgs(this, EnergyCost, value, nameof(EnergyCost)));
-                _energyCost = value;
-            }
-        }
+        [ObservableProperty] 
+        private int _energyCost;
 
-        private int _staminaCost;
         /// <summary>
         /// Used by the BattleAssistant to determine Stamina usage
         /// </summary>
-        public int StaminaCost
-        {
-            get
-            {
-                return _staminaCost;
-            }
-            set
-            {
-                SkillChanged?.Invoke(this, new SkillChangedEventArgs(this, StaminaCost, value, nameof(StaminaCost)));
-                _staminaCost = value;
-            }
-        }
+        [ObservableProperty] 
+        private int _staminaCost;
 
-        private int _skillTreeCheckpoint;
         /// <summary>
         /// Corresponding checkpoint (0-3) for this Skill
         /// </summary>
-        public int SkillTreeCheckpoint
-        {
-            get
-            {
-                return _skillTreeCheckpoint;
-            }
-            set
-            {
-                SkillChanged?.Invoke(this, new SkillChangedEventArgs(this, SkillTreeCheckpoint, value, nameof(SkillTreeCheckpoint)));
-                _skillTreeCheckpoint = value;
-            }
-        }
+        [ObservableProperty] 
+        private int _skillTreeCheckpoint;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [ObservableProperty]
+        private bool _isSkillable;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [ObservableProperty]
+        private bool _isActive;
 
         /// <summary>
         /// Repeatable Skills apply their Bonus for each time the MaxSkillPoints are reached
         /// </summary>
         public bool IsRepeatable { get; private set; }
+
+        [ObservableProperty]
+        private int _repetition = 0;
+
         /// <summary>
         /// Determines if the Skill's Bonus is Active or Passive
         /// </summary>
@@ -163,40 +101,18 @@ namespace PnPOrganizer.Core.Character
         /// </summary>
         public bool HasRoundDependendModifiers { get; private set; }
 
-        private int _usesLeft;
         /// <summary>
         /// Used by the BattleAssistant to determine how many times the Skill can be used in the current Battle
         /// </summary>
-        public int UsesLeft
-        {
-            get
-            {
-                return _usesLeft;
-            }
-            set
-            {
-                SkillChanged?.Invoke(this, new SkillChangedEventArgs(this, UsesLeft, value, nameof(UsesLeft)));
-                _usesLeft = value;
-            }
-        }
+        [ObservableProperty] 
+        private int _usesLeft;
 
-        private int _usesPerBattle;
         /// <summary>
         /// Used by the BattleAssistant to determine how many times the Skill can be used per Battle
         /// -1 = infinite uses
         /// </summary>
-        public int UsesPerBattle
-        {
-            get
-            {
-                return _usesPerBattle;
-            }
-            set
-            {
-                SkillChanged?.Invoke(this, new SkillChangedEventArgs(this, UsesPerBattle, value, nameof(UsesPerBattle)));
-                _usesPerBattle = value;
-            }
-        }
+        [ObservableProperty] 
+        private int _usesPerBattle;
 
         /// <summary>
         /// Collection of StatModifiers which this Skill will apply when skilled
@@ -227,9 +143,6 @@ namespace PnPOrganizer.Core.Character
         /// </summary>
         public SkillIdentifier? ForcedDependendSkill { get; private set; }
 
-        public event SkillChangedEventHandler? SkillChanged;
-        public delegate void SkillChangedEventHandler(object sender, SkillChangedEventArgs e);
-
         public Skill(SkillIdentifier identifier, string displayName, int maxSkillPoints, string description, IStatModifier[]? statModifiers = null,
             SkillIdentifier[]? dependendSkillNames = null, ActivationType activationType = ActivationType.Passive, int energyCost = 0, int staminaCost = 0, int usesPerBattle = -1,
             int skillTreeCheckpoint = 0)
@@ -256,6 +169,46 @@ namespace PnPOrganizer.Core.Character
             DependendSkills = dependendSkillNames ?? Array.Empty<SkillIdentifier>();
 
             RoundDependendStatModifiers = new List<IStatModifier[]>();
+
+            SkillPointsDisplayText = GetSkillPointsDisplayText();
+            PropertyChanged += Skill_PropertyChanged;
+        }
+
+        [RelayCommand]
+        private void IncreaseSkillPoints()
+        {
+            if(Repetition < 99)
+            {
+                if (IsRepeatable && SkillPoints >= (MaxSkillPoints - 1))
+                {
+                    Repetition++;
+                    SkillPoints = 0;
+                }
+                else if (SkillPoints < MaxSkillPoints)
+                    SkillPoints++;
+            }
+        }
+
+        [RelayCommand]
+        private void DecreaseSkillPoints()
+        {
+            if (SkillPoints > 0)
+                SkillPoints--;
+            else if(IsRepeatable && Repetition > 0)
+            {
+                Repetition--;
+                SkillPoints = MaxSkillPoints - 1;
+            }
+        }
+
+        private void Skill_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if(e.PropertyName is nameof(SkillPoints) or nameof(MaxSkillPoints))
+            {
+                SkillPointsDisplayText = $"{SkillPoints} / {MaxSkillPoints}";
+                if(SkillPoints >= MaxSkillPoints || (IsRepeatable && Repetition > 0))
+                    IsActive = true;
+            }
         }
 
         public static string CreateTooltip(Skill skill)
@@ -312,12 +265,6 @@ namespace PnPOrganizer.Core.Character
             UsableWithOtherSkills = false;
             return this;
         }
-
-        /// <summary>
-        /// Checks if the skill is active, which means that the max skill points are reached
-        /// </summary>
-        /// <returns></returns>
-        public bool IsActive() => SkillPoints == MaxSkillPoints;
 
         private void RoundDependencyModifierCheck()
         {
