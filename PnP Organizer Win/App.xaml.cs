@@ -57,6 +57,7 @@ namespace PnPOrganizer
                     .AddSingleton<IWindowingService, WindowingService>()
                     .AddSingleton<INavigationViewService, NavigationViewService>()
                     .AddSingleton<IAppActivationService, AppActivationService>()
+                    .AddSingleton<ISkillsService, SkillsService>()
                     .AddSingleton<MainWindowViewModel>()
                     .AddSingleton<SettingsPageViewModel>()
                     .AddSingleton<MainPageViewModel>()
