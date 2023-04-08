@@ -15,9 +15,11 @@
 
   <ItemGroup>
     <None Remove="Views\AppTitleBar.xaml" />
+    <None Remove="Views\CharacterPage.xaml" />
     <None Remove="Views\InventoryPage.xaml" />
     <None Remove="Views\MainPage.xaml" />
     <None Remove="Views\SettingsPage.xaml" />
+    <None Remove="Views\SkillsPage.xaml" />
     <None Remove="Views\Styles.xaml" />
   </ItemGroup>
 
@@ -57,8 +59,18 @@
     <ProjectCapability Include="Msix" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Core\Character\BattleAssistant\Events\" />
+    <Folder Include="Core\BattleAssistant\Events\" />
     <Folder Include="Strings\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\CharacterPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\SkillsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Views\InventoryPage.xaml">
