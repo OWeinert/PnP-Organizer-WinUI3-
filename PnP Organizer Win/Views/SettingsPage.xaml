@@ -143,6 +143,15 @@
                         Visibility="{x:Bind ViewModel.IsLocalizationChanged, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
                 </StackPanel>
             </toolkit:HeaderedContentControl>
+            <toolkit:HeaderedContentControl 
+                x:Uid="SettingsPage_Sound"
+                Style="{StaticResource MainHeaderStyle}">
+                <RelativePanel>
+                    <ToggleSwitch x:Uid="SettingsPage_SoundEnableSwitch"
+                                  x:Name="EnableSoundsToggleSwitch" 
+                                  IsOn="{x:Bind ViewModel.EnableSound, Mode=TwoWay}"/>
+                </RelativePanel>
+            </toolkit:HeaderedContentControl>
         </StackPanel>
     </Grid>
 
