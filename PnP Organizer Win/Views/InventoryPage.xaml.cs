@@ -73,6 +73,7 @@ namespace PnPOrganizer.Views
         #region ItemsGridView
         private void ItemsGridView_ItemClick(object sender, ItemClickEventArgs e)
         {
+            ElementSoundPlayer.Play(ElementSoundKind.Focus);
             if (ItemsGridView.ContainerFromItem(e.ClickedItem) is GridViewItem container)
             {
                 if(container.Content is not null)

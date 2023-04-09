@@ -128,7 +128,8 @@
                       FlowDirection="LeftToRight"
                       ItemClick="ItemsGridView_ItemClick"
                       DragItemsCompleted="ItemsGridView_DragItemsCompleted"
-                      Margin="16,0,10,0">
+                      Margin="16,0,10,0"
+                      ElementSoundMode="FocusOnly">
                 <GridView.ItemTemplate>
                     <DataTemplate x:DataType="models:InventoryItemModel">
                         <Grid x:Name="Item"
