@@ -34,7 +34,7 @@ namespace PnPOrganizer.Views
         {
             ViewModel = Ioc.Default.GetRequiredService<SkillsPageViewModel>();
             InitializeComponent();
-            NavigationCacheMode = NavigationCacheMode.Enabled;
+            NavigationCacheMode = NavigationCacheMode.Required;
         }
 
         partial void OnSelectedSkillChanged(Skill? value)
