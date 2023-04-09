@@ -211,7 +211,7 @@ namespace PnPOrganizer.Core
         {
             FileSavePicker savePicker = new();
 
-            var hWnd = WindowHelpers.GetCurrentProcMainWindowHandle();
+            var hWnd = WindowHelper.GetCurrentProcMainWindowHandle();
             WinRT.Interop.InitializeWithWindow.Initialize(savePicker, hWnd);
 
             savePicker.FileTypeChoices.Add("Rich Text", new List<string>() { ".rtf" });

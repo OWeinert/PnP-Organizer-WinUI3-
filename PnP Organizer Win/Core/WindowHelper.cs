@@ -6,13 +6,16 @@ using System.Threading.Tasks;
 
 namespace PnPOrganizer.Core
 {
+    using Microsoft.UI;
+    using Microsoft.UI.Windowing;
     using Microsoft.UI.Xaml;
     using System;
     using System.Diagnostics;
     using System.Runtime.InteropServices;
     using WinRT;
+    using WinRT.Interop;
 
-    public static class WindowHelpers
+    public static class WindowHelper
     {
         public static IntPtr GetCurrentProcMainWindowHandle()
         {
@@ -110,5 +113,46 @@ namespace PnPOrganizer.Core
                 }
             }
         }
+
+        static public Window CreateWindow()
+        {
+            var newWindow = new Window();
+            TrackWindow(newWindow);
+            return newWindow;
+        }
+
+        static public void TrackWindow(Window window)
+        {
+            window.Closed += (sender, args) => {
+                _activeWindows.Remove(window);
+            };
+            _activeWindows.Add(window);
+        }
+
+        static public AppWindow GetAppWindow(Window window)
+        {
+            IntPtr hWnd = WindowNative.GetWindowHandle(window);
+            WindowId wndId = Win32Interop.GetWindowIdFromWindow(hWnd);
+            return AppWindow.GetFromWindowId(wndId);
+        }
+
+        static public Window? GetWindowForElement(UIElement element)
+        {
+            if (element.XamlRoot != null)
+            {
+                foreach (Window window in _activeWindows)
+                {
+                    if (element.XamlRoot == window.Content.XamlRoot)
+                    {
+                        return window;
+                    }
+                }
+            }
+            return null;
+        }
+
+        static public List<Window> ActiveWindows { get { return _activeWindows; } }
+
+        static private List<Window> _activeWindows = new List<Window>();
     }
 }
