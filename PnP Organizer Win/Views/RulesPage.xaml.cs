@@ -33,7 +33,8 @@ namespace PnPOrganizer.Views
 
         private void OpenWindowButton_Click(object sender, RoutedEventArgs e)
         {
-            var externalWindow = new Window();
+            
+            var externalWindow = WindowHelper.CreateWindow();
             var rootPage = new ExternalRulesPage();
             externalWindow.Content = rootPage;
             externalWindow.Closed += (sender, e) =>
