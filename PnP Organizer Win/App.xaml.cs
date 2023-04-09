@@ -69,6 +69,7 @@ namespace PnPOrganizer
                     .AddSingleton<CharacterPageViewModel>()
                     .AddSingleton<InventoryPageViewModel>()
                     .AddSingleton<SkillsPageViewModel>()
+                    .AddSingleton<RulesPageViewModel>()
                     .AddSingleton<MainWindow>();
             })
             .Build();
