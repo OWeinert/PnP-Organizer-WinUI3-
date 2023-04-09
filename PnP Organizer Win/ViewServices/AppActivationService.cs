@@ -1,6 +1,7 @@
 using Microsoft.UI.Xaml;
 using PnPOrganizer.Interfaces;
 using PnPOrganizer.Views;
+using PnPOrganizer.ViewServices;
 
 namespace PnPOrganizer.Services
 {
@@ -13,6 +14,7 @@ namespace PnPOrganizer.Services
         private readonly ISettingsService _settingsService;
         private readonly IAppThemeService _appThemeService;
         private readonly ILocalizationService _localizationService;
+        private readonly ISoundSettingsService _soundSettingsService;
 
         public AppActivationService(
             MainWindow mainWindow,
@@ -21,7 +23,8 @@ namespace PnPOrganizer.Services
             INavigationViewService navigationViewService,
             ISettingsService settingsService,
             IAppThemeService appThemeService,
-            ILocalizationService localizationService)
+            ILocalizationService localizationService,
+            ISoundSettingsService soundSettingsService)
         {
             _mainWindow = mainWindow;
             _windowingService = windowingService;
@@ -30,6 +33,7 @@ namespace PnPOrganizer.Services
             _settingsService = settingsService;
             _appThemeService = appThemeService;
             _localizationService = localizationService;
+            _soundSettingsService = soundSettingsService;
         }
 
         public void Activate(object activationArgs)
@@ -52,6 +56,8 @@ namespace PnPOrganizer.Services
             }
 
             _localizationService.Initialize();
+
+            _soundSettingsService.Initialize();
         }
     }
 }

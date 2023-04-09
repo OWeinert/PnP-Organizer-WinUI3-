@@ -13,6 +13,7 @@
     <Page.Resources>
         <conv:SkillCategoryToBrushConverter x:Key="SkillCategoryToBrushConverter"/>
         <conv:SkillCategoryToColorConverter x:Key="SkillCategoryToColorConverter"/>
+        <conv:BoolInverter x:Key="BoolInverter"/>
     </Page.Resources>
     
     <Grid x:Name="ContentGrid"
@@ -62,37 +63,51 @@
                    PaneBackground="{ThemeResource AcrylicBackgroundFillColorDefaultBrush}"
                    PanePlacement="Right"
                    OpenPaneLength="460"
-                   DisplayMode="Overlay">
+                   DisplayMode="Overlay"
+                   PaneClosing="SkillsSplitView_PaneClosing"
+                   PaneOpening="SkillsSplitView_PaneOpening">
             <ScrollViewer x:Name="ItemsScrollViewer"
-                              VerticalAlignment="Stretch"
-                              Margin="0,1,100,0">
+                          VerticalAlignment="Stretch"
+                          Margin="0,1,60,0"
+                          ViewChanged="ItemsScrollViewer_ViewChanged">
 
                 <GridView x:Name="SkillGridView"
-                      ItemsSource="{x:Bind ViewModel.SkillsView}"
-                      IsItemClickEnabled="True"
-                      CanDragItems="False"
-                      AllowDrop="False"
-                      CanReorderItems="False"
-                      SelectionMode="None"
-                      FlowDirection="LeftToRight"
-                      Margin="16,0,10,0"
-                          ItemClick="ItemsGridView_ItemClick">
+                          ItemsSource="{x:Bind ViewModel.SkillsView}"
+                          IsItemClickEnabled="True"
+                          CanDragItems="False"
+                          AllowDrop="False"
+                          CanReorderItems="False"
+                          SelectionMode="None"
+                          FlowDirection="LeftToRight"
+                          Margin="16,0,10,0"
+                          ItemClick="ItemsGridView_ItemClick"
+                          CacheMode="BitmapCache">
                     <GridView.ItemTemplate>
                         <DataTemplate x:DataType="skillsys:Skill">
-                            <Border x:Name="SkillBorder"
-                                    Width="140"
-                                Height="110"
-                                Background="{x:Bind Identifier.SkillCategory, Converter={StaticResource SkillCategoryToBrushConverter}}">
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="0.8*"/>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="*"/>
-                                    </Grid.RowDefinitions>
+                            <Grid Width="140"
+                                  Height="110"
+                                  Margin="4"
+                                  CornerRadius="4">
+                                <Border x:Name="SkillBorder"
+                                        Background="{x:Bind Identifier.SkillCategory, Converter={StaticResource SkillCategoryToBrushConverter}}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="0.8*"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
 
-                                    <Viewbox Grid.Row="0"
+                                        <Border Grid.RowSpan="3"
+                                                Visibility="{x:Bind IsActiveInverted, Mode=OneWay}">
+                                            <Border.Background>
+                                                <SolidColorBrush Color="Black"
+                                                                 Opacity="0.4"/>
+                                            </Border.Background>
+                                        </Border>
+                                        
+                                        <Viewbox Grid.Row="0"
                                              Width="130">
-                                        <TextBlock 
+                                            <TextBlock 
                                                Width="130"
                                                HorizontalAlignment="Center"
                                                VerticalAlignment="Center"
@@ -101,58 +116,92 @@
                                                FontWeight="SemiBold"
                                                Text="{x:Bind DisplayName}"
                                                TextWrapping="WrapWholeWords"/>
-                                    </Viewbox>
+                                        </Viewbox>
 
-                                    <MenuFlyoutSeparator Grid.Row="1"
+                                        <MenuFlyoutSeparator Grid.Row="1"
                                                          Margin="12,0">
-                                        <MenuFlyoutSeparator.Background>
-                                            <SolidColorBrush Color="{ThemeResource TextFillColorPrimary}"
+                                            <MenuFlyoutSeparator.Background>
+                                                <SolidColorBrush Color="{ThemeResource TextFillColorPrimary}"
                                                              Opacity="0.25"/>
-                                        </MenuFlyoutSeparator.Background>
-                                    </MenuFlyoutSeparator>
+                                            </MenuFlyoutSeparator.Background>
+                                        </MenuFlyoutSeparator>
 
-                                    <StackPanel Grid.Row="2"
-                                                Orientation="Horizontal"
-                                                HorizontalAlignment="Center"
-                                                VerticalAlignment="Bottom"
-                                                Margin="0,0,0,8">
-                                        <Button Height="32"
-                                                Width="32"
-                                                Padding="0"
-                                                Command="{x:Bind DecreaseSkillPointsCommand}">
-                                            <Button.Content>
-                                                <FontIcon Glyph="&#xE949;"/>
-                                            </Button.Content>
-                                        </Button>
-                                        <TextBlock Text="{x:Bind SkillPointsDisplayText, Mode=OneWay}"
-                                                   VerticalAlignment="Center"
-                                                   Margin="6,0"
-                                                   FontWeight="Bold"/>
-                                        <Button Height="32"
-                                                Width="32"
-                                                Padding="0"
-                                                Command="{x:Bind IncreaseSkillPointsCommand}">
-                                            <Button.Content>
-                                                <FontIcon Glyph="&#xE710;"/>
-                                            </Button.Content>
-                                        </Button>
-                                    </StackPanel>
+                                        <Grid Grid.Row="2"
+                                              Visibility="{x:Bind IsSkillable, Mode=OneWay}">
+                                            <StackPanel Orientation="Horizontal"
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Bottom"
+                                                        Margin="0,0,0,8">
+                                                <Button Height="32"
+                                                        Width="32"
+                                                        Padding="0"
+                                                        Command="{x:Bind DecreaseSkillPointsCommand}"
+                                                        Click="IncrDecrButton_Click">
+                                                    <Button.Content>
+                                                        <FontIcon Glyph="&#xE949;"/>
+                                                    </Button.Content>
+                                                </Button>
+                                                <TextBlock Text="{x:Bind SkillPointsDisplayText, Mode=OneWay}"
+                                                           VerticalAlignment="Center"
+                                                           Margin="6,0"
+                                                           FontWeight="Bold"/>
+                                                <Button Height="32"
+                                                        Width="32"
+                                                        Padding="0"
+                                                        Command="{x:Bind IncreaseSkillPointsCommand}"
+                                                        Click="IncrDecrButton_Click">
+                                                    <Button.Content>
+                                                        <FontIcon Glyph="&#xE710;"/>
+                                                    </Button.Content>
+                                                </Button>
+                                            </StackPanel>
 
-                                    <Grid Grid.Row="2"
-                                          Visibility="{x:Bind IsRepeatable, Mode=OneWay}">
-                                        <FontIcon Glyph="&#xE8EE;"
-                                                  HorizontalAlignment="Center"
-                                                  VerticalAlignment="Top"
-                                                  FontSize="21"/>
-                                        <TextBlock Text="{x:Bind Repetition, Mode=OneWay}"
-                                                   HorizontalAlignment="Center"
-                                                   VerticalAlignment="Top"
-                                                   FontSize="12"
-                                                   FontWeight="SemiBold"
-                                                   Margin="0,2,0,0"/>
+                                            <Grid Visibility="{x:Bind IsRepeatable, Mode=OneWay}">
+                                                <FontIcon Glyph="&#xE8EE;"
+                                                          HorizontalAlignment="Center"
+                                                          VerticalAlignment="Top"
+                                                          FontSize="21"/>
+                                                <TextBlock Text="{x:Bind Repetition, Mode=OneWay}"
+                                                           HorizontalAlignment="Center"
+                                                           VerticalAlignment="Top"
+                                                           FontSize="12"
+                                                           FontWeight="SemiBold"
+                                                           Margin="0,2,0,0"/>
+                                            </Grid>
+                                        </Grid>
                                     </Grid>
-                                </Grid>
-                            </Border>
+                                </Border>
+                                
+                                    <Border>
+                                    <StackPanel Background="{ThemeResource ListViewItemOverlayBackgroundThemeBrush}"
+                                                Visibility="{x:Bind IsSkillableInverted, Mode=OneWay}"
+                                                VerticalAlignment="Bottom">
+                                        <Border Background="{ThemeResource SystemFillColorCriticalBackgroundBrush}"
+                                                HorizontalAlignment="Center"
+                                                Padding="12,3"
+                                                CornerRadius="6"
+                                                Margin="0,5,0,0">
+                                            <TextBlock x:Name="LockedTextBlock"
+                                                       Text="LOCKED"
+                                                       HorizontalAlignment="Center"
+                                                       FontSize="16"
+                                                       FontWeight="Bold"
+                                                       Foreground="Red"/>
+                                        </Border>
+                                        <HyperlinkButton x:Name="LockedHyperlinkButton_Skill"
+                                                         HorizontalAlignment="Center"
+                                                         Height="28"
+                                                         FontSize="12"
+                                                         Foreground="{ThemeResource TextFillColorPrimaryBrush}"
+                                                         Click="Skill_LockedHyperlinkButton_Click">
+                                            <Viewbox>
+                                                <TextBlock Text="Click here to see how to unlock"/>
+                                            </Viewbox>
+                                        </HyperlinkButton>
+                                        
+                                    </StackPanel>
+                                </Border>
+                            </Grid>
                         </DataTemplate>
                     </GridView.ItemTemplate>
                 </GridView>
@@ -193,29 +242,29 @@
                         <Grid Grid.Row="2">
                             <StackPanel Background="{ThemeResource ListViewItemOverlayBackgroundThemeBrush}"
                                         CornerRadius="12"
-                                        Visibility="{x:Bind SelectedSkill.IsSkillable, Mode=OneWay, Converter={StaticResource}}">
+                                        Visibility="{x:Bind SelectedSkill.IsSkillableInverted, Mode=OneWay}">
                                 <Border Background="{ThemeResource SystemFillColorCriticalBackgroundBrush}"
                                     HorizontalAlignment="Center"
                                     Padding="12,4"
-                                    CornerRadius="6">
+                                    CornerRadius="6"
+                                        Margin="0,4,0,0">
                                     <TextBlock x:Name="LockedTextBlock"
                                        Text="LOCKED"
                                        HorizontalAlignment="Center"
                                        FontSize="26"
                                        FontWeight="Bold"
-                                       Foreground="Red"
-                                       Margin="0,0,0,0"/>
+                                       Foreground="Red"/>
                                 </Border>
                                 <HyperlinkButton x:Name="LockedHyperlinkButton"
                                              Content="Click here to see how to unlock"
                                              HorizontalAlignment="Center"
                                              FontSize="20"
                                              Foreground="{ThemeResource TextFillColorPrimaryBrush}"
-                                             Margin="0,8,0,0"
+                                             Margin="0,0,0,4"
                                              Click="LockedHyperlinkButton_Click"/>
                             </StackPanel>
 
-                            <Grid>
+                            <Grid Visibility="{x:Bind SelectedSkill.IsSkillable, Mode=OneWay}">
                                 <StackPanel Orientation="Horizontal"
                                         HorizontalAlignment="Center">
                                     <TextBlock VerticalAlignment="Center"
@@ -253,19 +302,19 @@
                         <TextBlock Grid.Row="5"
                                    x:Name="DescriptionTextBox"
                                    Text="{x:Bind SelectedSkill.Description, Mode=OneWay}"
+                                   TextWrapping="WrapWholeWords"
+                                   TextAlignment="Justify"
                                    FontSize="20"/>
                     </Grid>
                 </Border>
             </SplitView.Pane>
         </SplitView>
 
-        <TeachingTip x:Name="UnlockTeachingTip"
+        <TeachingTip x:Name="UnlockTeachingTip_0"
+                     MinWidth="500"
                      Target="{x:Bind LockedHyperlinkButton}"
-                     Title="Change themes without hassle"
-                     Subtitle="It's easier than ever to see control samples in both light and dark theme!">
-            <TeachingTip.IconSource>
-                <SymbolIconSource Symbol="Refresh" />
-            </TeachingTip.IconSource>
+                     Title="{x:Bind CurrentSkillUnlockTitle, Mode=OneWay}"
+                     Content="{x:Bind CurrentSkillUnlockContent, Mode=OneWay}">
         </TeachingTip>
     </Grid>
 </Page>

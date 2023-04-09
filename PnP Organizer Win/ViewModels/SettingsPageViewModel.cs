@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.WinUI;
 using Microsoft.UI.Xaml;
 using PnPOrganizer.Interfaces;
+using PnPOrganizer.ViewServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,7 @@ namespace PnPOrganizer.ViewModels
         private readonly IAppTitleBarService _appTitleBarService;
         private readonly IAppThemeService _appThemeService;
         private readonly ILocalizationService _localizationService;
+        private readonly ISoundSettingsService _soundSettingsService;
 
         [ObservableProperty]
         private int _windowWidth;
@@ -36,18 +38,23 @@ namespace PnPOrganizer.ViewModels
         private LanguageViewModel? _language;
 
         [ObservableProperty]
+        private bool _enableSound;
+
+        [ObservableProperty]
         private bool _isLocalizationChanged = false;
 
         public SettingsPageViewModel(
             IWindowingService windowingService,
             IAppTitleBarService appTitleBarService,
             IAppThemeService appThemeService,
-            ILocalizationService localizationService)
+            ILocalizationService localizationService,
+            ISoundSettingsService soundSettingsService)
         {
             _windowingService = windowingService;
             _appTitleBarService = appTitleBarService;
             _appThemeService = appThemeService;
             _localizationService = localizationService;
+            _soundSettingsService = soundSettingsService;
 
             _availableAppThemes = _appThemeService.AvailableThemes
                 .Select(theme => new ThemeViewModel(theme, theme.ToString().GetLocalized("Resources")));
@@ -61,6 +68,13 @@ namespace PnPOrganizer.ViewModels
             {
                 _language = new LanguageViewModel(language, language.GetLocalized("Resources"));
             }
+        }
+
+        partial void OnEnableSoundChanged(bool value)
+        {
+            ElementSoundPlayer.State = value ? ElementSoundPlayerState.On : ElementSoundPlayerState.Off;
+            _soundSettingsService.SoundsEnabled = value;
+            _soundSettingsService.SaveSoundSettings();
         }
 
         partial void OnAppThemeChanged(ThemeViewModel? value)
@@ -99,6 +113,8 @@ namespace PnPOrganizer.ViewModels
             {
                 AppTheme = themeItemViewModel;
             }
+
+            EnableSound = _soundSettingsService.LoadSoundSettings();
         }
 
         [RelayCommand]

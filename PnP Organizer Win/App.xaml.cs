@@ -8,6 +8,7 @@ using PnPOrganizer.Interfaces;
 using PnPOrganizer.Services;
 using PnPOrganizer.ViewModels;
 using PnPOrganizer.Views;
+using PnPOrganizer.ViewServices;
 using Serilog;
 
 namespace PnPOrganizer
@@ -56,6 +57,7 @@ namespace PnPOrganizer
                     .AddSingleton<ISettingsService, LocalSettingsService>()
                     .AddSingleton<IAppThemeService, AppThemeService>()
                     .AddSingleton<ILocalizationService, LocalizationService>()
+                    .AddSingleton<ISoundSettingsService, SoundSettingsService>()
                     .AddSingleton<IAppTitleBarService, AppTitleBarService>()
                     .AddSingleton<IWindowingService, WindowingService>()
                     .AddSingleton<INavigationViewService, NavigationViewService>()
