@@ -1,0 +1,21 @@
+﻿<Page
+    x:Class="PnPOrganizer.Views.Maps.MapPageAttica"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:PnPOrganizer.Views.Maps"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid x:Name="ContentGrid">
+        <!-- Width and Height are 1/2 of the original image size. TODO: Change actual image size! -->
+        <Image Source="ms-appx:///Assets/Maps/Attica.jpg"
+               Width="1024"
+               Height="768"
+               AutomationProperties.Name="attica" 
+               Stretch="Fill"
+               HorizontalAlignment="Center" 
+               VerticalAlignment="Top"/>
+    </Grid>
+</Page>

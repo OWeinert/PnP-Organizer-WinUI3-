@@ -7,8 +7,10 @@ using PnPOrganizer.Core.Character.SkillSystem;
 using PnPOrganizer.Interfaces;
 using PnPOrganizer.Services;
 using PnPOrganizer.ViewModels;
+using PnPOrganizer.ViewModels.Maps;
 using PnPOrganizer.Views;
 using PnPOrganizer.ViewServices;
+using PnPOrganizer.ViewServices.Interfaces;
 using Serilog;
 
 namespace PnPOrganizer
@@ -61,6 +63,7 @@ namespace PnPOrganizer
                     .AddSingleton<IAppTitleBarService, AppTitleBarService>()
                     .AddSingleton<IWindowingService, WindowingService>()
                     .AddSingleton<INavigationViewService, NavigationViewService>()
+                    .AddSingleton<IMapService, MapService>()
                     .AddSingleton<IAppActivationService, AppActivationService>()
                     .AddSingleton<ISkillsService, SkillsService>()
                     .AddSingleton<MainWindowViewModel>()
@@ -70,6 +73,8 @@ namespace PnPOrganizer
                     .AddSingleton<InventoryPageViewModel>()
                     .AddSingleton<SkillsPageViewModel>()
                     .AddSingleton<RulesPageViewModel>()
+                    .AddSingleton<MapPageAleraViewModel>()
+                    .AddSingleton<MapPageViewModel>()
                     .AddSingleton<MainWindow>();
             })
             .Build();

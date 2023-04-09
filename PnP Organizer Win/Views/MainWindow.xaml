@@ -15,7 +15,7 @@
         <views:AppTitleBar
             x:Name="AppTitleBar"
             x:Uid="AppTitleBar"
-            Background="Transparent"
+            Background="Black"
             Grid.Row="0"
             VerticalAlignment="Center"
             Icon="../Assets/WindowsIcon.gif"
@@ -38,8 +38,7 @@
                 <NavigationViewItem
                     x:Uid="NavigationViewItem_Main"
                     Icon="Home"
-                    Tag="PnPOrganizer.Views.MainPage"
-                    />
+                    Tag="PnPOrganizer.Views.MainPage"/>
                 <NavigationViewItem
                     x:Uid="NavigationViewItem_Character"
                     Icon="Contact"
@@ -55,8 +54,7 @@
                         <FontIcon Glyph="&#xE945;"/>
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
-            </NavigationView.MenuItems>
-            <NavigationView.FooterMenuItems>
+
                 <NavigationViewItem
                     x:Uid="NavigationViewItem_Map"
                     Tag="PnPOrganizer.Views.MapPage">
@@ -71,8 +69,7 @@
                         <FontIcon Glyph="&#xE7BE;" />
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
-                <NavigationViewItemSeparator Margin="4,0"/>
-            </NavigationView.FooterMenuItems>
+            </NavigationView.MenuItems>
             <Grid>
                 <Frame x:Name="ContentFrame"/>
             </Grid>

@@ -42,6 +42,9 @@
     <None Remove="Views\InventoryPage.xaml" />
     <None Remove="Views\MainPage.xaml" />
     <None Remove="Views\MapPage.xaml" />
+    <None Remove="Views\Maps\MapPageAlera.xaml" />
+    <None Remove="Views\Maps\MapPageAttica.xaml" />
+    <None Remove="Views\Maps\MapPageParcia.xaml" />
     <None Remove="Views\RulesPage.xaml" />
     <None Remove="Views\SettingsPage.xaml" />
     <None Remove="Views\SkillsPage.xaml" />
@@ -86,6 +89,32 @@
   <ItemGroup>
     <Folder Include="Core\BattleAssistant\Events\" />
     <Folder Include="Strings\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Update="Assets\Maps\Alera.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Assets\Maps\Attica.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Assets\Maps\Parcia.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\Maps\MapPageAttica.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\Maps\MapPageParcia.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\Maps\MapPageAlera.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Views\MapPage.xaml">

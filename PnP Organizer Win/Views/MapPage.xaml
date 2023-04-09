@@ -6,9 +6,39 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    Style="{ThemeResource CommonPageStyle}">
 
-    <Grid>
-
+    <Grid Style="{StaticResource PageBodyGridStyle}">
+        <ScrollViewer ZoomMode="Enabled"
+                      IsTabStop="True" 
+                      IsVerticalScrollChainingEnabled="True"
+                      MinZoomFactor="0.79"
+                      HorizontalScrollMode="Enabled" 
+                      HorizontalScrollBarVisibility="Auto"
+                      VerticalScrollMode="Enabled" 
+                      VerticalScrollBarVisibility="Auto">
+            <Frame x:Name="ContentFrame"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center">
+                <Frame.ContentTransitions>
+                    <TransitionCollection>
+                        <NavigationThemeTransition  />
+                    </TransitionCollection>
+                </Frame.ContentTransitions>
+            </Frame>
+        </ScrollViewer>
+        <StackPanel Width="64"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Stretch"
+                    Background="{ThemeResource AcrylicBackgroundFillColorBaseBrush}">
+            <Button Width="48"
+                    Height="48"
+                    HorizontalAlignment="Center"
+                    Margin="0,6,0,0"
+                    Command="{x:Bind ViewModel.NavigateBackCommand}">
+                <FontIcon Glyph="&#xE72B;"/>
+            </Button>
+        </StackPanel>
     </Grid>
 </Page>

@@ -132,11 +132,23 @@
   <data name="MainPage_Title.Text" xml:space="preserve">
     <value>Main Page</value>
   </data>
+  <data name="NavigationViewItem_Inventory.Content" xml:space="preserve">
+    <value>Inventory</value>
+  </data>
   <data name="NavigationViewItem_Main.Content" xml:space="preserve">
     <value>Main</value>
   </data>
+  <data name="NavigationViewItem_Map.Content" xml:space="preserve">
+    <value>World Map</value>
+  </data>
+  <data name="NavigationViewItem_Rules.Content" xml:space="preserve">
+    <value>Rules</value>
+  </data>
   <data name="NavigationViewItem_Settings.Content" xml:space="preserve">
     <value>Settings</value>
+  </data>
+  <data name="NavigationViewItem_Skills.Content" xml:space="preserve">
+    <value>Skills</value>
   </data>
   <data name="RulesPage_ButtonTooltip.Content" xml:space="preserve">
     <value>Open in new Window</value>

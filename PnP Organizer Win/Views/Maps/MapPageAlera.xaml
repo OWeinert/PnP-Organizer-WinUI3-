@@ -1,0 +1,64 @@
+﻿<Page
+    x:Class="PnPOrganizer.Views.Maps.MapPageAlera"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:PnPOrganizer.Views.Maps"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid x:Name="ContentGrid">
+        <Image Source="ms-appx:///Assets/Maps/Alera.png" 
+                   AutomationProperties.Name="alera" 
+                   Stretch="None"
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Top"/>
+        <Button x:Name="ParciaButton" Width="48"
+                        Height="48"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Margin="726,780,0,0"
+                        Padding="0"
+                        Command="{x:Bind ViewModel.NavigateToParciaCommand}">
+            <Button.Resources>
+                <ResourceDictionary>
+                    <ResourceDictionary.ThemeDictionaries>
+                        <ResourceDictionary x:Key="Dark">
+                            <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="{ThemeResource SystemFillColorSuccess}"/>
+                        </ResourceDictionary>
+                        <ResourceDictionary x:Key="Light">
+                            <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="{ThemeResource SystemFillColorSuccess}"/>
+                        </ResourceDictionary>
+                    </ResourceDictionary.ThemeDictionaries>
+                </ResourceDictionary>
+            </Button.Resources>
+            <FontIcon Glyph="&#xE840;"
+                              FontSize="36"
+                              FontWeight="ExtraBold"/>
+        </Button>
+        <Button x:Name="AtticaButton" Width="48"
+                        Height="48"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Margin="735,580,0,0"
+                        Padding="0"
+                        Command="{x:Bind ViewModel.NavigateToAtticaCommand}">
+            <Button.Resources>
+                <ResourceDictionary>
+                    <ResourceDictionary.ThemeDictionaries>
+                        <ResourceDictionary x:Key="Dark">
+                            <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="{ThemeResource SystemFillColorSuccess}"/>
+                        </ResourceDictionary>
+                        <ResourceDictionary x:Key="Light">
+                            <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="{ThemeResource SystemFillColorSuccess}"/>
+                        </ResourceDictionary>
+                    </ResourceDictionary.ThemeDictionaries>
+                </ResourceDictionary>
+            </Button.Resources>
+            <FontIcon Glyph="&#xE840;"
+                              FontSize="36"
+                              FontWeight="ExtraBold"/>
+        </Button>
+    </Grid>
+</Page>
