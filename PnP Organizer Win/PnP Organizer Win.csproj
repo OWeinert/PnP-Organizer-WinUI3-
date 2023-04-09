@@ -41,6 +41,7 @@
     <None Remove="Views\ExternalRulesPage.xaml" />
     <None Remove="Views\InventoryPage.xaml" />
     <None Remove="Views\MainPage.xaml" />
+    <None Remove="Views\MapPage.xaml" />
     <None Remove="Views\RulesPage.xaml" />
     <None Remove="Views\SettingsPage.xaml" />
     <None Remove="Views\SkillsPage.xaml" />
@@ -85,6 +86,11 @@
   <ItemGroup>
     <Folder Include="Core\BattleAssistant\Events\" />
     <Folder Include="Strings\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\MapPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Views\ExternalRulesPage.xaml">
