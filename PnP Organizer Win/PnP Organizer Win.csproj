@@ -34,6 +34,10 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|arm64'">
     <Optimize>True</Optimize>
   </PropertyGroup>
+  <ItemGroup>
+    <Content Remove="Assets\applicationIcon-512.png" />
+    <Content Remove="Assets\applicationIcon.ico" />
+  </ItemGroup>
 
   <ItemGroup>
     <None Remove="Views\AppTitleBar.xaml" />
@@ -49,17 +53,6 @@
     <None Remove="Views\SettingsPage.xaml" />
     <None Remove="Views\SkillsPage.xaml" />
     <None Remove="Views\Styles.xaml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="Assets\SplashScreen.scale-200.png" />
-    <Content Include="Assets\LockScreenLogo.scale-200.png" />
-    <Content Include="Assets\Square150x150Logo.scale-200.png" />
-    <Content Include="Assets\Square44x44Logo.scale-200.png" />
-    <Content Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png" />
-    <Content Include="Assets\StoreLogo.png" />
-    <Content Include="Assets\Wide310x150Logo.scale-200.png" />
-    <Content Include="Assets\WindowsIcon.gif" />
   </ItemGroup>
 
   <ItemGroup>
@@ -100,6 +93,14 @@
     <Content Update="Assets\Maps\Parcia.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Assets\applicationIcon-512.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Assets\applicationIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Views\Maps\MapPageAttica.xaml">

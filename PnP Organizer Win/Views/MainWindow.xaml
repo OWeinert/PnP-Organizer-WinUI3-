@@ -18,7 +18,7 @@
             Background="Black"
             Grid.Row="0"
             VerticalAlignment="Center"
-            Icon="../Assets/WindowsIcon.gif"
+            Icon="../Assets/applicationIcon.ico"
             IconHeight="30"
             IconMargin="8,0,0,0"
             IconWidth="30"
