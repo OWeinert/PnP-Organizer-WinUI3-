@@ -25,8 +25,10 @@ namespace PnPOrganizer.Core
 
         public static IntPtr GetHandle(this Window window)
         {
-            WindowWrapper windowWrapper = WindowWrapper.FromAbi(window.GetHandle());
-            return windowWrapper.WindowHandle;
+            WindowWrapper? windowWrapper = WindowWrapper.FromAbi(window.GetHandle());
+            if(windowWrapper != null)
+                return windowWrapper.WindowHandle;
+            return IntPtr.Zero;
         }
 
         [ComImport]
@@ -79,7 +81,7 @@ namespace PnPOrganizer.Core
                 return ObjectReference<Vftbl>.FromAbi(thisPtr);
             }
 
-            public static implicit operator WindowWrapper(IObjectReference obj)
+            public static implicit operator WindowWrapper?(IObjectReference obj)
             {
                 return (obj != null) ? new WindowWrapper(obj) : null;
             }
@@ -131,8 +133,8 @@ namespace PnPOrganizer.Core
 
         static public AppWindow GetAppWindow(Window window)
         {
-            IntPtr hWnd = WindowNative.GetWindowHandle(window);
-            WindowId wndId = Win32Interop.GetWindowIdFromWindow(hWnd);
+            var hWnd = WindowNative.GetWindowHandle(window);
+            var wndId = Win32Interop.GetWindowIdFromWindow(hWnd);
             return AppWindow.GetFromWindowId(wndId);
         }
 
