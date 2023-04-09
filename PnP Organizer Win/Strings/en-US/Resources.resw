@@ -138,6 +138,9 @@
   <data name="NavigationViewItem_Settings.Content" xml:space="preserve">
     <value>Settings</value>
   </data>
+  <data name="RulesPage_ButtonTooltip.Content" xml:space="preserve">
+    <value>Open in new Window</value>
+  </data>
   <data name="SettingsPage_ApplicationTheme.Header" xml:space="preserve">
     <value>Application theme</value>
   </data>
@@ -155,6 +158,15 @@
   </data>
   <data name="SettingsPage_LocalizationChangedMessage.Text" xml:space="preserve">
     <value>Application restart is required.</value>
+  </data>
+  <data name="SettingsPage_Sound.Header" xml:space="preserve">
+    <value>Sound</value>
+  </data>
+  <data name="SettingsPage_SoundEnableSwitch.OffContent" xml:space="preserve">
+    <value>Sounds Disabled</value>
+  </data>
+  <data name="SettingsPage_SoundEnableSwitch.OnContent" xml:space="preserve">
+    <value>Sounds Enabled</value>
   </data>
   <data name="SettingsPage_Title.Text" xml:space="preserve">
     <value>Settings</value>
@@ -194,6 +206,15 @@
   </data>
   <data name="Skills_Filter" xml:space="preserve">
     <value>Filter</value>
+  </data>
+  <data name="Skills_HowToUnlock_ContentDependencyPrefix" xml:space="preserve">
+    <value>You need to skill one of the following:</value>
+  </data>
+  <data name="Skills_HowToUnlock_ContentForcedDependencyPrefix" xml:space="preserve">
+    <value>You need to skill this:</value>
+  </data>
+  <data name="Skills_HowToUnlock_Title" xml:space="preserve">
+    <value>How to Unlock:</value>
   </data>
   <data name="Skills_Locked" xml:space="preserve">
     <value>Locked</value>
@@ -1092,5 +1113,8 @@ Fail: -1 on Parade and Dodge Throws until your next Turn.</value>
   </data>
   <data name="String" xml:space="preserve">
     <value>+0.5 * Air pearls incoming damage</value>
+  </data>
+  <data name="Word_And" xml:space="preserve">
+    <value>AND</value>
   </data>
 </root>
