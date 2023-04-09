@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net7.0-windows10.0.19041.0</TargetFramework>
+    <TargetFramework>net7.0-windows10.0.18362.0</TargetFramework>
     <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
     <RootNamespace>PnPOrganizer</RootNamespace>
     <ApplicationManifest>app.manifest</ApplicationManifest>
@@ -11,13 +11,37 @@
     <UseWinUI>true</UseWinUI>
     <EnablePreviewMsixTooling>true</EnablePreviewMsixTooling>
     <Nullable>enable</Nullable>
+    <SupportedOSPlatformVersion>10.0.18362.0</SupportedOSPlatformVersion>
+    <StartupObject>PnPOrganizer.Program</StartupObject>
+    <IsPublishable>True</IsPublishable>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
+    <Optimize>True</Optimize>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Optimize>True</Optimize>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|arm64'">
+    <Optimize>True</Optimize>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86'">
+    <Optimize>True</Optimize>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Optimize>True</Optimize>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|arm64'">
+    <Optimize>True</Optimize>
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove="Views\AppTitleBar.xaml" />
     <None Remove="Views\CharacterPage.xaml" />
+    <None Remove="Views\ExternalRulesPage.xaml" />
     <None Remove="Views\InventoryPage.xaml" />
     <None Remove="Views\MainPage.xaml" />
+    <None Remove="Views\RulesPage.xaml" />
     <None Remove="Views\SettingsPage.xaml" />
     <None Remove="Views\SkillsPage.xaml" />
     <None Remove="Views\Styles.xaml" />
@@ -35,20 +59,20 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0" />
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.0-preview2" />
     <PackageReference Include="CommunityToolkit.WinUI" Version="7.1.2" />
     <PackageReference Include="CommunityToolkit.WinUI.UI.Controls" Version="7.1.2" />
-    <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.0" />
-    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.2.230118.102" />
-    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.755" />
-    <PackageReference Include="Octokit" Version="5.0.2" />
-    <PackageReference Include="Serilog" Version="2.12.0" />
-    <PackageReference Include="Serilog.Extensions.Hosting" Version="5.0.1" />
-    <PackageReference Include="Serilog.Extensions.Logging" Version="3.1.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0-preview.2.23128.3" />
+    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.25336-preview" />
+    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.3.230228005-preview1" />
+    <PackageReference Include="Octokit" Version="5.0.3" />
+    <PackageReference Include="Serilog" Version="3.0.0-dev-01958" />
+    <PackageReference Include="Serilog.Extensions.Hosting" Version="5.1.0-dev-00123" />
+    <PackageReference Include="Serilog.Extensions.Logging" Version="3.1.1-dev-10338" />
     <PackageReference Include="Serilog.Sinks.Async" Version="1.5.0" />
-    <PackageReference Include="Serilog.Sinks.Console" Version="4.1.0" />
+    <PackageReference Include="Serilog.Sinks.Console" Version="4.1.1-dev-00910" />
     <PackageReference Include="Serilog.Sinks.Debug" Version="2.0.0" />
-    <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
+    <PackageReference Include="Serilog.Sinks.File" Version="5.0.1-dev-00947" />
     <Manifest Include="$(ApplicationManifest)" />
   </ItemGroup>
 
@@ -61,6 +85,16 @@
   <ItemGroup>
     <Folder Include="Core\BattleAssistant\Events\" />
     <Folder Include="Strings\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\ExternalRulesPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\RulesPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Views\CharacterPage.xaml">
