@@ -52,6 +52,11 @@
                     x:Uid="NavigationViewItem_Skills"
                     Icon="Add"
                     Tag="PnPOrganizer.Views.SkillsPage"/>
+
+                <NavigationViewItem
+                    x:Uid="NavigationViewItem_Rules"
+                    Icon="Add"
+                    Tag="PnPOrganizer.Views.RulesPage"/>
             </NavigationView.MenuItems>
             <Grid>
                 <Frame x:Name="ContentFrame"/>
