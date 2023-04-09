@@ -1,11 +1,14 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Input;
 using PnPOrganizer.Core.Character.StatModifiers;
 using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Text;
+using Windows.ApplicationModel.Resources;
 
 namespace PnPOrganizer.Core.Character.SkillSystem
 {
@@ -77,7 +80,16 @@ namespace PnPOrganizer.Core.Character.SkillSystem
         /// 
         /// </summary>
         [ObservableProperty]
+        private bool _isSkillableInverted;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [ObservableProperty]
         private bool _isActive;
+
+        [ObservableProperty]
+        private bool _isActiveInverted;
 
         /// <summary>
         /// Repeatable Skills apply their Bonus for each time the MaxSkillPoints are reached
@@ -170,7 +182,11 @@ namespace PnPOrganizer.Core.Character.SkillSystem
 
             RoundDependendStatModifiers = new List<IStatModifier[]>();
 
-            SkillPointsDisplayText = GetSkillPointsDisplayText();
+            SkillPointsDisplayText = $"{SkillPoints} / {MaxSkillPoints}";
+
+            IsSkillableInverted = !IsSkillable;
+            IsActiveInverted = !IsActive;
+
             PropertyChanged += Skill_PropertyChanged;
         }
 
@@ -206,9 +222,17 @@ namespace PnPOrganizer.Core.Character.SkillSystem
             if(e.PropertyName is nameof(SkillPoints) or nameof(MaxSkillPoints))
             {
                 SkillPointsDisplayText = $"{SkillPoints} / {MaxSkillPoints}";
-                if(SkillPoints >= MaxSkillPoints || (IsRepeatable && Repetition > 0))
-                    IsActive = true;
+                if(!IsRepeatable)
+                    IsActive = SkillPoints >= MaxSkillPoints;
             }
+            if (e.PropertyName is nameof(Repetition) && IsRepeatable)
+                IsActive = Repetition > 0;
+
+            if (e.PropertyName is nameof(IsSkillable))
+                IsSkillableInverted = !IsSkillable;
+
+            if(e.PropertyName is nameof(IsActive))
+                IsActiveInverted = !IsActive;
         }
 
         public static string CreateTooltip(Skill skill)

@@ -811,10 +811,7 @@ namespace PnPorganizer.Core.Character
                         if (e.PropertyName is nameof(Skill.IsActive))
                         {
                             var anyDependencyActive = skill.DependendSkills.Where(id => Registry[id].IsActive).Any();
-                            if (anyDependencyActive)
-                            {
-                                skill.IsSkillable = true;
-                            }
+                            skill.IsSkillable = anyDependencyActive;
                         }
                     };
                 }
