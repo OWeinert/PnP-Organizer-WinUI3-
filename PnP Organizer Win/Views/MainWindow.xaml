@@ -42,7 +42,7 @@
                     />
                 <NavigationViewItem
                     x:Uid="NavigationViewItem_Character"
-                    Icon="Account"
+                    Icon="Contact"
                     Tag="PnPOrganizer.Views.CharacterPage"/>
                 <NavigationViewItem
                     x:Uid="NavigationViewItem_Inventory"
@@ -50,14 +50,29 @@
                     Tag="PnPOrganizer.Views.InventoryPage"/>
                 <NavigationViewItem
                     x:Uid="NavigationViewItem_Skills"
-                    Icon="Add"
-                    Tag="PnPOrganizer.Views.SkillsPage"/>
-
+                    Tag="PnPOrganizer.Views.SkillsPage">
+                    <NavigationViewItem.Icon>
+                        <FontIcon Glyph="&#xE945;"/>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+            </NavigationView.MenuItems>
+            <NavigationView.FooterMenuItems>
+                <NavigationViewItem
+                    x:Uid="NavigationViewItem_Map"
+                    Tag="PnPOrganizer.Views.MapPage">
+                    <NavigationViewItem.Icon>
+                        <FontIcon Glyph="&#xE909;"/>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
                 <NavigationViewItem
                     x:Uid="NavigationViewItem_Rules"
-                    Icon="Add"
-                    Tag="PnPOrganizer.Views.RulesPage"/>
-            </NavigationView.MenuItems>
+                    Tag="PnPOrganizer.Views.RulesPage">
+                    <NavigationViewItem.Icon>
+                        <FontIcon Glyph="&#xE7BE;" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItemSeparator Margin="4,0"/>
+            </NavigationView.FooterMenuItems>
             <Grid>
                 <Frame x:Name="ContentFrame"/>
             </Grid>
