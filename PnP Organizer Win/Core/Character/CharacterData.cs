@@ -8,6 +8,7 @@ namespace PnPOrganizer.Core.Character
     [INotifyPropertyChanged]
     public partial class CharacterData
     {
+        public string FileName { get; set; } = string.Empty;
         public string Name { get; set; } = string.Empty;
         public int Age { get; set; }
         public float Height { get; set; }
