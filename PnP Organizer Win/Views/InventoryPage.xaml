@@ -71,7 +71,8 @@
     </Page.Resources>
 
     <Grid x:Name="ContentGrid"
-          Style="{StaticResource PageBodyGridStyle}">
+          Style="{StaticResource PageBodyGridStyle}"
+          Margin="0">
         
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -116,7 +117,7 @@
         <ScrollViewer x:Name="ItemsScrollViewer" 
                       Grid.Row="1"
                       VerticalAlignment="Stretch"
-                      Margin="0,1,4,0">
+                      Margin="24,1,4,0">
 
             <GridView x:Name="ItemsGridView"
                       ItemsSource="{x:Bind ViewModel.ItemsView}"

@@ -9,7 +9,8 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     Style="{ThemeResource CommonPageStyle}">
 
-    <Grid Style="{StaticResource PageBodyGridStyle}">
+    <Grid Style="{StaticResource PageBodyGridStyle}"
+          Margin="0">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>

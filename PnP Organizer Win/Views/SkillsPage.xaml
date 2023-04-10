@@ -18,7 +18,7 @@
     
     <Grid x:Name="ContentGrid"
           Style="{StaticResource PageBodyGridStyle}"
-          Margin="32,0">
+          Margin="0">
 
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -118,7 +118,7 @@
                    PaneOpening="SkillsSplitView_PaneOpening">
             <ScrollViewer x:Name="ItemsScrollViewer"
                           VerticalAlignment="Stretch"
-                          Margin="0,1,4,0"
+                          Margin="28,1,4,0"
                           ViewChanged="ItemsScrollViewer_ViewChanged">
 
                 <GridView x:Name="SkillGridView"
