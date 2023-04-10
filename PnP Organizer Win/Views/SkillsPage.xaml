@@ -17,7 +17,8 @@
     </Page.Resources>
     
     <Grid x:Name="ContentGrid"
-          Style="{StaticResource PageBodyGridStyle}">
+          Style="{StaticResource PageBodyGridStyle}"
+          Margin="32,0">
 
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -26,36 +27,85 @@
 
         <CommandBar Grid.Row="0"
                     DefaultLabelPosition="Right"
-                    IsSticky="True">
+                    IsSticky="True"
+                    Margin="0,0,24,0">
             <CommandBar.Content>
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="0"
-                               Text="Inventory"
-                           VerticalAlignment="Center"
-                           FontSize="28"
-                           FontFamily="Display"
-                           FontWeight="SemiBold"
-                           Margin="6,6,0,0"/>
+                    <TextBlock x:Uid="SkillsPage_Header"
+                               Grid.Column="0"
+                               Text="Skills"
+                               VerticalAlignment="Center"
+                               FontSize="28"
+                               FontFamily="Display"
+                               FontWeight="SemiBold"
+                               Margin="6,6,0,0"/>
 
                 </Grid>
             </CommandBar.Content>
-            <AppBarElementContainer>
-                <AutoSuggestBox x:Name="SearchItemBox"  
-                                Width="320"
-                                VerticalAlignment="Center"
-                                HorizontalAlignment="Center"
-                                Margin="16,6,0,0"
-                                QueryIcon="Find"
-                                PlaceholderText="Search Item"/>
+            <AppBarElementContainer VerticalAlignment="Center">
+                <StackPanel Orientation="Horizontal">
+                    <ComboBox MinWidth="120"
+                          ItemsSource="{x:Bind ViewModel.SkillabilityFilters}"
+                          DisplayMemberPath="DisplayName"
+                          SelectedIndex="0"
+                          SelectedItem="{x:Bind CurrentSkillabilityFilter, Mode=TwoWay}">
+                    </ComboBox>
+                    <TextBlock x:Uid="SkillPage_SkillabilityTextBlock"
+                               VerticalAlignment="Center"
+                               Margin="8,0"
+                               FontWeight="SemiBold"/>
+                </StackPanel>
             </AppBarElementContainer>
-            <AppBarSeparator Margin="16,0,0,0"/>
-            <AppBarButton Icon="Add" Label="Add"/>
-            <AppBarButton Icon="Edit" Label="Edit"/>
-            <AppBarButton Icon="Share" Label="Share"/>
+            <AppBarElementContainer VerticalAlignment="Center"
+                                    Margin="16,0,0,0">
+                <StackPanel Orientation="Horizontal">
+                    <ComboBox MinWidth="120"
+                          ItemsSource="{x:Bind ViewModel.SkillTreeFilters}"
+                          DisplayMemberPath="DisplayName"
+                          SelectedIndex="0"
+                          SelectedItem="{x:Bind CurrentSkillTreeFilter, Mode=TwoWay}">
+                    </ComboBox>
+                    <TextBlock x:Uid="SkillPage_SkillTreeTextBlock"
+                               VerticalAlignment="Center"
+                               Margin="8,0"
+                               FontWeight="SemiBold"/>
+                </StackPanel>
+            </AppBarElementContainer>
+            <AppBarElementContainer VerticalAlignment="Center">
+                <AutoSuggestBox x:Name="SearchSkillBox"  
+                                Width="320"
+                                HorizontalAlignment="Center"
+                                Margin="16,0,0,0"
+                                QueryIcon="Find"
+                                PlaceholderText="Search Item"
+                                Text="{x:Bind SearchBoxText, Mode=TwoWay}"
+                                TextChanged="SearchSkillBox_TextChanged"/>
+            </AppBarElementContainer>
+            <AppBarElementContainer VerticalAlignment="Center">
+                <Border Background="{ThemeResource AcrylicBackgroundFillColorDefaultBrush}"
+                        MinHeight="32"
+                        Margin="16,0,0,0"
+                        CornerRadius="4">
+                    <RelativePanel VerticalAlignment="Center"
+                                   Margin="12,0">
+                        <TextBlock x:Name="UsedSkillPointsTextBlock"
+                                   x:Uid="SkillsPage_UsedSkillPointsTextBlock"
+                                   Style="{ThemeResource BodyTextBlockStyle}"
+                                   FontSize="16"/>
+                        <TextBlock x:Name="UsedSkillPointsNumberTextBlock"
+                                   Text="{x:Bind ViewModel.UsedSkillPoints, Mode=OneWay}"
+                                   RelativePanel.RightOf="UsedSkillPointsTextBlock"
+                                   Style="{ThemeResource BodyStrongTextBlockStyle}"
+                                   FontSize="16"
+                                   MinWidth="25"
+                                   Margin="2,0,0,0"/>
+                    </RelativePanel>
+                </Border>
+            </AppBarElementContainer>
         </CommandBar>
 
         <SplitView x:Name="SkillsSplitView" 
@@ -68,7 +118,7 @@
                    PaneOpening="SkillsSplitView_PaneOpening">
             <ScrollViewer x:Name="ItemsScrollViewer"
                           VerticalAlignment="Stretch"
-                          Margin="0,1,60,0"
+                          Margin="0,1,4,0"
                           ViewChanged="ItemsScrollViewer_ViewChanged">
 
                 <GridView x:Name="SkillGridView"
@@ -86,7 +136,7 @@
                         <DataTemplate x:DataType="skillsys:Skill">
                             <Grid Width="140"
                                   Height="110"
-                                  Margin="4"
+                                  Margin="8"
                                   CornerRadius="4">
                                 <Border x:Name="SkillBorder"
                                         Background="{x:Bind Identifier.SkillCategory, Converter={StaticResource SkillCategoryToBrushConverter}}">
