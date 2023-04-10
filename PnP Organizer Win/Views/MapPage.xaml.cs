@@ -1,10 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.DependencyInjection;
-using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Media.Animation;
 using PnPOrganizer.ViewModels;
 using PnPOrganizer.Views.Interfaces;
-using PnPOrganizer.Views.Maps;
 
 namespace PnPOrganizer.Views
 {
@@ -17,6 +14,7 @@ namespace PnPOrganizer.Views
             ViewModel = Ioc.Default.GetService<MapPageViewModel>()!;
             InitializeComponent();
             ViewModel.SetupMapService(ContentFrame);
+            MapScrollViewer.ZoomToFactor(MapScrollViewer.MinZoomFactor);
         }
     }
 }

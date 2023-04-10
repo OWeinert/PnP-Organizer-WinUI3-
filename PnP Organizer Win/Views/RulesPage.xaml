@@ -8,16 +8,34 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>
-        
-        <WebView2 x:Name="MyWebView2" 
+    <Grid Style="{ThemeResource PageBodyGridStyle}">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <CommandBar Grid.Row="0">
+            <CommandBar.Content>
+                <TextBlock Grid.Column="0"
+                           Text="Rules"
+                           VerticalAlignment="Center"
+                           FontSize="28"
+                           FontFamily="Display"
+                           FontWeight="SemiBold"
+                           Margin="6,6,0,0"/>
+            </CommandBar.Content>
+        </CommandBar>
+
+        <Grid Grid.Row="1">
+            <WebView2 x:Name="MyWebView2" 
                   Source="https://docs.google.com/document/d/1anE5mth0s6hBIGDsXC2vEGr0ZO2K8F23VRcqik1pAVQ/" 
                   HorizontalAlignment="Stretch" 
                   VerticalAlignment="Stretch" 
                   Grid.Row="1" 
                   MinHeight="200" 
                   MinWidth="200"/>
-        <Button x:Name="OpenWindowButton"
+            <Button x:Name="OpenWindowButton"
                 Style="{ThemeResource DefaultButtonStyle}"
                 Background="{ThemeResource AccentAcrylicBackgroundFillColorDefaultBrush}"
                 Foreground="{ThemeResource TextFillColorPrimaryBrush}"
@@ -28,31 +46,32 @@
                 Height="64"
                 Translation="0,0,35"
                 Click="OpenWindowButton_Click">
-            <Button.Shadow>
-                <ThemeShadow x:Name="ButtonShadow"/>
-            </Button.Shadow>
-            <ToolTipService.ToolTip>
-                <ToolTip x:Uid="RulesPage_ButtonTooltip"
+                <Button.Shadow>
+                    <ThemeShadow x:Name="ButtonShadow"/>
+                </Button.Shadow>
+                <ToolTipService.ToolTip>
+                    <ToolTip x:Uid="RulesPage_ButtonTooltip"
                          Style="{ThemeResource DefaultToolTipStyle}"/>
-            </ToolTipService.ToolTip>
-            <Button.Resources>
-                <ResourceDictionary>
-                    <ResourceDictionary.ThemeDictionaries>
-                        <ResourceDictionary x:Key="Dark">
-                            <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="{ThemeResource ControlSolidFillColorDefault}"/>
-                            <SolidColorBrush x:Key="ButtonForegroundPressed" Color="{ThemeResource TextFillColorInverse}"/>
-                        </ResourceDictionary>
-                        <ResourceDictionary x:Key="Light">
-                            <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="{ThemeResource ControlSolidFillColorDefault}"/>
-                            <SolidColorBrush x:Key="ButtonForegroundPressed" Color="{ThemeResource TextFillColorInverse}"/>
-                        </ResourceDictionary>
-                    </ResourceDictionary.ThemeDictionaries>
-                </ResourceDictionary>
-            </Button.Resources>
-            <FontIcon x:Name="ButtonIcon"
+                </ToolTipService.ToolTip>
+                <Button.Resources>
+                    <ResourceDictionary>
+                        <ResourceDictionary.ThemeDictionaries>
+                            <ResourceDictionary x:Key="Dark">
+                                <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="{ThemeResource ControlSolidFillColorDefault}"/>
+                                <SolidColorBrush x:Key="ButtonForegroundPressed" Color="{ThemeResource TextFillColorInverse}"/>
+                            </ResourceDictionary>
+                            <ResourceDictionary x:Key="Light">
+                                <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="{ThemeResource ControlSolidFillColorDefault}"/>
+                                <SolidColorBrush x:Key="ButtonForegroundPressed" Color="{ThemeResource TextFillColorInverse}"/>
+                            </ResourceDictionary>
+                        </ResourceDictionary.ThemeDictionaries>
+                    </ResourceDictionary>
+                </Button.Resources>
+                <FontIcon x:Name="ButtonIcon"
                       Glyph="&#xF7ED;"
                       FontSize="36">
-            </FontIcon>
-        </Button>
+                </FontIcon>
+            </Button>
+        </Grid>
     </Grid>
 </Page>

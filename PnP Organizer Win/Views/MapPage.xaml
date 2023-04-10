@@ -10,10 +10,30 @@
     Style="{ThemeResource CommonPageStyle}">
 
     <Grid Style="{StaticResource PageBodyGridStyle}">
-        <ScrollViewer ZoomMode="Enabled"
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <CommandBar Grid.Row="0">
+            <CommandBar.Content>
+                <TextBlock Grid.Column="0"
+                           Text="World Map"
+                           VerticalAlignment="Center"
+                           FontSize="28"
+                           FontFamily="Display"
+                           FontWeight="SemiBold"
+                           Margin="6,6,0,0"/>
+            </CommandBar.Content>
+        </CommandBar>
+        
+        <ScrollViewer x:Name="MapScrollViewer"
+                      Grid.Row="1"
+                      ZoomMode="Enabled"
                       IsTabStop="True" 
                       IsVerticalScrollChainingEnabled="True"
                       MinZoomFactor="0.79"
+                      MaxZoomFactor="3"
                       HorizontalScrollMode="Enabled" 
                       HorizontalScrollBarVisibility="Auto"
                       VerticalScrollMode="Enabled" 
@@ -28,14 +48,17 @@
                 </Frame.ContentTransitions>
             </Frame>
         </ScrollViewer>
-        <StackPanel Width="64"
+        <StackPanel Grid.Row="1"
+                    Width="64"
                     HorizontalAlignment="Left"
-                    VerticalAlignment="Stretch"
-                    Background="{ThemeResource AcrylicBackgroundFillColorBaseBrush}">
+                    VerticalAlignment="Center"
+                    Background="{ThemeResource AcrylicBackgroundFillColorBaseBrush}"
+                    CornerRadius="0,8,8,0"
+                    Margin="0,0,0,64">
             <Button Width="48"
                     Height="48"
                     HorizontalAlignment="Center"
-                    Margin="0,6,0,0"
+                    Margin="0,8"
                     Command="{x:Bind ViewModel.NavigateBackCommand}">
                 <FontIcon Glyph="&#xE72B;"/>
             </Button>
