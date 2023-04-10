@@ -19,9 +19,9 @@
             Grid.Row="0"
             VerticalAlignment="Center"
             Icon="../Assets/applicationIcon.ico"
-            IconHeight="30"
+            IconHeight="24"
             IconMargin="8,0,0,0"
-            IconWidth="30"
+            IconWidth="24"
             TextFontSize="12"
             TextMargin="28,0,0,0"
             TextWrapping="NoWrap" />

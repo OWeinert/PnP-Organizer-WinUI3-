@@ -1,7 +1,9 @@
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using PnPOrganizer.Helpers;
 using PnPOrganizer.ViewModels;
+using System;
 
 namespace PnPOrganizer.Views
 {
@@ -13,6 +15,7 @@ namespace PnPOrganizer.Views
             ExtendsContentIntoTitleBar = true;
             SetTitleBar(AppTitleBar);
             ViewModel = Ioc.Default.GetRequiredService<MainWindowViewModel>();
+            AppWindow.SetIcon("Assets/applicationIcon.ico");
         }
 
         public AppTitleBar TitleBar { get => AppTitleBar; }
