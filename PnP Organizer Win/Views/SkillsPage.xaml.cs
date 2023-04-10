@@ -165,9 +165,13 @@ namespace PnPOrganizer.Views
                 }
                 if (suitableSkills.Count == 0)
                 {
-                    //TODO Give information that no skill was found
+                    sender.ItemsSource = new List<string>()
+                    {
+                        $"No Skill found containing \"{sender.Text}\""
+                    };
                 }
-                sender.ItemsSource = suitableSkills.ConvertAll(skill => skill.DisplayName);
+                else
+                    sender.ItemsSource = suitableSkills.ConvertAll(skill => skill.DisplayName);
             }
         }
     }

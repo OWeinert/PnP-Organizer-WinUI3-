@@ -66,7 +66,7 @@ namespace PnPOrganizer.ViewModels
 
         public event EventHandler? Initialized;
 
-        private ISkillsService _skillsService;
+        private readonly ISkillsService _skillsService;
 
         public SkillsPageViewModel(ISkillsService skillsService) 
         {
