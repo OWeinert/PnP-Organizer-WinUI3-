@@ -48,7 +48,7 @@ namespace PnPOrganizer
                     .MinimumLevel.Override("Microsoft", Serilog.Events.LogEventLevel.Warning)
                     .WriteTo.Console()
                     .WriteTo.Debug()
-                    .WriteTo.File($"\\log_.txt", rollingInterval: RollingInterval.Minute, fileSizeLimitBytes: 52428800)
+                    .WriteTo.File($"\\logs\\log_.txt", rollingInterval: RollingInterval.Minute, fileSizeLimitBytes: 52428800)
                     .CreateLogger();
 
                 logger.AddSerilog(dispose: true);
