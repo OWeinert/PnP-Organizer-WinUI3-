@@ -36,7 +36,8 @@
         <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
     </Page.Resources>
 
-    <Grid Style="{StaticResource PageBodyGridStyle}">
+    <Grid Style="{StaticResource PageBodyGridStyle}"
+          Margin="0">
         <StackPanel
             Margin="{StaticResource MediumMargin}"
             Orientation="Vertical">

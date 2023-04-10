@@ -1,7 +1,9 @@
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Media.Animation;
 using PnPOrganizer.Helpers;
+using PnPOrganizer.Interfaces;
 using PnPOrganizer.ViewModels;
 using System;
 
@@ -18,12 +20,15 @@ namespace PnPOrganizer.Views
             AppWindow.SetIcon("Assets/applicationIcon.ico");
         }
 
-        public AppTitleBar TitleBar { get => AppTitleBar; }
-
         public NavigationView AppNavigationViewControl { get => AppNavigationView; }
 
         public Frame ContentFrameControl { get => ContentFrame; }
 
         public MainWindowViewModel ViewModel { get; }
+
+        private void MenuSettings_Click(object sender, RoutedEventArgs e)
+        {
+            ContentFrame.Navigate(typeof(SettingsPage));
+        }
     }
 }

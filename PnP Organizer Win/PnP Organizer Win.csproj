@@ -50,7 +50,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="Views\AppTitleBar.xaml" />
     <None Remove="Views\CharacterPage.xaml" />
     <None Remove="Views\ExternalRulesPage.xaml" />
     <None Remove="Views\InventoryPage.xaml" />
@@ -98,6 +97,7 @@
   <ItemGroup>
     <Folder Include="Core\BattleAssistant\Events\" />
     <Folder Include="Strings\" />
+    <Folder Include="Themes\" />
   </ItemGroup>
   <ItemGroup>
     <Content Update="Assets\appIcon\appIcon-512.png">
@@ -187,11 +187,6 @@
   </ItemGroup>
   <ItemGroup>
     <Page Update="Views\MainPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Page Update="Views\AppTitleBar.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>

@@ -60,7 +60,6 @@ namespace PnPOrganizer
                     .AddSingleton<IAppThemeService, AppThemeService>()
                     .AddSingleton<ILocalizationService, LocalizationService>()
                     .AddSingleton<ISoundSettingsService, SoundSettingsService>()
-                    .AddSingleton<IAppTitleBarService, AppTitleBarService>()
                     .AddSingleton<IWindowingService, WindowingService>()
                     .AddSingleton<INavigationViewService, NavigationViewService>()
                     .AddSingleton<IMapService, MapService>()

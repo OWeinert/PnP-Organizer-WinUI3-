@@ -14,7 +14,6 @@ namespace PnPOrganizer.ViewModels
     public partial class SettingsPageViewModel : ObservableObject
     {
         private readonly IWindowingService _windowingService;
-        private readonly IAppTitleBarService _appTitleBarService;
         private readonly IAppThemeService _appThemeService;
         private readonly ILocalizationService _localizationService;
         private readonly ISoundSettingsService _soundSettingsService;
@@ -45,13 +44,11 @@ namespace PnPOrganizer.ViewModels
 
         public SettingsPageViewModel(
             IWindowingService windowingService,
-            IAppTitleBarService appTitleBarService,
             IAppThemeService appThemeService,
             ILocalizationService localizationService,
             ISoundSettingsService soundSettingsService)
         {
             _windowingService = windowingService;
-            _appTitleBarService = appTitleBarService;
             _appThemeService = appThemeService;
             _localizationService = localizationService;
             _soundSettingsService = soundSettingsService;
