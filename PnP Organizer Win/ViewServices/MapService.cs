@@ -27,8 +27,8 @@ namespace PnPOrganizer.ViewServices
 
         public void SetRootMap<TPage>() where TPage : Page
         {
-            _mapFrame!.Navigate(typeof(TPage), null, new SuppressNavigationTransitionInfo());
-            if (_mapFrame.Content is TPage page)
+            MapFrame!.Navigate(typeof(TPage), null, new SuppressNavigationTransitionInfo());
+            if (MapFrame.Content is TPage page)
             {
                 _currentMap = page;
                 _rootMap = _currentMap;
@@ -37,12 +37,14 @@ namespace PnPOrganizer.ViewServices
 
         public void NavigateBack(object? parameters = null, NavigationTransitionInfo? transitionInfo = null)
         {
-            if(_lastMap != null && _currentMap != _lastMap)
+            if (CurrentMap!.GetType() == RootMap!.GetType())
+                return;
+            if(LastMap != null)
             {
                 transitionInfo ??= new SuppressNavigationTransitionInfo();
                 PrepareAnimation();
-                _mapFrame.GoBack();
-                if (_mapFrame.Content is Page page)
+                MapFrame.GoBack();
+                if (MapFrame.Content is Page page)
                 {
                     _currentMap = page;
                 }
@@ -54,7 +56,7 @@ namespace PnPOrganizer.ViewServices
             transitionInfo ??= new SuppressNavigationTransitionInfo();
             PrepareAnimation();
             _mapFrame.Navigate(typeof(TPage), parameters, transitionInfo);
-            if(_mapFrame.Content is TPage page)
+            if(MapFrame.Content is TPage page)
             {
                 _lastMap = _currentMap;
                 _currentMap = page;
