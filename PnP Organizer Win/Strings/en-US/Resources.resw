@@ -118,13 +118,16 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AppTitleBar.Text" xml:space="preserve">
-    <value>WinUI 3 App</value>
+    <value>PnP Organizer</value>
   </data>
   <data name="en-US" xml:space="preserve">
     <value>English</value>
   </data>
   <data name="es-ES" xml:space="preserve">
     <value>Español</value>
+  </data>
+  <data name="InventoryPage_Header.Text" xml:space="preserve">
+    <value>Inventory</value>
   </data>
   <data name="ja" xml:space="preserve">
     <value>日本語</value>
@@ -206,6 +209,42 @@
   </data>
   <data name="SettingsPage_WindowWidth.Header" xml:space="preserve">
     <value>Width</value>
+  </data>
+  <data name="SkillPage_SkillabilityTextBlock.Text" xml:space="preserve">
+    <value>Skillability</value>
+  </data>
+  <data name="SkillPage_SkillTreeTextBlock.Text" xml:space="preserve">
+    <value>Skill Tree</value>
+  </data>
+  <data name="SkillsPage_Header.Text" xml:space="preserve">
+    <value>Skills</value>
+  </data>
+  <data name="SkillsPage_SkillabilityAll" xml:space="preserve">
+    <value>All</value>
+  </data>
+  <data name="SkillsPage_SkillabilityLocked" xml:space="preserve">
+    <value>Locked</value>
+  </data>
+  <data name="SkillsPage_SkillabilitySkilled" xml:space="preserve">
+    <value>Skilled</value>
+  </data>
+  <data name="SkillsPage_SkillabilityUnlocked" xml:space="preserve">
+    <value>Unlocked</value>
+  </data>
+  <data name="SkillsPage_SkillTreeFilterAll" xml:space="preserve">
+    <value>All</value>
+  </data>
+  <data name="SkillsPage_SkillTreeFilterCharacter" xml:space="preserve">
+    <value>Character</value>
+  </data>
+  <data name="SkillsPage_SkillTreeFilterMelee" xml:space="preserve">
+    <value>Melee</value>
+  </data>
+  <data name="SkillsPage_SkillTreeFilterRanged" xml:space="preserve">
+    <value>Ranged</value>
+  </data>
+  <data name="SkillsPage_UsedSkillPointsTextBlock.Text" xml:space="preserve">
+    <value>Used Skill Points:</value>
   </data>
   <data name="Skills_All" xml:space="preserve">
     <value>All</value>
@@ -1083,9 +1122,6 @@ Fail: -1 on Parade and Dodge Throws until your next Turn.</value>
   </data>
   <data name="Skills_SkillWeaponsAndArmorDescr" xml:space="preserve">
     <value>Grants the Ability to create Armor and Weapons.</value>
-  </data>
-  <data name="Skills_UsedSkillPoints" xml:space="preserve">
-    <value>Used Skill Points</value>
   </data>
   <data name="Skill_BurningBlade" xml:space="preserve">
     <value>Burning Blade</value>
