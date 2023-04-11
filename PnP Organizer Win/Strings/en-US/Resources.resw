@@ -255,16 +255,19 @@
   <data name="SkillsPage_SkillabilityUnlocked" xml:space="preserve">
     <value>Unlocked</value>
   </data>
-  <data name="SkillsPage_SkillTreeFilterAll" xml:space="preserve">
+  <data name="SkillsPage_SkillTreeButton.Content" xml:space="preserve">
+    <value>Filter Skill Tree</value>
+  </data>
+  <data name="SkillsPage_SkillTreeFilterAll.Text" xml:space="preserve">
     <value>All</value>
   </data>
-  <data name="SkillsPage_SkillTreeFilterCharacter" xml:space="preserve">
+  <data name="SkillsPage_SkillTreeFilterCharacter.Text" xml:space="preserve">
     <value>Character</value>
   </data>
-  <data name="SkillsPage_SkillTreeFilterMelee" xml:space="preserve">
+  <data name="SkillsPage_SkillTreeFilterMelee.Text" xml:space="preserve">
     <value>Melee</value>
   </data>
-  <data name="SkillsPage_SkillTreeFilterRanged" xml:space="preserve">
+  <data name="SkillsPage_SkillTreeFilterRanged.Text" xml:space="preserve">
     <value>Ranged</value>
   </data>
   <data name="SkillsPage_UsedSkillPointsTextBlock.Text" xml:space="preserve">
