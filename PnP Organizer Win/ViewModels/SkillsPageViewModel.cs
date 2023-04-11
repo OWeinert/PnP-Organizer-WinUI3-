@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.WinUI.UI;
-using PnPOrganizer.Core.Character;
 using PnPOrganizer.Core.Character.SkillSystem;
 using PnPOrganizer.ViewModels.Interfaces;
 using System;
@@ -27,23 +27,6 @@ namespace PnPOrganizer.ViewModels
             set => SetProperty(ref _skillsView, value);
         }
 
-        private IList<SkillTreeFilter>? _skillTreeFilters;
-        public IList<SkillTreeFilter> SkillTreeFilters
-        {
-            get
-            {
-                var resourceLoader = Windows.ApplicationModel.Resources.ResourceLoader.GetForViewIndependentUse();
-                _skillTreeFilters ??= new List<SkillTreeFilter>()
-                {
-                    new SkillTreeFilter(resourceLoader.GetString("SkillsPage_SkillTreeFilterAll"), null),
-                    new SkillTreeFilter(resourceLoader.GetString("SkillsPage_SkillTreeFilterCharacter"), SkillCategory.Character),
-                    new SkillTreeFilter(resourceLoader.GetString("SkillsPage_SkillTreeFilterMelee"), SkillCategory.Melee),
-                    new SkillTreeFilter(resourceLoader.GetString("SkillsPage_SkillTreeFilterRanged"), SkillCategory.Ranged),
-                };
-                return _skillTreeFilters;
-            }
-        }
-
         private IList<SkillabilityFilter>? _skillabilityFilters;
         public IList<SkillabilityFilter> SkillabilityFilters
         {
@@ -64,6 +47,17 @@ namespace PnPOrganizer.ViewModels
         [ObservableProperty]
         private int _usedSkillPoints = 0;
 
+        [ObservableProperty]
+        private bool _skillTreeCheckedAll = true;
+        [ObservableProperty]
+        private bool _skillTreeCheckedCharacter = true;
+        [ObservableProperty]
+        private bool _skillTreeCheckedMelee = true;
+        [ObservableProperty]
+        private bool _skillTreeCheckedRanged = true;
+
+        private bool _suppressPropertyChanged = false;
+
         public event EventHandler? Initialized;
 
         private readonly ISkillsService _skillsService;
@@ -82,11 +76,30 @@ namespace PnPOrganizer.ViewModels
 
         public void Initialize()
         {
+            PropertyChanged += SkillsPageViewModel_PropertyChanged;
             foreach (Skill skill in SkillsView.SourceCollection)
             {
                 skill.PropertyChanged += Skill_PropertyChanged;
             }
             _isInitialized = true;
+        }
+
+        private void SkillsPageViewModel_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            if (!_suppressPropertyChanged)
+            {
+                _suppressPropertyChanged = true;
+                if (e.PropertyName is nameof(SkillTreeCheckedCharacter) or nameof(SkillTreeCheckedMelee) or nameof(SkillTreeCheckedRanged))
+                {
+                    SkillTreeCheckedAll = (SkillTreeCheckedCharacter && SkillTreeCheckedMelee && SkillTreeCheckedRanged);
+                    
+                }
+                if (e.PropertyName is nameof(SkillTreeCheckedAll))
+                {
+                    SkillTreeCheckedCharacter = SkillTreeCheckedMelee = SkillTreeCheckedRanged = SkillTreeCheckedAll;
+                }
+                _suppressPropertyChanged = false;
+            }
         }
 
         private async void Skill_PropertyChanged(object? sender, PropertyChangedEventArgs e)
@@ -102,18 +115,6 @@ namespace PnPOrganizer.ViewModels
                     return skillPointSum;
                 })).AsAsyncOperation();
             }
-        }
-    }
-    
-    public readonly struct SkillTreeFilter
-    {
-        public string DisplayName { get; }
-        public SkillCategory? SkillCategory { get; }
-
-        public SkillTreeFilter(string displayName, SkillCategory? skillCategory)
-        {
-            DisplayName = displayName;
-            SkillCategory = skillCategory;
         }
     }
 

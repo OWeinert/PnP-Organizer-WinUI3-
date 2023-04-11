@@ -12,6 +12,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System;
 using System.ComponentModel;
+using PnPOrganizer.Core.Character;
 
 namespace PnPOrganizer.Views
 {
@@ -33,9 +34,6 @@ namespace PnPOrganizer.Views
         private string _currentSkillUnlockContent = string.Empty;
 
         [ObservableProperty]
-        private SkillTreeFilter _currentSkillTreeFilter;
-
-        [ObservableProperty]
         private SkillabilityFilter _currentSkillabilityFilter;
 
         [ObservableProperty]
@@ -46,15 +44,14 @@ namespace PnPOrganizer.Views
             ViewModel = Ioc.Default.GetRequiredService<SkillsPageViewModel>();
             InitializeComponent();
             NavigationCacheMode = NavigationCacheMode.Required;
-            CurrentSkillTreeFilter = ViewModel.SkillTreeFilters[0];
             CurrentSkillabilityFilter = ViewModel.SkillabilityFilters[0];
         }
-
-        partial void OnCurrentSkillTreeFilterChanged(SkillTreeFilter value) => UpdateFilter();
 
         partial void OnSearchBoxTextChanged(string value) => UpdateFilter();
 
         partial void OnCurrentSkillabilityFilterChanged(SkillabilityFilter value) => UpdateFilter();
+
+        private void SkillTreeMenuFlyoutItem_Click(object sender, RoutedEventArgs e) => UpdateFilter();
 
         private void UpdateFilter()
         {
@@ -62,8 +59,9 @@ namespace PnPOrganizer.Views
             {
                 if (entry is Skill skill)
                 {
-                    var correctSkillTree = CurrentSkillTreeFilter.SkillCategory == null ? true
-                        : CurrentSkillTreeFilter.SkillCategory == skill.Identifier.SkillCategory;
+                    var correctSkillTree = (skill.Identifier.SkillCategory == SkillCategory.Character && ViewModel.SkillTreeCheckedCharacter)
+                                            || (skill.Identifier.SkillCategory == SkillCategory.Melee && ViewModel.SkillTreeCheckedMelee)
+                                            || (skill.Identifier.SkillCategory == SkillCategory.Ranged && ViewModel.SkillTreeCheckedRanged);
 
                     var correctSkillability = CurrentSkillabilityFilter.Skillability switch
                     {

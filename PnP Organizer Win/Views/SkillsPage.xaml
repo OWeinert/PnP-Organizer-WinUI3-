@@ -63,12 +63,24 @@
             <AppBarElementContainer VerticalAlignment="Center"
                                     Margin="16,0,0,0">
                 <StackPanel Orientation="Horizontal">
-                    <ComboBox MinWidth="120"
-                          ItemsSource="{x:Bind ViewModel.SkillTreeFilters}"
-                          DisplayMemberPath="DisplayName"
-                          SelectedIndex="0"
-                          SelectedItem="{x:Bind CurrentSkillTreeFilter, Mode=TwoWay}">
-                    </ComboBox>
+                    <DropDownButton x:Uid="SkillsPage_SkillTreeButton">
+                        <DropDownButton.Flyout>
+                            <MenuFlyout Placement="Bottom">
+                                <ToggleMenuFlyoutItem x:Uid="SkillsPage_SkillTreeFilterAll"
+                                                      IsChecked="{x:Bind ViewModel.SkillTreeCheckedAll, Mode=TwoWay}"
+                                                      Click="SkillTreeMenuFlyoutItem_Click"/>
+                                <ToggleMenuFlyoutItem x:Uid="SkillsPage_SkillTreeFilterCharacter"
+                                                      IsChecked="{x:Bind ViewModel.SkillTreeCheckedCharacter, Mode=TwoWay}"
+                                                      Click="SkillTreeMenuFlyoutItem_Click"/>
+                                <ToggleMenuFlyoutItem x:Uid="SkillsPage_SkillTreeFilterMelee"
+                                                      IsChecked="{x:Bind ViewModel.SkillTreeCheckedMelee, Mode=TwoWay}"
+                                                      Click="SkillTreeMenuFlyoutItem_Click"/>
+                                <ToggleMenuFlyoutItem x:Uid="SkillsPage_SkillTreeFilterRanged"
+                                                      IsChecked="{x:Bind ViewModel.SkillTreeCheckedRanged, Mode=TwoWay}"
+                                                      Click="SkillTreeMenuFlyoutItem_Click"/>
+                            </MenuFlyout>
+                        </DropDownButton.Flyout>
+                    </DropDownButton>
                     <TextBlock x:Uid="SkillPage_SkillTreeTextBlock"
                                VerticalAlignment="Center"
                                Margin="8,0"
