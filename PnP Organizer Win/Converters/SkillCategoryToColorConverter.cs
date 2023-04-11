@@ -15,12 +15,17 @@ namespace PnPOrganizer.Converters
             if (value is not SkillCategory)
                 throw new ArgumentException("value type is not SkillCategory!", nameof(value));
 
-            return (SkillCategory)value switch
+            // HACK
+            unchecked
             {
-                SkillCategory.Melee => Utils.ColorFromArgbValue(ISkillsService.MeleeSkillColor),
-                SkillCategory.Ranged => Utils.ColorFromArgbValue(ISkillsService.RangedSkillColor),
-                _ => Utils.ColorFromArgbValue(ISkillsService.CharSkillColor),
-            };
+                return (SkillCategory)value switch
+                {
+                    SkillCategory.Melee => Utils.ColorFromArgbValue((int)ISkillsService.MeleeSkillColor),
+                    SkillCategory.Ranged => Utils.ColorFromArgbValue((int)ISkillsService.RangedSkillColor),
+                    _ => Utils.ColorFromArgbValue((int)ISkillsService.CharSkillColor),
+                };
+            }
+            
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)
