@@ -49,10 +49,10 @@
             <AppBarElementContainer VerticalAlignment="Center">
                 <StackPanel Orientation="Horizontal">
                     <ComboBox MinWidth="120"
-                          ItemsSource="{x:Bind ViewModel.SkillabilityFilters}"
-                          DisplayMemberPath="DisplayName"
-                          SelectedIndex="0"
-                          SelectedItem="{x:Bind CurrentSkillabilityFilter, Mode=TwoWay}">
+                              ItemsSource="{x:Bind ViewModel.SkillabilityFilters}"
+                              DisplayMemberPath="DisplayName"
+                              SelectedIndex="0"
+                              SelectedItem="{x:Bind CurrentSkillabilityFilter, Mode=TwoWay}">
                     </ComboBox>
                     <TextBlock x:Uid="SkillPage_SkillabilityTextBlock"
                                VerticalAlignment="Center"
@@ -62,30 +62,24 @@
             </AppBarElementContainer>
             <AppBarElementContainer VerticalAlignment="Center"
                                     Margin="16,0,0,0">
-                <StackPanel Orientation="Horizontal">
-                    <DropDownButton x:Uid="SkillsPage_SkillTreeButton">
-                        <DropDownButton.Flyout>
-                            <MenuFlyout Placement="Bottom">
-                                <ToggleMenuFlyoutItem x:Uid="SkillsPage_SkillTreeFilterAll"
+                <DropDownButton x:Uid="SkillsPage_SkillTreeButton">
+                    <DropDownButton.Flyout>
+                        <MenuFlyout Placement="Bottom">
+                            <ToggleMenuFlyoutItem x:Uid="SkillsPage_SkillTreeFilterAll"
                                                       IsChecked="{x:Bind ViewModel.SkillTreeCheckedAll, Mode=TwoWay}"
                                                       Click="SkillTreeMenuFlyoutItem_Click"/>
-                                <ToggleMenuFlyoutItem x:Uid="SkillsPage_SkillTreeFilterCharacter"
+                            <ToggleMenuFlyoutItem x:Uid="SkillsPage_SkillTreeFilterCharacter"
                                                       IsChecked="{x:Bind ViewModel.SkillTreeCheckedCharacter, Mode=TwoWay}"
                                                       Click="SkillTreeMenuFlyoutItem_Click"/>
-                                <ToggleMenuFlyoutItem x:Uid="SkillsPage_SkillTreeFilterMelee"
+                            <ToggleMenuFlyoutItem x:Uid="SkillsPage_SkillTreeFilterMelee"
                                                       IsChecked="{x:Bind ViewModel.SkillTreeCheckedMelee, Mode=TwoWay}"
                                                       Click="SkillTreeMenuFlyoutItem_Click"/>
-                                <ToggleMenuFlyoutItem x:Uid="SkillsPage_SkillTreeFilterRanged"
+                            <ToggleMenuFlyoutItem x:Uid="SkillsPage_SkillTreeFilterRanged"
                                                       IsChecked="{x:Bind ViewModel.SkillTreeCheckedRanged, Mode=TwoWay}"
                                                       Click="SkillTreeMenuFlyoutItem_Click"/>
-                            </MenuFlyout>
-                        </DropDownButton.Flyout>
-                    </DropDownButton>
-                    <TextBlock x:Uid="SkillPage_SkillTreeTextBlock"
-                               VerticalAlignment="Center"
-                               Margin="8,0"
-                               FontWeight="SemiBold"/>
-                </StackPanel>
+                        </MenuFlyout>
+                    </DropDownButton.Flyout>
+                </DropDownButton>
             </AppBarElementContainer>
             <AppBarElementContainer VerticalAlignment="Center">
                 <AutoSuggestBox x:Name="SearchSkillBox"  
