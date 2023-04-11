@@ -1,7 +1,14 @@
-﻿using Microsoft.UI.Xaml;
+﻿using CommunityToolkit.Mvvm.DependencyInjection;
+using CommunityToolkit.WinUI;
+using Microsoft.UI.Dispatching;
+using Microsoft.UI.Xaml;
 using PnPOrganizer.Core;
 using PnPOrganizer.Core.Character;
+using PnPOrganizer.Core.Character.SkillSystem;
+using PnPOrganizer.Helpers;
 using PnPOrganizer.Services.Interfaces;
+using PnPOrganizer.Views;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -14,48 +21,79 @@ namespace PnPOrganizer.Services
 {
     public class SaveDataService : ISaveDataService
     {
+        public event EventHandler<CharacterData>? CharacterSaved;
+        public event EventHandler<CharacterData>? CharacterLoaded;
+
         private CharacterData? _loadedCharacter;
         public CharacterData? LoadedCharacter => _loadedCharacter;
 
+        private ISkillsService _skillsService;
+        private IInventoryService _inventoryService;
+
+        public SaveDataService(ISkillsService skillsService, IInventoryService inventoryService)
+        {
+            _skillsService = skillsService;
+            _inventoryService = inventoryService;
+        }
+
         public CharacterData CreateNewCharacter()
         {
-            return new CharacterData();
+            _loadedCharacter = new CharacterData();
+            return LoadedCharacter!;
         }
 
-        public IAsyncAction LoadCharacter(StorageFile file)
+        public async Task LoadCharacter(StorageFile file)
         {
-            return Task.Run(async () =>
+            var window = Ioc.Default.GetRequiredService<MainWindow>();
+            await window.DispatcherQueue.EnqueueAsync(async () =>
             {
                 using var stream = await file.OpenStreamForReadAsync();
-                if (stream is FileStream fs)
+                try
                 {
-                    _loadedCharacter = Utils.ReadAndDeserializeFromXml<CharacterData>(fs);
+                    _loadedCharacter = Utils.ReadAndDeserializeFromXml<CharacterData>(stream);
+                    _inventoryService.LoadInventory(_loadedCharacter);
+                    _skillsService.LoadSkillSaveData(_loadedCharacter);
+                    CharacterLoaded?.Invoke(this, _loadedCharacter);
                 }
-                else
-                    throw new IOException("Invalid Stream when trying to load Character!");
-            }).AsAsyncAction();
+                catch (IOException e)
+                {
+                    Log.Error(e, "Error loading Character Save Data!");
+                }
+            }, DispatcherQueuePriority.High);
         }
 
-        public IAsyncAction SaveCharacter(StorageFile file)
+        public async Task SaveCharacter(StorageFile file)
         {
-            return Task.Run(async () =>
+            var window = Ioc.Default.GetRequiredService<MainWindow>();
+            await window.DispatcherQueue.EnqueueAsync(async() =>
             {
                 using var stream = await file.OpenStreamForWriteAsync();
-                if (stream is FileStream fs)
+                try
                 {
-                    Utils.SerializeAndWriteToXml(LoadedCharacter, fs);
+                    try
+                    {
+                        _inventoryService.SaveInventory(ref _loadedCharacter!);
+                        _skillsService.SaveSkillSaveData(ref _loadedCharacter!);
+                        Utils.SerializeAndWriteToXml(LoadedCharacter, stream);
+                        CharacterSaved?.Invoke(this, LoadedCharacter!);
+                    }
+                    catch (ArgumentNullException e) when (_loadedCharacter == null)
+                    {
+                        Log.Error(e, "Loaded Character is NULL!");
+                    }
                 }
-                else
-                    throw new IOException("Invalid Stream when trying to save Character!");
-            }).AsAsyncAction();
+                catch (IOException e)
+                {
+                    Log.Error(e, "Error loading Character Save Data!");
+                }
+            }, DispatcherQueuePriority.High);
         }
 
         public async Task<bool> ShowSaveCharacterFilePicker(UIElement? currentUIElement = null)
         {
             var savePicker = new FileSavePicker();
 
-            var window = currentUIElement != null ? WindowHelper.GetWindowForElement(currentUIElement) : Window.Current;
-            var hWnd = WinRT.Interop.WindowNative.GetWindowHandle(window);
+            var hWnd = WindowHelper.GetCurrentProcMainWindowHandle();
             WinRT.Interop.InitializeWithWindow.Initialize(savePicker, hWnd);
 
             savePicker.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
@@ -82,8 +120,7 @@ namespace PnPOrganizer.Services
         {
             var openPicker = new FileOpenPicker();
 
-            var window = currentUIElement != null ? WindowHelper.GetWindowForElement(currentUIElement) : Window.Current;
-            var hWnd = WinRT.Interop.WindowNative.GetWindowHandle(window);
+            var hWnd = WindowHelper.GetCurrentProcMainWindowHandle();
             WinRT.Interop.InitializeWithWindow.Initialize(openPicker, hWnd);
 
             openPicker.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;

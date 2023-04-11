@@ -151,7 +151,7 @@
                                                 Visibility="{x:Bind IsActiveInverted, Mode=OneWay}">
                                             <Border.Background>
                                                 <SolidColorBrush Color="Black"
-                                                                 Opacity="0.4"/>
+                                                                 Opacity="0.5"/>
                                             </Border.Background>
                                         </Border>
                                         

@@ -71,7 +71,13 @@ namespace PnPOrganizer.ViewModels
         public SkillsPageViewModel(ISkillsService skillsService) 
         {
             _skillsService = skillsService;
+            _skillsService.ViewRefreshRequested += SkillsService_ViewRefreshRequested;
             Initialize();
+        }
+
+        private void SkillsService_ViewRefreshRequested(object? sender, EventArgs e)
+        {
+            SkillsView?.Refresh();
         }
 
         public void Initialize()

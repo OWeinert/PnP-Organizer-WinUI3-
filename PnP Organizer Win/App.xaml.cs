@@ -6,6 +6,7 @@ using PnPorganizer.Core.Character;
 using PnPOrganizer.Core.Character.SkillSystem;
 using PnPOrganizer.Interfaces;
 using PnPOrganizer.Services;
+using PnPOrganizer.Services.Interfaces;
 using PnPOrganizer.ViewModels;
 using PnPOrganizer.ViewModels.Maps;
 using PnPOrganizer.Views;
@@ -65,6 +66,8 @@ namespace PnPOrganizer
                     .AddSingleton<IMapService, MapService>()
                     .AddSingleton<IAppActivationService, AppActivationService>()
                     .AddSingleton<ISkillsService, SkillsService>()
+                    .AddSingleton<IInventoryService, InventoryService>()
+                    .AddSingleton<ISaveDataService, SaveDataService>()
                     .AddSingleton<MainWindowViewModel>()
                     .AddSingleton<SettingsPageViewModel>()
                     .AddSingleton<MainPageViewModel>()

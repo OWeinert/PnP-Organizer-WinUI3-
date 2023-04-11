@@ -84,11 +84,11 @@ namespace PnPOrganizer.Core
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="obj"></param>
-        /// <param name="fs"></param>
-        public static void SerializeAndWriteToXml<T>(T obj, FileStream fs)
+        /// <param name="stream"></param>
+        public static void SerializeAndWriteToXml<T>(T obj, Stream stream)
         {
             XmlSerializer serializer = new(typeof(T));
-            using var writer = XmlWriter.Create(fs, _xmlWriterSettings);
+            using var writer = XmlWriter.Create(stream, _xmlWriterSettings);
             serializer.Serialize(writer, obj);
             writer.Close();
         }
@@ -96,12 +96,12 @@ namespace PnPOrganizer.Core
         /// <summary>
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="fs"></param>
+        /// <param name="stream"></param>
         /// <returns></returns>
-        public static T ReadAndDeserializeFromXml<T>(FileStream fs)
+        public static T ReadAndDeserializeFromXml<T>(Stream stream)
         {
             XmlSerializer serializer = new(typeof(T));
-            using var reader = XmlReader.Create(fs);
+            using var reader = XmlReader.Create(stream);
             var obj = (T)serializer.Deserialize(reader)!;
             return obj;
         }
@@ -112,9 +112,9 @@ namespace PnPOrganizer.Core
         /// </summary>
         /// <param name="color"></param>
         /// <returns></returns>
-        public static uint GetArgbColorValue(Color color)
+        public static int GetArgbColorValue(Color color)
         {
-            var argb = BitConverter.ToUInt32(new byte[] { color.A, color.B, color.G, color.R}, 0);
+            var argb = BitConverter.ToInt32(new byte[] { color.A, color.B, color.G, color.R}, 0);
             return argb;
         }
 
@@ -122,7 +122,7 @@ namespace PnPOrganizer.Core
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public static Color ColorFromArgbValue(uint value)
+        public static Color ColorFromArgbValue(int value)
         {
             var a = (byte)(value >> 24 & 0xFF);
             var r = (byte)(value >> 16 & 0xFF);

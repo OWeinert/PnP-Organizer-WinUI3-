@@ -1,4 +1,5 @@
 ﻿using PnPOrganizer.Core.Character.StatModifiers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -9,6 +10,8 @@ namespace PnPOrganizer.Core.Character.SkillSystem
         public const uint CharSkillColor = 0xffcf5e3f;
         public const uint MeleeSkillColor = 0xff5774e9;
         public const uint RangedSkillColor = 0xff6fb655;
+
+        public event EventHandler? ViewRefreshRequested;
 
         public Dictionary<SkillIdentifier, Skill> Registry { get; }
 
@@ -26,5 +29,9 @@ namespace PnPOrganizer.Core.Character.SkillSystem
         public Skill? GetSkillFromStatModifier(IStatModifier statModifier);
 
         public IReadOnlyDictionary<SkillIdentifier, Skill> GetSkillsFromStatModifier(IStatModifier statModifier);
+
+        public void LoadSkillSaveData(CharacterData data);
+
+        public void SaveSkillSaveData(ref CharacterData data);
     }
 }

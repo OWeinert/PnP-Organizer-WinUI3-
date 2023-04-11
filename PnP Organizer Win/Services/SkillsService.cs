@@ -2,17 +2,22 @@
 using PnPOrganizer.Core.Character;
 using PnPOrganizer.Core.Character.SkillSystem;
 using PnPOrganizer.Core.Character.StatModifiers;
+using PnPOrganizer.Services.Interfaces;
 using PnPOrganizer.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using Windows.ApplicationModel.Resources;
 
 namespace PnPorganizer.Core.Character
 {
     public class SkillsService : ISkillsService
     {
+        public event EventHandler? ViewRefreshRequested;
+
         /// <summary>
         /// Contains every skill
         /// </summary>
@@ -174,7 +179,9 @@ namespace PnPorganizer.Core.Character
         public SkillsService()
         {
             Registry = new();
+
             var resourceLoader = ResourceLoader.GetForViewIndependentUse();
+
             #region Skill Definitions
             #region Character
             // Checkpoint 0
@@ -818,6 +825,32 @@ namespace PnPorganizer.Core.Character
                 if (skill.ForcedDependendSkill != null)
                     skill.IsSkillable = Registry[(SkillIdentifier)skill.ForcedDependendSkill].IsActive;
             }
+        }
+
+        public void LoadSkillSaveData(CharacterData data)
+        {
+            Registry.Values.ToList().ForEach(skill => skill.SkillPoints = 0);
+
+            var skillSaveData = data.Skills;
+            foreach (var saveData in skillSaveData)
+            {
+                Registry[saveData.Identifier].SkillPoints = saveData.SkillPoints;
+                if (Registry[saveData.Identifier].IsRepeatable && saveData.Repetition != null)
+                    Registry[saveData.Identifier].Repetition = (int)saveData.Repetition;
+            }
+            ViewRefreshRequested?.Invoke(this, EventArgs.Empty);
+        }
+
+        public void SaveSkillSaveData(ref CharacterData data)
+        {
+            var activeSkills = Registry.Values.Where(skill => skill.IsActive);
+            var saveData = activeSkills.ToList().ConvertAll(skill => new SkillSaveData()
+            {
+                Identifier = skill.Identifier,
+                SkillPoints = skill.SkillPoints,
+                Repetition = skill.IsRepeatable ? skill.Repetition : null
+            });
+            data.Skills = saveData;
         }
     }
 }

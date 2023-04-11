@@ -18,7 +18,7 @@ namespace PnPOrganizer.Core.Character.Inventory
         public string Description { get; set; }
         public byte[]? ItemImageBytes { get; set; }
         public string ItemImageFileExt { get; set; }
-        public uint Color { get; set; }
+        public int Color { get; set; }
 
         public InventoryItem(string name, string description)
         {
@@ -26,7 +26,10 @@ namespace PnPOrganizer.Core.Character.Inventory
             Description = description;
             ItemImageBytes = Array.Empty<byte>();
             ItemImageFileExt = string.Empty;
-            Color = 0xFF222222;
+            unchecked
+            {
+                Color = (int)0xFF222222;
+            }
         }
 
         public InventoryItem(InventoryItemModel inventoryItemModel)

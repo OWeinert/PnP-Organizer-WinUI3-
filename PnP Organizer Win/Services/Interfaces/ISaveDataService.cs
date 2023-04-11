@@ -1,6 +1,6 @@
 ﻿using Microsoft.UI.Xaml;
 using PnPOrganizer.Core.Character;
-using System.ComponentModel;
+using System;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Storage;
@@ -9,13 +9,16 @@ namespace PnPOrganizer.Services.Interfaces
 {
     public interface ISaveDataService
     {
+        public event EventHandler<CharacterData>? CharacterSaved;
+        public event EventHandler<CharacterData>? CharacterLoaded;
+
         public CharacterData? LoadedCharacter { get; }
 
         public CharacterData CreateNewCharacter();
 
-        public IAsyncAction LoadCharacter(StorageFile file);
+        public Task LoadCharacter(StorageFile file);
 
-        public IAsyncAction SaveCharacter(StorageFile file);
+        public Task SaveCharacter(StorageFile file);
 
         public Task<bool> ShowSaveCharacterFilePicker(UIElement? currentUIElement = null);
 

@@ -2,6 +2,7 @@
 using CommunityToolkit.WinUI.UI;
 using Microsoft.UI.Xaml.Media;
 using PnPOrganizer.Models;
+using PnPOrganizer.Services.Interfaces;
 using PnPOrganizer.ViewModels.Interfaces;
 using System;
 using System.Collections.ObjectModel;
@@ -12,14 +13,14 @@ namespace PnPOrganizer.ViewModels
     public partial class InventoryPageViewModel : ObservableObject, IViewModel
     {
         [ObservableProperty]
-        private ObservableCollection<InventoryItemModel> _itemModels = new();
+        private ObservableCollection<InventoryItemModel>? _itemModels;
 
         private IAdvancedCollectionView? _itemsView;
         public IAdvancedCollectionView ItemsView
         {
             get
             {
-                _itemsView ??= new AdvancedCollectionView(_itemModels);
+                _itemsView ??= new AdvancedCollectionView(ItemModels);
                 return _itemsView;
             }
             set => SetProperty(ref _itemsView, value);
@@ -30,13 +31,18 @@ namespace PnPOrganizer.ViewModels
 
         public event EventHandler? Initialized;
 
-        public InventoryPageViewModel() 
+        private readonly IInventoryService _inventoryService;
+
+        public InventoryPageViewModel(IInventoryService inventoryService) 
         {
+            _inventoryService = inventoryService;
             Initialize();
         }
         
         public void Initialize()
         {
+            ItemModels = _inventoryService.ItemModels;
+
             // HACK Placeholder until real items are fully implemented
             var random = new Random();
             for(var i = 0; i < 64; i++)
@@ -47,7 +53,7 @@ namespace PnPOrganizer.ViewModels
                     Description = $"Description of Item No. {i + 1}",
                     Brush = new SolidColorBrush(Color.FromArgb(255, (byte)random.Next(0, 256), (byte)random.Next(0, 256), (byte)random.Next(0, 256)))
                 };
-                ItemModels.Add(itemModel);
+                _inventoryService.AddItem(itemModel);
             }
             _initialized = true;
             Initialized?.Invoke(this, new EventArgs());

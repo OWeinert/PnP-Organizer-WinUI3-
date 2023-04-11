@@ -107,8 +107,9 @@
                             </MenuFlyoutItem.KeyboardAccelerators>
                         </MenuFlyoutItem>
                         <MenuFlyoutItem x:Name="MenuOpen"
-                                    x:Uid="MainWindow_MenuOpen"
-                                    Text="Open...">
+                                        x:Uid="MainWindow_MenuOpen"
+                                        Text="Open..."
+                                        Command="{x:Bind ViewModel.OpenCharacterCommand}">
                             <MenuFlyoutItem.Icon>
                                 <FontIcon Glyph="&#xED25;"/>
                             </MenuFlyoutItem.Icon>
@@ -117,16 +118,18 @@
                             </MenuFlyoutItem.KeyboardAccelerators>
                         </MenuFlyoutItem>
                         <MenuFlyoutItem x:Name="MenuSave"
-                                    x:Uid="MainWindow_MenuSave"
-                                    Text="Save"
-                                    Icon="Save">
+                                        x:Uid="MainWindow_MenuSave"
+                                        Text="Save"
+                                        Icon="Save"
+                                        Command="{x:Bind ViewModel.SaveCharacterCommand}">
                             <MenuFlyoutItem.KeyboardAccelerators>
                                 <KeyboardAccelerator Modifiers="Control" Key="S"/>
                             </MenuFlyoutItem.KeyboardAccelerators>
                         </MenuFlyoutItem>
                         <MenuFlyoutItem x:Name="MenuSaveAs"
                                     x:Uid="MainWindow_MenuSaveAs"
-                                    Text="Save As">
+                                    Text="Save As"
+                                        Command="{x:Bind ViewModel.SaveCharacterAsCommand}">
                             <MenuFlyoutItem.Icon>
                                 <FontIcon Glyph="&#xE792;"/>
                             </MenuFlyoutItem.Icon>
