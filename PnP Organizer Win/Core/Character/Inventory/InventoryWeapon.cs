@@ -28,7 +28,7 @@ namespace PnPOrganizer.Core.Character.Inventory
             IsTwoHanded = false;
         }
 
-        public InventoryWeapon(InventoryWeaponModel inventoryWeaponModel) : base(inventoryWeaponModel) 
+        public InventoryWeapon(InventoryWeaponViewModel inventoryWeaponModel) : base(inventoryWeaponModel) 
         {
             AttackMode = inventoryWeaponModel.AttackMode;
             DiceRollCount = inventoryWeaponModel.DiceRollCount;

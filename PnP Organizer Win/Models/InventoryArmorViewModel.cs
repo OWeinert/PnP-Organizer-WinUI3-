@@ -6,7 +6,7 @@ using PnPOrganizer.Core.Character.Inventory;
 
 namespace PnPOrganizer.Models
 {
-    public partial class InventoryArmorModel : InventoryItemModel
+    public partial class InventoryArmorViewModel : InventoryItemViewModel
     {
         [ObservableProperty]
         private int _armor = 0;
@@ -17,9 +17,9 @@ namespace PnPOrganizer.Models
         [ObservableProperty]
         private float _loudness = 0.0f;
 
-        public InventoryArmorModel() : this (new InventoryArmor()) { }
+        public InventoryArmorViewModel() : this (new InventoryArmor()) { }
 
-        public InventoryArmorModel(InventoryArmor inventoryArmor) : base(inventoryArmor)
+        public InventoryArmorViewModel(InventoryArmor inventoryArmor) : base(inventoryArmor)
         {
             IsInitialized = false;
 

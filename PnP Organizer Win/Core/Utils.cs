@@ -1,10 +1,8 @@
 ﻿using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Documents;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Imaging;
 using Octokit;
-using PnPOrganizer.Core;
 using Serilog;
 using System;
 using System.Collections.Generic;
@@ -16,7 +14,6 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
-using Windows.Foundation;
 using Windows.Graphics.Imaging;
 using Windows.Storage;
 using Windows.Storage.Pickers;
@@ -38,27 +35,51 @@ namespace PnPOrganizer.Core
         /// </summary>
         /// <param name="bitmapImage"></param>
         /// <returns></returns>
-        public static async Task<IAsyncOperationWithProgress<IBuffer, uint>> BitmapToBytesAsync(SoftwareBitmap? bitmap, string fileExtension = "")
+        public static async Task<byte[]?> BitmapToBytesAsync(BitmapImage? bitmap)
         {
-            if (bitmap == null)
-                throw new ArgumentNullException(nameof(bitmap));
-            if (string.IsNullOrWhiteSpace(fileExtension))
-                throw new ArgumentNullException(nameof(fileExtension));
-
-            using var stream = new InMemoryRandomAccessStream();
-            var encoderId = fileExtension switch
+            if(bitmap == null || bitmap.UriSource == null)
+                return null;
+            using var stream = await RandomAccessStreamReference.CreateFromUri(bitmap.UriSource).OpenReadAsync();
+            try
             {
-                "png" => BitmapEncoder.PngEncoderId,
-                "bmp" => BitmapEncoder.BmpEncoderId,
-                "jpeg" or "jpg" => BitmapEncoder.JpegEncoderId,
-                _ => BitmapEncoder.GifEncoderId
-            };
-            var encoder = await BitmapEncoder.CreateAsync(BitmapEncoder.PngEncoderId, stream);
-            encoder.SetSoftwareBitmap(bitmap);
-            await encoder.FlushAsync();
+                var decoder = await BitmapDecoder.CreateAsync(stream);
+                var pixelData = await decoder.GetPixelDataAsync();
+                return pixelData.DetachPixelData();
+            }
+            catch (Exception e)
+            {
+                Log.Error(e, "Could not read from Bitmap stream!");
+            }
+            return null;
+        }
 
-            var bytes = new byte[stream.Size];
-            return stream.ReadAsync(bytes.AsBuffer(), (uint)stream.Size, InputStreamOptions.None);
+        /// <summary>
+        /// Converts a <paramref name="bitmapImage"/> into a byte Buffer
+        /// </summary>
+        /// <param name="bitmapImage"></param>
+        /// <returns></returns>
+        public static async Task<IBuffer?> BitmapToByteBufferAsync(BitmapImage? bitmap) => (await BitmapToBytesAsync(bitmap)).AsBuffer();
+
+        public static Task<BitmapImage> BitmapFromBytesAsync(IBuffer buffer)
+            {
+            return Task.Factory.StartNew(() =>
+            {
+                return BitmapFromByteBuffer(buffer);
+            });
+        }
+
+        /// <summary>
+        /// Converts a byte Buffer into a BitmapImage
+        /// </summary>
+        /// <param name="buffer"></param>
+        /// <returns></returns>
+        public static BitmapImage BitmapFromByteBuffer(IBuffer buffer)
+        {
+            using var stream = buffer.AsStream().AsRandomAccessStream();
+            stream.Seek(0);
+            var bitmap = new BitmapImage();
+            bitmap.SetSource(stream);
+            return bitmap;
         }
 
         /// <summary>
@@ -66,12 +87,7 @@ namespace PnPOrganizer.Core
         /// </summary>
         /// <param name="bytes"></param>
         /// <returns></returns>
-        public static async Task<SoftwareBitmap> BitmapImageFromBytesAsync(IBuffer buffer)
-        {
-            using var stream = buffer.AsStream().AsRandomAccessStream();
-            var decoder = await BitmapDecoder.CreateAsync(stream);
-            return decoder.GetSoftwareBitmapAsync().GetResults();
-        }
+        public static BitmapImage BitmapFromBytes(byte[] bytes) => BitmapFromByteBuffer(bytes.AsBuffer());
         #endregion Image
 
         #region XML

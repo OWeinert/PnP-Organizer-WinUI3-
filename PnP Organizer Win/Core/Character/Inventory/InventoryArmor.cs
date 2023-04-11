@@ -17,7 +17,7 @@ namespace PnPOrganizer.Core.Character.Inventory
             Loudness = 1.0f;
         }
 
-        public InventoryArmor(InventoryArmorModel inventoryShieldModel) : base(inventoryShieldModel)
+        public InventoryArmor(InventoryArmorViewModel inventoryShieldModel) : base(inventoryShieldModel)
         {
             Armor = inventoryShieldModel.Armor;
             PutOnTime = inventoryShieldModel.PutOnTime;

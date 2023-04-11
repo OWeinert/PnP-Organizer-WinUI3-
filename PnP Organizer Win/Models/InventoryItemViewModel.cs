@@ -4,6 +4,7 @@ using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Imaging;
 using PnPOrganizer.Core;
 using PnPOrganizer.Core.Character.Inventory;
+using System;
 using System.ComponentModel;
 
 namespace PnPOrganizer.Models
@@ -11,7 +12,7 @@ namespace PnPOrganizer.Models
     /// <summary>
     /// Data for Inventory items
     /// </summary>
-    public partial class InventoryItemModel : ObservableObject
+    public partial class InventoryItemViewModel : ObservableObject
     {
         private InventoryItem _inventoryItem;
         public InventoryItem InventoryItem
@@ -27,8 +28,7 @@ namespace PnPOrganizer.Models
         private string _description = string.Empty;
 
         [ObservableProperty]
-        private SoftwareBitmapSource? _itemImage;
-        private string _itemImageFileExt = string.Empty;
+        private BitmapImage? _itemImage;
 
         [ObservableProperty]
         private SolidColorBrush? _brush;
@@ -38,20 +38,17 @@ namespace PnPOrganizer.Models
 
         protected bool IsInitialized = false;
 
-        public InventoryItemModel() : this(new InventoryItem()) { }
+        public InventoryItemViewModel() : this(new InventoryItem()) { }
 
-        public InventoryItemModel(InventoryItem inventoryItem)
+        public InventoryItemViewModel(InventoryItem inventoryItem)
         {
             PropertyChanged += OnItemPropertyChanged;
             InventoryItem = inventoryItem;
 
             Name = _inventoryItem!.Name;
             Description = _inventoryItem.Description;
-            /*
-             * if (_inventoryItem.ItemImageBytes != null)
-                ItemImage = Utils.BitmapImageFromBytesAsync(_inventoryItem.ItemImageBytes.AsBuffer()).Result;
-             */
-            _itemImageFileExt = inventoryItem.ItemImageFileExt;
+            if (_inventoryItem.ItemImageBytes != null)
+                ItemImage = Utils.BitmapFromBytes(_inventoryItem.ItemImageBytes);
             Brush = new SolidColorBrush(Utils.ColorFromArgbValue(_inventoryItem.Color));
             Foreground = (SolidColorBrush)Application.Current.Resources["TextFillColorPrimaryBrush"];
 
@@ -71,8 +68,7 @@ namespace PnPOrganizer.Models
                         _inventoryItem.Description = Description;
                         break;
                     case nameof(ItemImage):
-                        //_inventoryItem.ItemImageBytes = (await Utils.BitmapToBytesAsync(ItemImage, _itemImageFileExt)).GetResults().ToArray();
-                        _inventoryItem.ItemImageFileExt = _itemImageFileExt;
+                        _inventoryItem.ItemImageBytes = (await Utils.BitmapToBytesAsync(ItemImage));
                         break;
                     case nameof(Brush):
                         _inventoryItem.Color = Utils.GetArgbColorValue(Brush!.Color);
@@ -80,9 +76,20 @@ namespace PnPOrganizer.Models
                     default:
                         break;
                 }
-
-                //FileIO.IsCharacterSaved = false;
             }            
+        }
+
+        internal InventoryItemViewModel Copy()
+        {
+            return new InventoryItemViewModel()
+            {
+                Name = Name,
+                Description = Description,
+                ItemImage = ItemImage,
+                Brush = Brush,
+                Foreground = Foreground,
+                InventoryItem = _inventoryItem
+            };
         }
     }
 }

@@ -12,13 +12,13 @@ namespace PnPOrganizer.Services.Interfaces
 {
     public interface IInventoryService
     {
-        public ObservableCollection<InventoryItemModel> ItemModels { get; }
+        public ObservableCollection<InventoryItemViewModel> ItemModels { get; }
 
-        public InventoryItemModel AddItem(InventoryItem item);
+        public InventoryItemViewModel AddItem(InventoryItem item);
 
-        public InventoryItemModel AddItem(InventoryItemModel item);
+        public InventoryItemViewModel AddItem(InventoryItemViewModel item);
 
-        public void RemoveItem(InventoryItemModel item);
+        public void RemoveItem(InventoryItemViewModel item);
 
         public void ClearInventory();
 

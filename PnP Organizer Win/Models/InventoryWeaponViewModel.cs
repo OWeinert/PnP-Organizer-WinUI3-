@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 namespace PnPOrganizer.Models
 {
-    public partial class InventoryWeaponModel : InventoryItemModel
+    public partial class InventoryWeaponViewModel : InventoryItemViewModel
     {
         [ObservableProperty]
         private AttackMode _attackMode = AttackMode.Melee;
@@ -35,9 +35,9 @@ namespace PnPOrganizer.Models
         [ObservableProperty]
         private List<Dice>? _dices;
 
-        public InventoryWeaponModel() : this (new InventoryWeapon()) { }
+        public InventoryWeaponViewModel() : this (new InventoryWeapon()) { }
 
-        public InventoryWeaponModel(InventoryWeapon inventoryWeapon) : base(inventoryWeapon)
+        public InventoryWeaponViewModel(InventoryWeapon inventoryWeapon) : base(inventoryWeapon)
         {
             IsInitialized = false;
 

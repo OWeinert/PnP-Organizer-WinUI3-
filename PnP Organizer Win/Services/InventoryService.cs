@@ -9,22 +9,22 @@ namespace PnPOrganizer.Services
 {
     public class InventoryService : IInventoryService
     {
-        private readonly ObservableCollection<InventoryItemModel> _itemModels = new();
-        public ObservableCollection<InventoryItemModel> ItemModels => _itemModels;
+        private readonly ObservableCollection<InventoryItemViewModel> _itemModels = new();
+        public ObservableCollection<InventoryItemViewModel> ItemModels => _itemModels;
 
-        public InventoryItemModel AddItem(InventoryItem item)
+        public InventoryItemViewModel AddItem(InventoryItem item)
         {
-            var itemModel = new InventoryItemModel(item);
+            var itemModel = new InventoryItemViewModel(item);
             return AddItem(itemModel);
         }
 
-        public InventoryItemModel AddItem(InventoryItemModel item)
+        public InventoryItemViewModel AddItem(InventoryItemViewModel item)
         {
             ItemModels.Add(item);
             return item;
         }
 
-        public void RemoveItem(InventoryItemModel item) => ItemModels.Remove(item);
+        public void RemoveItem(InventoryItemViewModel item) => ItemModels.Remove(item);
 
         public void ClearInventory() => ItemModels.Clear();
 

@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace PnPOrganizer.Models
 {
-    public partial class InventoryShieldModel : InventoryItemModel
+    public partial class InventoryShieldModel : InventoryItemViewModel
     {
         [ObservableProperty]
         private int _paradeBonus = 0;
