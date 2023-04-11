@@ -61,7 +61,7 @@ namespace PnPOrganizer.Core
         public static async Task<IBuffer?> BitmapToByteBufferAsync(BitmapImage? bitmap) => (await BitmapToBytesAsync(bitmap)).AsBuffer();
 
         public static Task<BitmapImage> BitmapFromBytesAsync(IBuffer buffer)
-            {
+        {
             return Task.Factory.StartNew(() =>
             {
                 return BitmapFromByteBuffer(buffer);
@@ -257,5 +257,19 @@ namespace PnPOrganizer.Core
         [GeneratedRegex(".*-rc")]
         private static partial Regex VersionExcludeRegex();
         #endregion
+
+        /// <summary>
+        /// Copies the Values of the source's Properties to the target's Properties
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="source"></param>
+        /// <param name="target"></param>
+        public static void CopyProperties<T>(T source, ref T target) where T : class
+        {
+            foreach(var property in source.GetType().GetProperties())
+            {
+                property.SetValue(target, property.GetValue(source));
+            }
+        }
     }
 }

@@ -15,6 +15,11 @@ using PnPOrganizer.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Windows.UI;
 using PnPOrganizer.Views.Interfaces;
+using System.Threading.Tasks;
+using PnPOrganizer.Core;
+using Windows.Storage.Pickers;
+using Microsoft.UI.Xaml.Media.Imaging;
+using System.Diagnostics;
 
 namespace PnPOrganizer.Views
 {
@@ -24,7 +29,10 @@ namespace PnPOrganizer.Views
         public InventoryPageViewModel ViewModel { get; }
 
         [ObservableProperty]
-        private InventoryItemModel? _storedItem;
+        private InventoryItemViewModel? _storedItem;
+
+        [ObservableProperty]
+        private InventoryItemViewModel? _storedItemCopy;
 
 
         private const byte DETAILCARD_ALPHA = 224;
@@ -36,10 +44,33 @@ namespace PnPOrganizer.Views
             NavigationCacheMode = NavigationCacheMode.Enabled;
             SharedShadow.Receivers.Add(ItemsScrollViewer);
             SharedShadow.Receivers.Add(ItemsGridView);
+
+            ViewModel.ItemModels?.Add(new InventoryItemViewModel()
+            {
+                Name = "Test Item",
+                Description = "Short Description..."
+            });
         }
 
         #region Item Detail View
-        private async void BackButton_Click(object sender, RoutedEventArgs e)
+        private async void AcceptButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (StoredItemCopy != null)
+            {
+#pragma warning disable MVVMTK0034 // Direct field reference to [ObservableProperty] backing field
+                Utils.CopyProperties(StoredItemCopy, ref _storedItem!);
+#pragma warning restore MVVMTK0034 // Direct field reference to [ObservableProperty] backing field
+            }
+            await PlayTransitionAnimationAsync();
+            ViewModel.ItemsView.Refresh();
+        }
+
+        private async void CancelButton_Click(object sender, RoutedEventArgs e)
+        {
+            await PlayTransitionAnimationAsync();
+        }
+
+        private async Task PlayTransitionAnimationAsync()
         {
             ConnectedAnimation animation = ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("backwardsAnimation", ItemDetails);
             SmokeGrid.Children.Remove(ItemDetails);
@@ -54,19 +85,40 @@ namespace PnPOrganizer.Views
                 animation.Configuration = new DirectConnectedAnimationConfiguration();
             }
             await ItemsGridView.TryStartConnectedAnimationAsync(animation, StoredItem, "Item");
-            ViewModel.ItemsView.Refresh();
+        }
+
+        private async void ItemImageButton_Click(object sender, RoutedEventArgs e)
+        {
+            var openPicker = new FileOpenPicker();
+
+            var hWnd = WindowHelper.GetCurrentProcMainWindowHandle();
+            WinRT.Interop.InitializeWithWindow.Initialize(openPicker, hWnd);
+
+            openPicker.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
+            openPicker.FileTypeFilter.Add(".png");
+            openPicker.FileTypeFilter.Add(".jpg");
+            openPicker.FileTypeFilter.Add(".jpeg");
+            openPicker.FileTypeFilter.Add(".bmp");
+            openPicker.FileTypeFilter.Add(".gif");
+
+            var file = await openPicker.PickSingleFileAsync();
+            if (file != null)
+            {
+                var itemImage = new BitmapImage();
+
+                using var stream = await file.OpenReadAsync();
+                stream.Seek(0);
+                await itemImage.SetSourceAsync(stream);
+
+                if(StoredItemCopy != null)
+                    StoredItemCopy.ItemImage = itemImage;
+            }
         }
 
         private void Animation_Completed(ConnectedAnimation sender, object args)
         {
             SmokeGrid.Visibility = Visibility.Collapsed;
             SmokeGrid.Children.Add(ItemDetails);
-        }
-
-        private void DetailContentDescr_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (StoredItem is not null)
-                StoredItem.Description = DetailContentDescr.Text;
         }
         #endregion
 
@@ -76,13 +128,14 @@ namespace PnPOrganizer.Views
             ElementSoundPlayer.Play(ElementSoundKind.Focus);
             if (ItemsGridView.ContainerFromItem(e.ClickedItem) is GridViewItem container)
             {
-                if(container.Content is not null)
+                if(container.Content != null)
                 {
-                    StoredItem = (container.Content as InventoryItemModel)!;
+                    StoredItem = (container.Content as InventoryItemViewModel)!;
+                    StoredItemCopy = StoredItem.Copy();
                 }
                 var animation = ItemsGridView.PrepareConnectedAnimation("ForwardConnectedAnimation", StoredItem, "Item");
                 
-                if(StoredItem is not null)
+                if(StoredItem != null)
                 {
                     ItemDetails.DataContext = StoredItem;
 
@@ -96,7 +149,6 @@ namespace PnPOrganizer.Views
 
                 animation.TryStart(ItemDetails);
                 SmokeGrid.Visibility = Visibility.Visible;
-
             }
         }
 
@@ -131,7 +183,7 @@ namespace PnPOrganizer.Views
         {
             if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput)
             {
-                var suitableItems = new List<InventoryItemModel>();
+                var suitableItems = new List<InventoryItemViewModel>();
                 var splitText = sender.Text.ToLower().Split(" ");
                 foreach (var item in ViewModel.ItemModels)
                 {
@@ -166,7 +218,7 @@ namespace PnPOrganizer.Views
                 else
                 {
                     ResetFilter();
-                    ViewModel.ItemsView.Filter = x => ((InventoryItemModel)x).Name.ToLower().Contains(SearchItemBox.Text.ToLower());
+                    ViewModel.ItemsView.Filter = x => ((InventoryItemViewModel)x).Name.ToLower().Contains(SearchItemBox.Text.ToLower());
                 }
             }
         }
@@ -177,19 +229,42 @@ namespace PnPOrganizer.Views
         #region Item Command Flyout
         private void CommandFlyoutColorButton_Click(object sender, RoutedEventArgs e) 
         {
-            SetStoredItem((Button)sender);
+            GetStoredItemFromButton((Button)sender);
             ItemColorPicker.Color = StoredItem!.Brush is not null ? StoredItem.Brush.Color : Color.FromArgb(255, 255, 255, 255);
         }
 
-        private void CommandFlyoutClearButton_Click(object sender, RoutedEventArgs e) => SetStoredItem((Button)sender);
+        private void CommandFlyoutClearButton_Click(object sender, RoutedEventArgs e)
+        {
+            GetStoredItemFromButton((Button)sender);
+            if (StoredItem != null)
+            {
+                var tempNewItem = (InventoryItemViewModel?)Activator.CreateInstance(StoredItem.GetType());
+                if(tempNewItem != null)
+                {
+#pragma warning disable MVVMTK0034 // Direct field reference to [ObservableProperty] backing field
+                    Utils.CopyProperties(tempNewItem, ref _storedItem!);
+#pragma warning restore MVVMTK0034 // Direct field reference to [ObservableProperty] backing field
+                }
+                ViewModel.ItemsView.Refresh();
+            }
+        }
 
-        private void CommandFlyoutDeleteButton_Click(object sender, RoutedEventArgs e) => SetStoredItem((Button)sender);
+        private void CommandFlyoutDeleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            GetStoredItemFromButton((Button)sender);
+            if(StoredItem != null)
+            {
+                ViewModel.ItemModels?.Remove(StoredItem);
+                StoredItem = null;
+                StoredItemCopy = null;
+            }
+        }
 
-        private void SetStoredItem(Button sender) => _storedItem = (InventoryItemModel)sender.DataContext;
+        private void GetStoredItemFromButton(Button sender) => StoredItem = (InventoryItemViewModel)sender.DataContext;
 
         private void ConfirmColor_Click(object sender, RoutedEventArgs e)
         {
-            if(StoredItem is not null)
+            if(StoredItem != null)
                 StoredItem.Brush = new SolidColorBrush(ItemColorPicker.Color);
 
             ViewModel.ItemsView.Refresh();

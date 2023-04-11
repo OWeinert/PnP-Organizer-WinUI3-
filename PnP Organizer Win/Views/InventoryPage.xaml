@@ -132,7 +132,7 @@
                       Margin="16,0,10,0"
                       ElementSoundMode="FocusOnly">
                 <GridView.ItemTemplate>
-                    <DataTemplate x:DataType="models:InventoryItemModel">
+                    <DataTemplate x:DataType="models:InventoryItemViewModel">
                         <Grid x:Name="Item"
                               AutomationProperties.Name="{x:Bind Name}">
                             <Border Background="{x:Bind Brush}"
@@ -150,32 +150,39 @@
                                         <ColumnDefinition Width = 'Auto'/>
                                         <ColumnDefinition Width = '*'/>
                                     </Grid.ColumnDefinitions>
-                                    <!-- HACK Remove once ItemImage is functional -->
-                                    <Border Grid.Row="0"
-                                            Grid.Column="0"
-                                            Background="Black"
-                                            VerticalAlignment="Top"
-                                            HorizontalAlignment="Left"
-                                            Margin="4,4,0,4"
-                                            CornerRadius="4">
+                                    <Grid Grid.Row="0"
+                                          Grid.Column="0"
+                                          Background="{ThemeResource ControlFillColorDefaultBrush}"
+                                          VerticalAlignment="Top"
+                                          HorizontalAlignment="Left"
+                                          Margin="4,4,0,4"
+                                          CornerRadius="4">
+                                        <TextBlock Text="?"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Center"
+                                                   FontSize="46"
+                                                   Margin="0,0,0,6"/>
                                         <Image x:Name="ItemImageControl"
-                                               Source = '{x:Bind ItemImage}'
-                                               Width="72"
-                                               Height="72"
-                                               Stretch = 'Fill' 
-                                               VerticalAlignment = 'Top'/>
-                                    </Border>
+                                                   Source = "{x:Bind ItemImage, Mode=OneWay}"
+                                                   Width="72"
+                                                   Height="72"
+                                                   Stretch = "Fill"
+                                                   VerticalAlignment = "Top"/>
+                                    </Grid>
                                     <Grid Grid.Row="0"
                                           Grid.Column = "1"
                                           Margin = "12,0,0,0"
                                           HorizontalAlignment="Stretch"
                                           VerticalAlignment="Stretch">
                                         <Viewbox HorizontalAlignment="Left"
-                                                 MaxWidth="140">
+                                                 MaxWidth="140"
+                                                 MaxHeight="72">
                                             <TextBlock Text="{x:Bind Name}" 
                                                        Style='{ThemeResource SubtitleTextBlockStyle}' 
                                                        VerticalAlignment="Center"
-                                                       Margin='0,0,0,4'/>
+                                                       TextWrapping="Wrap"
+                                                       Margin='0,0,0,4'
+                                                       MaxWidth="170"/>
                                         </Viewbox>
                                     </Grid>
                                     
@@ -248,24 +255,84 @@
                 </Grid.RowDefinitions>
                 <Grid x:Name="DetailHeaderGrid"
                       HorizontalAlignment="Stretch" 
-                      VerticalAlignment="Stretch"
-                      Height="68">
-                    <TextBlock x:Name="DetailHeaderName"
-                               Style="{ThemeResource HeaderTextBlockStyle}" 
-                               Margin="16,0,0,0" 
-                               VerticalAlignment="Top" />
-                    <Button Click="BackButton_Click" 
+                      VerticalAlignment="Stretch">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <Grid Grid.Column="0"
+                          CornerRadius="4"
+                          Background="{ThemeResource TextBoxButtonBackgroundThemeBrush}"
+                          BorderBrush="{ThemeResource TextBoxDisabledBorderThemeBrush}"
+                          BorderThickness="0,0,0,0.6"
+                          Margin="12,12,0,0"
+                          Width="92"
+                          Height="92">
+                        <SymbolIcon Symbol="Add"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"/>
+                        <Button x:Name="ItemImageButton"
+                                Click="ItemImageButton_Click"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Stretch"
+                                Padding="0">
+                            <Grid CornerRadius="4">
+                                <Image x:Name="DetailItemImage"
+                                   Source="{x:Bind StoredItemCopy.ItemImage, Mode=TwoWay}"
+                                   Stretch = "Fill"
+                                   VerticalAlignment = "Stretch"
+                                   HorizontalAlignment="Stretch"/>
+                            </Grid>
+                        </Button>
+                    </Grid>
+                    <TextBox x:Name="DetailHeaderName"
+                             Grid.Column="1"
+                             Style="{ThemeResource DefaultTextBoxStyle}" 
+                             Text="{x:Bind StoredItemCopy.Name, Mode=TwoWay}"
+                             VerticalAlignment="Stretch" 
+                             HorizontalAlignment="Stretch"
+                             MaxHeight="92"
+                             FontSize="28"
+                             TextAlignment="Center"
+                             IsTextScaleFactorEnabled="True"
+                             IsSpellCheckEnabled="False"
+                             AcceptsReturn="True"
+                             TextWrapping="Wrap"
+                             Margin="12,12,0,0"
+                             ScrollViewer.VerticalScrollBarVisibility="Visible"/>
+                    <StackPanel Grid.Column="2"
+                                Margin="12,12,12,0">
+                        <Button 
+                            Click="CancelButton_Click" 
                             HorizontalAlignment="Right" 
                             VerticalAlignment="Top" 
                             Height="40" 
-                            Width="40" 
-                            Margin="5"
-                            ToolTipService.ToolTip="Close" 
-                            AutomationProperties.Name="Close">
-                        <Button.Content>
-                            <SymbolIcon Symbol="Clear" />
-                        </Button.Content>
-                    </Button>
+                            Width="40"
+                            ToolTipService.ToolTip="Cancel" 
+                            AutomationProperties.Name="Cancel"
+                            Padding="0">
+                            <Button.Content>
+                                <SymbolIcon Symbol="Cancel" />
+                            </Button.Content>
+                        </Button>
+                        <Button 
+                            Click="AcceptButton_Click" 
+                            HorizontalAlignment="Right" 
+                            VerticalAlignment="Top" 
+                            Height="40" 
+                            Width="40"
+                            Margin="0,12,0,0"
+                            ToolTipService.ToolTip="Accept" 
+                            AutomationProperties.Name="Accept"
+                            Padding="0">
+                            <Button.Content>
+                                <SymbolIcon Symbol="Accept" />
+                            </Button.Content>
+                        </Button>
+                    </StackPanel>
                 </Grid>
                 <Grid x:Name="DetailContentGrid"
                       HorizontalAlignment="Stretch" 
@@ -277,7 +344,7 @@
                             <SolidColorBrush Color="{ThemeResource SolidBackgroundFillColorBase}" 
                                              Opacity="0.5"/>
                         </Grid.Background>
-                        <Image x:Name="DetailHeaderImage"/>
+
                         <TextBox x:Name="DetailContentDescr"
                                  AutomationProperties.Name="DetailDescrTextBox"
                                  HorizontalAlignment="Stretch"
@@ -285,8 +352,7 @@
                                  AcceptsReturn="True"
                                  TextWrapping="Wrap"
                                  PlaceholderText="Description"
-                                 Text="{x:Bind StoredItem.Description, Mode=TwoWay}"
-                                 TextChanged="DetailContentDescr_TextChanged"
+                                 Text="{x:Bind StoredItemCopy.Description, Mode=TwoWay}"
                                  Margin="12" />
                     </Grid>
                 </Grid>
