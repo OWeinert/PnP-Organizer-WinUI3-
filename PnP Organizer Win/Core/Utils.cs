@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text.RegularExpressions;
@@ -124,15 +125,6 @@ namespace PnPOrganizer.Core
         #endregion XML
 
         #region Color
-        /// <summary>
-        /// </summary>
-        /// <param name="color"></param>
-        /// <returns></returns>
-        public static int GetArgbColorValue(Color color)
-        {
-            var argb = BitConverter.ToInt32(new byte[] { color.A, color.B, color.G, color.R}, 0);
-            return argb;
-        }
 
         /// <summary>
         /// </summary>
@@ -266,7 +258,8 @@ namespace PnPOrganizer.Core
         /// <param name="target"></param>
         public static void CopyProperties<T>(T source, ref T target) where T : class
         {
-            foreach(var property in source.GetType().GetProperties())
+            var writableProperties = source.GetType().GetProperties().Where(p => p.CanWrite);
+            foreach (var property in writableProperties)
             {
                 property.SetValue(target, property.GetValue(source));
             }
