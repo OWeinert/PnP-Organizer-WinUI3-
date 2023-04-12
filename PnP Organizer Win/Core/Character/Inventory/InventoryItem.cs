@@ -1,4 +1,6 @@
-﻿using Microsoft.UI.Xaml;
+﻿using CommunityToolkit.WinUI.Helpers;
+using Microsoft.UI;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Imaging;
 using PnPOrganizer.Models;
@@ -24,18 +26,15 @@ namespace PnPOrganizer.Core.Character.Inventory
 
         public InventoryItem(string name, string description)
         {
+            Color = GetBaseColor();
             Name = name;
             Description = description;
             ItemImageBytes = Array.Empty<byte>();
-            unchecked
-            {
-                Color = (int)0xFF222222;
-            }
         }
 
         public InventoryItem(InventoryItemViewModel inventoryItemViewModel)
         {
-            Color = Utils.GetArgbColorValue(inventoryItemViewModel.Brush!.Color);
+            Color = inventoryItemViewModel.Brush!.Color.ToInt();
             ItemImageBytes = inventoryItemViewModel.ItemImage != null ? Utils.BitmapToBytesAsync(inventoryItemViewModel.ItemImage).Result : null;
             Name = inventoryItemViewModel.Name;
             Description = inventoryItemViewModel.Description;
@@ -47,5 +46,7 @@ namespace PnPOrganizer.Core.Character.Inventory
         {
             ItemImageBytes = Utils.BitmapToBytesAsync(image).Result;
         }
+
+        protected virtual int GetBaseColor() => DefaultPalette.Gray.ToInt();
     }
 }

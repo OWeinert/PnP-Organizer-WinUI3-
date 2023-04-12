@@ -7,10 +7,6 @@ namespace PnPOrganizer.Core.Character.SkillSystem
 {
     public interface ISkillsService
     {
-        public const uint CharSkillColor = 0xffcf5e3f;
-        public const uint MeleeSkillColor = 0xff5774e9;
-        public const uint RangedSkillColor = 0xff6fb655;
-
         public event EventHandler? ViewRefreshRequested;
 
         public Dictionary<SkillIdentifier, Skill> Registry { get; }

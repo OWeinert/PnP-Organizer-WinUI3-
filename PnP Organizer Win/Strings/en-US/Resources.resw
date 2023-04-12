@@ -123,6 +123,21 @@
   <data name="es-ES" xml:space="preserve">
     <value>Español</value>
   </data>
+  <data name="InventoryPage_AddArmorButton.Text" xml:space="preserve">
+    <value>Armor</value>
+  </data>
+  <data name="InventoryPage_AddItemButton.Text" xml:space="preserve">
+    <value>Regular Item</value>
+  </data>
+  <data name="InventoryPage_AddItemMenuButton.Content" xml:space="preserve">
+    <value>Add Item</value>
+  </data>
+  <data name="InventoryPage_AddShieldButton.Text" xml:space="preserve">
+    <value>Shield</value>
+  </data>
+  <data name="InventoryPage_AddWeaponButton.Text" xml:space="preserve">
+    <value>Weapon</value>
+  </data>
   <data name="InventoryPage_Header.Text" xml:space="preserve">
     <value>Inventory</value>
   </data>

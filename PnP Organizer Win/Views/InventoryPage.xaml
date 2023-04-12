@@ -6,6 +6,8 @@
       xmlns:conv="using:PnPOrganizer.Converters"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:viewmodels="using:PnPOrganizer.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:InventoryPageViewModel}"
+      xmlns:controls="using:PnPOrganizer.Controls"
+      xmlns:sel="using:PnPOrganizer.Selectors"
       mc:Ignorable="d"
       Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
       Style="{StaticResource CommonPageStyle}"
@@ -13,61 +15,67 @@
       ScrollViewer.VerticalScrollBarVisibility="Disabled">
 
     <Page.Resources>
-        <!-- Converters -->
-        <conv:InventoryHeightConverter x:Key="InventoryHeightConverter"/>
+        <ResourceDictionary>
+            <!-- Converters -->
+            <conv:InventoryHeightConverter x:Key="InventoryHeightConverter"/>
 
-        <!-- Controls -->
-        <Flyout x:Key="ColorPickerFlyout">
-            <RelativePanel>
-                <ColorPicker x:Name="ItemColorPicker"
+            <!-- Controls -->
+            <Flyout x:Key="ColorPickerFlyout">
+                <RelativePanel>
+                    <ColorPicker x:Name="ItemColorPicker"
                          ColorSpectrumShape="Ring"
-                         IsMoreButtonVisible="False"
+                         IsMoreButtonVisible="True"
                          IsColorSliderVisible="False"
                          IsColorChannelTextInputVisible="False"
                          IsHexInputVisible="True"
-                         IsAlphaEnabled="False"
-                         IsAlphaSliderVisible="True"
-                         IsAlphaTextInputVisible="True"/>
-                <Grid RelativePanel.Below="ItemColorPicker"
+                         IsAlphaEnabled="False"/>
+                    <Grid RelativePanel.Below="ItemColorPicker"
                       RelativePanel.AlignLeftWithPanel="True"
                       RelativePanel.AlignRightWithPanel="True">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-                    <Button Content="Confirm" Click="ConfirmColor_Click"
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Button Content="Confirm" Click="ConfirmColor_Click"
                         Margin="0,12,2,0" HorizontalAlignment="Stretch"/>
-                    <Button Content="Cancel" Click="CancelColor_Click"
+                        <Button Content="Cancel" Click="CancelColor_Click"
                         Margin="2,12,0,0" HorizontalAlignment="Stretch"
                         Grid.Column="1"/>
-                </Grid>
-            </RelativePanel>
-        </Flyout>
+                    </Grid>
+                </RelativePanel>
+            </Flyout>
 
-        <CommandBarFlyout Placement="Left" x:Name="EditItemFlyout">
-            <AppBarButton x:Name="PickColorButton"
+            <CommandBarFlyout Placement="Left" x:Name="EditItemFlyout">
+                <AppBarButton x:Name="PickColorButton"
                           Label="Color" 
                           ToolTipService.ToolTip="Choose Color" 
                           Click="CommandFlyoutColorButton_Click"
                           Flyout="{StaticResource ColorPickerFlyout}">
-                <AppBarButton.Icon>
-                    <FontIcon Glyph="&#xE790;"/>
-                </AppBarButton.Icon>
-            </AppBarButton>
-            <AppBarButton Label="Reset" 
+                    <AppBarButton.Icon>
+                        <FontIcon Glyph="&#xE790;"/>
+                    </AppBarButton.Icon>
+                </AppBarButton>
+                <AppBarButton Label="Reset" 
                           ToolTipService.ToolTip="Reset" 
                           Click="CommandFlyoutClearButton_Click">
-                <AppBarButton.Icon>
-                    <FontIcon Glyph="&#xE75C;"/>
-                </AppBarButton.Icon>
-            </AppBarButton>
-            <AppBarButton Label="Delete" 
+                    <AppBarButton.Icon>
+                        <FontIcon Glyph="&#xE75C;"/>
+                    </AppBarButton.Icon>
+                </AppBarButton>
+                <AppBarButton Label="Delete" 
                           Icon="Delete" 
                           ToolTipService.ToolTip="Delete" 
                           Click="CommandFlyoutDeleteButton_Click" />
-        </CommandBarFlyout>
+            </CommandBarFlyout>
 
-        <ThemeShadow x:Name="SharedShadow"/>
+            <ThemeShadow x:Name="SharedShadow"/>
+
+            <sel:InventoryItemDetailSelector x:Key="InventoryItemDetailSelector"
+                                         Item="{StaticResource InventoryItemDetailsTemplate}"
+                                         Weapon="{StaticResource InventoryWeaponDetailsTemplate}"
+                                         Armor="{StaticResource InventoryArmorDetailsTemplate}"
+                                         Shield="{StaticResource InventoryArmorDetailsTemplate}"/>
+        </ResourceDictionary>
     </Page.Resources>
 
     <Grid x:Name="ContentGrid"
@@ -98,20 +106,36 @@
 
                 </Grid>
             </CommandBar.Content>
-            <AppBarElementContainer>
+            <AppBarElementContainer VerticalAlignment="Center">
                 <AutoSuggestBox x:Name="SearchItemBox"  
                                 Width="320"
-                                VerticalAlignment="Center"
                                 HorizontalAlignment="Center"
-                                Margin="16,6,0,0"
                                 QueryIcon="Find"
                                 PlaceholderText="Search Item"
                                 TextChanged="SearchItemBox_TextChanged"/>
             </AppBarElementContainer>
-            <AppBarSeparator Margin="16,0,0,0"/>
-            <AppBarButton Icon="Add" Label="Add"/>
-            <AppBarButton Icon="Edit" Label="Edit"/>
-            <AppBarButton Icon="Share" Label="Share"/>
+            <AppBarSeparator Margin="16,0"/>
+            <AppBarElementContainer VerticalAlignment="Center"
+                                    Margin="0,0,32,0">
+                <DropDownButton x:Uid="InventoryPage_AddItemMenuButton">
+                    <DropDownButton.Flyout>
+                        <MenuFlyout>
+                            <MenuFlyoutItem x:Uid="InventoryPage_AddItemButton"
+                                            Command="{x:Bind ViewModel.AddItemCommand}"
+                                            CommandParameter="Item"/>
+                            <MenuFlyoutItem x:Uid="InventoryPage_AddWeaponButton"
+                                            Command="{x:Bind ViewModel.AddItemCommand}"
+                                            CommandParameter="Weapon"/>
+                            <MenuFlyoutItem x:Uid="InventoryPage_AddArmorButton"
+                                            Command="{x:Bind ViewModel.AddItemCommand}"
+                                            CommandParameter="Armor"/>
+                            <MenuFlyoutItem x:Uid="InventoryPage_AddShieldButton"
+                                            Command="{x:Bind ViewModel.AddItemCommand}"
+                                            CommandParameter="Shield"/>
+                        </MenuFlyout>
+                    </DropDownButton.Flyout>
+                </DropDownButton>
+            </AppBarElementContainer>
         </CommandBar>
 
         <ScrollViewer x:Name="ItemsScrollViewer" 
@@ -146,48 +170,11 @@
                                         <RowDefinition Height="Auto"/>
                                         <RowDefinition Height="*"/>
                                     </Grid.RowDefinitions>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width = 'Auto'/>
-                                        <ColumnDefinition Width = '*'/>
-                                    </Grid.ColumnDefinitions>
-                                    <Grid Grid.Row="0"
-                                          Grid.Column="0"
-                                          Background="{ThemeResource ControlFillColorDefaultBrush}"
-                                          VerticalAlignment="Top"
-                                          HorizontalAlignment="Left"
-                                          Margin="4,4,0,4"
-                                          CornerRadius="4">
-                                        <TextBlock Text="?"
-                                                   HorizontalAlignment="Center"
-                                                   VerticalAlignment="Center"
-                                                   FontSize="46"
-                                                   Margin="0,0,0,6"/>
-                                        <Image x:Name="ItemImageControl"
-                                                   Source = "{x:Bind ItemImage, Mode=OneWay}"
-                                                   Width="72"
-                                                   Height="72"
-                                                   Stretch = "Fill"
-                                                   VerticalAlignment = "Top"/>
-                                    </Grid>
-                                    <Grid Grid.Row="0"
-                                          Grid.Column = "1"
-                                          Margin = "12,0,0,0"
-                                          HorizontalAlignment="Stretch"
-                                          VerticalAlignment="Stretch">
-                                        <Viewbox HorizontalAlignment="Left"
-                                                 MaxWidth="140"
-                                                 MaxHeight="72">
-                                            <TextBlock Text="{x:Bind Name}" 
-                                                       Style='{ThemeResource SubtitleTextBlockStyle}' 
-                                                       VerticalAlignment="Center"
-                                                       TextWrapping="Wrap"
-                                                       Margin='0,0,0,4'
-                                                       MaxWidth="170"/>
-                                        </Viewbox>
-                                    </Grid>
                                     
+                                    <controls:InventoryItemHeader Grid.Row="0"
+                                                                  ItemViewModel="{x:Bind BindableInstance}"/>
+
                                     <Grid Grid.Row="1"
-                                          Grid.ColumnSpan="2"
                                           VerticalAlignment="Stretch">
                                         <Grid.Background>
                                             <SolidColorBrush Color="{ThemeResource SolidBackgroundFillColorBase}" 
@@ -248,114 +235,29 @@
                   Height="520"
                   CornerRadius="8"
                   Shadow="{StaticResource SharedShadow}"
-                  Translation="0,0,25">
+                  Translation="0,0,25"
+                  Background="{x:Bind StoredItemCopy.Brush, Mode=OneWay}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
-                <Grid x:Name="DetailHeaderGrid"
-                      HorizontalAlignment="Stretch" 
-                      VerticalAlignment="Stretch">
 
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
-                    
-                    <Grid Grid.Column="0"
-                          CornerRadius="4"
-                          Background="{ThemeResource TextBoxButtonBackgroundThemeBrush}"
-                          BorderBrush="{ThemeResource TextBoxDisabledBorderThemeBrush}"
-                          BorderThickness="0,0,0,0.6"
-                          Margin="12,12,0,0"
-                          Width="92"
-                          Height="92">
-                        <SymbolIcon Symbol="Add"
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center"/>
-                        <Button x:Name="ItemImageButton"
-                                Click="ItemImageButton_Click"
+                <controls:InventoryItemDetailHeader Grid.Row="0"
+                                                    ItemViewModel="{x:Bind StoredItemCopy, Mode=OneWay}"
+                                                    AcceptButtonClick="AcceptButton_Click"
+                                                    CancelButtonClick="CancelButton_Click"
+                                                    Margin="0,0,0,12"/>
+               
+                
+                <ContentControl Grid.Row="1"
+                                ContentTemplateSelector="{StaticResource InventoryItemDetailSelector}"
+                                Content="{x:Bind StoredItemCopy, Mode=OneWay}"
                                 HorizontalAlignment="Stretch"
+                                HorizontalContentAlignment="Stretch"
                                 VerticalAlignment="Stretch"
-                                Padding="0">
-                            <Grid CornerRadius="4">
-                                <Image x:Name="DetailItemImage"
-                                   Source="{x:Bind StoredItemCopy.ItemImage, Mode=TwoWay}"
-                                   Stretch = "Fill"
-                                   VerticalAlignment = "Stretch"
-                                   HorizontalAlignment="Stretch"/>
-                            </Grid>
-                        </Button>
-                    </Grid>
-                    <TextBox x:Name="DetailHeaderName"
-                             Grid.Column="1"
-                             Style="{ThemeResource DefaultTextBoxStyle}" 
-                             Text="{x:Bind StoredItemCopy.Name, Mode=TwoWay}"
-                             VerticalAlignment="Stretch" 
-                             HorizontalAlignment="Stretch"
-                             MaxHeight="92"
-                             FontSize="28"
-                             TextAlignment="Center"
-                             IsTextScaleFactorEnabled="True"
-                             IsSpellCheckEnabled="False"
-                             AcceptsReturn="True"
-                             TextWrapping="Wrap"
-                             Margin="12,12,0,0"
-                             ScrollViewer.VerticalScrollBarVisibility="Visible"/>
-                    <StackPanel Grid.Column="2"
-                                Margin="12,12,12,0">
-                        <Button 
-                            Click="CancelButton_Click" 
-                            HorizontalAlignment="Right" 
-                            VerticalAlignment="Top" 
-                            Height="40" 
-                            Width="40"
-                            ToolTipService.ToolTip="Cancel" 
-                            AutomationProperties.Name="Cancel"
-                            Padding="0">
-                            <Button.Content>
-                                <SymbolIcon Symbol="Cancel" />
-                            </Button.Content>
-                        </Button>
-                        <Button 
-                            Click="AcceptButton_Click" 
-                            HorizontalAlignment="Right" 
-                            VerticalAlignment="Top" 
-                            Height="40" 
-                            Width="40"
-                            Margin="0,12,0,0"
-                            ToolTipService.ToolTip="Accept" 
-                            AutomationProperties.Name="Accept"
-                            Padding="0">
-                            <Button.Content>
-                                <SymbolIcon Symbol="Accept" />
-                            </Button.Content>
-                        </Button>
-                    </StackPanel>
-                </Grid>
-                <Grid x:Name="DetailContentGrid"
-                      HorizontalAlignment="Stretch" 
-                      VerticalAlignment="Stretch"
-                      Grid.Row="1">
-                    <Grid HorizontalAlignment="Stretch" 
-                          VerticalAlignment="Stretch">
-                        <Grid.Background>
-                            <SolidColorBrush Color="{ThemeResource SolidBackgroundFillColorBase}" 
-                                             Opacity="0.5"/>
-                        </Grid.Background>
-
-                        <TextBox x:Name="DetailContentDescr"
-                                 AutomationProperties.Name="DetailDescrTextBox"
-                                 HorizontalAlignment="Stretch"
-                                 VerticalAlignment="Stretch"
-                                 AcceptsReturn="True"
-                                 TextWrapping="Wrap"
-                                 PlaceholderText="Description"
-                                 Text="{x:Bind StoredItemCopy.Description, Mode=TwoWay}"
-                                 Margin="12" />
-                    </Grid>
-                </Grid>
+                                VerticalContentAlignment="Stretch">
+                </ContentControl>
+                
             </Grid>
         </Grid>
     </Grid>

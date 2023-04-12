@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.WinUI.Helpers;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Imaging;
@@ -14,6 +15,8 @@ namespace PnPOrganizer.Models
     /// </summary>
     public partial class InventoryItemViewModel : ObservableObject
     {
+        public InventoryItemViewModel BindableInstance => this;
+
         private InventoryItem _inventoryItem;
         public InventoryItem InventoryItem
         {
@@ -33,9 +36,6 @@ namespace PnPOrganizer.Models
         [ObservableProperty]
         private SolidColorBrush? _brush;
 
-        [ObservableProperty]
-        private SolidColorBrush? foreground;
-
         protected bool IsInitialized = false;
 
         public InventoryItemViewModel() : this(new InventoryItem()) { }
@@ -49,8 +49,8 @@ namespace PnPOrganizer.Models
             Description = _inventoryItem.Description;
             if (_inventoryItem.ItemImageBytes != null)
                 ItemImage = Utils.BitmapFromBytes(_inventoryItem.ItemImageBytes);
+
             Brush = new SolidColorBrush(Utils.ColorFromArgbValue(_inventoryItem.Color));
-            Foreground = (SolidColorBrush)Application.Current.Resources["TextFillColorPrimaryBrush"];
 
             IsInitialized = true;
         }
@@ -71,7 +71,7 @@ namespace PnPOrganizer.Models
                         _inventoryItem.ItemImageBytes = (await Utils.BitmapToBytesAsync(ItemImage));
                         break;
                     case nameof(Brush):
-                        _inventoryItem.Color = Utils.GetArgbColorValue(Brush!.Color);
+                        _inventoryItem.Color = Brush!.Color.ToInt();
                         break;
                     default:
                         break;
@@ -87,7 +87,6 @@ namespace PnPOrganizer.Models
                 Description = Description,
                 ItemImage = ItemImage,
                 Brush = Brush,
-                Foreground = Foreground,
                 InventoryItem = _inventoryItem
             };
         }

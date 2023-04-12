@@ -27,15 +27,6 @@ namespace PnPOrganizer.Models
             PutOnTime = inventoryArmor.PutOnTime;
             Weight = inventoryArmor.Weight;
             Loudness = inventoryArmor.Loudness;
-
-            if (inventoryArmor.Color != Utils.GetArgbColorValue(((SolidColorBrush)Application.Current.Resources["PalettePrimaryBrush"]).Color)
-                && inventoryArmor.Color != Utils.GetArgbColorValue(((SolidColorBrush)Application.Current.Resources["PaletteBrownBrush"]).Color))
-            {
-                Brush = new SolidColorBrush(Utils.ColorFromArgbValue(inventoryArmor.Color));
-            }
-            else
-                Brush = (SolidColorBrush)Application.Current.Resources["PaletteBrownBrush"];
-
             PropertyChanged += InventoryArmorModel_PropertyChanged;
 
             IsInitialized = true;

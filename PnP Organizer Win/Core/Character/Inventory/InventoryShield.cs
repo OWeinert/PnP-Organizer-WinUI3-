@@ -1,4 +1,6 @@
-﻿using PnPOrganizer.Core.BattleAssistant;
+﻿using CommunityToolkit.WinUI.Helpers;
+using Microsoft.UI;
+using PnPOrganizer.Core.BattleAssistant;
 using PnPOrganizer.Models;
 
 namespace PnPOrganizer.Core.Character.Inventory
@@ -16,11 +18,13 @@ namespace PnPOrganizer.Core.Character.Inventory
             Weight = 1.0f;
         }
 
-        public InventoryShield(InventoryShieldModel inventoryShieldModel) : base(inventoryShieldModel)
+        public InventoryShield(InventoryShieldViewModel inventoryShieldModel) : base(inventoryShieldModel)
         {
             ParadeBonus = inventoryShieldModel.ParadeBonus;
             ParadeDiceBonus = inventoryShieldModel.ParadeDiceBonus;
             Weight = inventoryShieldModel.Weight;
         }
+
+        protected override int GetBaseColor() => DefaultPalette.Red.ToInt();
     }
 }

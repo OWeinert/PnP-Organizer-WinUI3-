@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.WinUI.UI;
 using Microsoft.UI.Xaml.Media;
 using PnPOrganizer.Models;
@@ -44,6 +45,27 @@ namespace PnPOrganizer.ViewModels
             ItemModels = _inventoryService.ItemModels;
             _initialized = true;
             Initialized?.Invoke(this, new EventArgs());
+        }
+
+        [RelayCommand]
+        private void AddItem(object typeName)
+        {
+            switch((string)typeName)
+            {
+                case "Weapon":
+                    _inventoryService.AddItem(new InventoryWeaponViewModel());
+                    break;
+                case "Armor":
+                    _inventoryService.AddItem(new InventoryArmorViewModel());
+                    break;
+                case "Shield":
+                    _inventoryService.AddItem(new InventoryShieldViewModel());
+                    break;
+                case "Item":
+                default:
+                    _inventoryService.AddItem(new InventoryItemViewModel());
+                    break;
+            }
         }
     }
 }

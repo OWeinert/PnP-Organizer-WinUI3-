@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace PnPOrganizer.Models
 {
-    public partial class InventoryShieldModel : InventoryItemViewModel
+    public partial class InventoryShieldViewModel : InventoryItemViewModel
     {
         [ObservableProperty]
         private int _paradeBonus = 0;
@@ -20,9 +20,9 @@ namespace PnPOrganizer.Models
         [ObservableProperty]
         private List<Dice>? _dices;
 
-        public InventoryShieldModel() : this (new InventoryShield()) { }
+        public InventoryShieldViewModel() : this (new InventoryShield()) { }
 
-        public InventoryShieldModel(InventoryShield inventoryShield) : base(inventoryShield)
+        public InventoryShieldViewModel(InventoryShield inventoryShield) : base(inventoryShield)
         {
             IsInitialized = false;
 
@@ -31,15 +31,6 @@ namespace PnPOrganizer.Models
             ParadeBonus = inventoryShield.ParadeBonus;
             ParadeDiceBonus = inventoryShield.ParadeDiceBonus;
             Weight = inventoryShield.Weight;
-
-            if (inventoryShield.Color != Utils.GetArgbColorValue(((SolidColorBrush)Application.Current.Resources["PalettePrimaryBrush"]).Color)
-                && inventoryShield.Color != Utils.GetArgbColorValue(((SolidColorBrush)Application.Current.Resources["PaletteDeepPurpleBrush"]).Color))
-            {
-                Brush = new SolidColorBrush(Utils.ColorFromArgbValue(inventoryShield.Color));
-            }
-            else
-                Brush = (SolidColorBrush)Application.Current.Resources["PaletteDeepPurpleBrush"];
-
             PropertyChanged += InventoryShieldModel_PropertyChanged;
 
             IsInitialized = true;

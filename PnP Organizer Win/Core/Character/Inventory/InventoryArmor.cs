@@ -1,4 +1,6 @@
-﻿using PnPOrganizer.Models;
+﻿using CommunityToolkit.WinUI.Helpers;
+using Microsoft.UI;
+using PnPOrganizer.Models;
 
 namespace PnPOrganizer.Core.Character.Inventory
 {
@@ -24,5 +26,7 @@ namespace PnPOrganizer.Core.Character.Inventory
             Weight = inventoryShieldModel.Weight;
             Loudness = inventoryShieldModel.Loudness;
         }
+
+        protected override int GetBaseColor() => DefaultPalette.Green.ToInt();
     }
 }

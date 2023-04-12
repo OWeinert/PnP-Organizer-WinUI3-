@@ -87,34 +87,6 @@ namespace PnPOrganizer.Views
             await ItemsGridView.TryStartConnectedAnimationAsync(animation, StoredItem, "Item");
         }
 
-        private async void ItemImageButton_Click(object sender, RoutedEventArgs e)
-        {
-            var openPicker = new FileOpenPicker();
-
-            var hWnd = WindowHelper.GetCurrentProcMainWindowHandle();
-            WinRT.Interop.InitializeWithWindow.Initialize(openPicker, hWnd);
-
-            openPicker.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
-            openPicker.FileTypeFilter.Add(".png");
-            openPicker.FileTypeFilter.Add(".jpg");
-            openPicker.FileTypeFilter.Add(".jpeg");
-            openPicker.FileTypeFilter.Add(".bmp");
-            openPicker.FileTypeFilter.Add(".gif");
-
-            var file = await openPicker.PickSingleFileAsync();
-            if (file != null)
-            {
-                var itemImage = new BitmapImage();
-
-                using var stream = await file.OpenReadAsync();
-                stream.Seek(0);
-                await itemImage.SetSourceAsync(stream);
-
-                if(StoredItemCopy != null)
-                    StoredItemCopy.ItemImage = itemImage;
-            }
-        }
-
         private void Animation_Completed(ConnectedAnimation sender, object args)
         {
             SmokeGrid.Visibility = Visibility.Collapsed;
@@ -135,16 +107,9 @@ namespace PnPOrganizer.Views
                 }
                 var animation = ItemsGridView.PrepareConnectedAnimation("ForwardConnectedAnimation", StoredItem, "Item");
                 
-                if(StoredItem != null)
+                if(StoredItemCopy != null)
                 {
-                    ItemDetails.DataContext = StoredItem;
-
-                    var translucentBrush = new SolidColorBrush(Color.FromArgb(DETAILCARD_ALPHA, StoredItem.Brush!.Color.R, StoredItem.Brush.Color.G, StoredItem.Brush.Color.B));
-
-                    DetailHeaderGrid.Background = translucentBrush;
-                    DetailHeaderName.Text = StoredItem.Name;
-                    DetailContentGrid.Background = translucentBrush;
-                    DetailContentDescr.Text = StoredItem.Description;
+                    ItemDetails.DataContext = StoredItemCopy;
                 }
 
                 animation.TryStart(ItemDetails);

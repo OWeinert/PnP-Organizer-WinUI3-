@@ -1,0 +1,42 @@
+﻿<ResourceDictionary x:Class="PnPOrganizer.Views.InventoryItemDetailTemplates"
+                    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:models="using:PnPOrganizer.Models"
+                    xmlns:controls="using:PnPOrganizer.Controls">
+
+    <DataTemplate x:Name="InventoryItemDetailsTemplate"
+                  x:Key="InventoryItemDetailsTemplate" 
+                  x:DataType="models:InventoryItemViewModel">
+        <Grid x:Name="DetailContentGrid">
+            <controls:InventoryItemDetailDescription ItemViewModel="{x:Bind BindableInstance, Mode=OneWay}"
+                                                     HorizontalAlignment="Stretch"
+                                                     VerticalAlignment="Stretch"/>
+        </Grid>
+    </DataTemplate>
+
+    <DataTemplate x:Name="InventoryWeaponDetailsTemplate"
+                  x:Key="InventoryWeaponDetailsTemplate" 
+                  x:DataType="models:InventoryWeaponViewModel">
+        <Grid x:Name="DetailContentGrid">
+            <controls:InventoryItemDetailDescription ItemViewModel="{x:Bind BindableInstance, Mode=OneWay}"
+                                                     HorizontalAlignment="Stretch"
+                                                     VerticalAlignment="Stretch"/>
+        </Grid>
+    </DataTemplate>
+
+    <DataTemplate x:Name="InventoryArmorDetailsTemplate"
+                  x:Key="InventoryArmorDetailsTemplate" 
+                  x:DataType="models:InventoryArmorViewModel">
+        <Grid x:Name="DetailContentGrid">
+            <controls:InventoryItemDetailDescription ItemViewModel="{x:Bind BindableInstance, Mode=OneWay}"/>
+        </Grid>
+    </DataTemplate>
+
+    <DataTemplate x:Name="InventoryShieldDetailsTemplate" 
+                  x:Key="InventoryShieldDetailsTemplate"
+                  x:DataType="models:InventoryShieldViewModel">
+        <Grid x:Name="DetailContentGrid">
+            <controls:InventoryItemDetailDescription ItemViewModel="{x:Bind BindableInstance, Mode=OneWay}"/>
+        </Grid>
+    </DataTemplate>
+</ResourceDictionary>

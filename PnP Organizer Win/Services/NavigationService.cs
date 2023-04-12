@@ -37,7 +37,7 @@ namespace PnPOrganizer.Services
             _contentFrame.Navigated += OnNavigated;
             _contentFrame.NavigationFailed += OnNavigationFailed;
 
-            foreach (NavigationViewItem item in _navigationView.MenuItems)
+            foreach (var item in _navigationView.MenuItems.Cast<NavigationViewItem>())
             {
                 if (item.Tag.ToString() is string itemTag &&
                     Type.GetType(itemTag) is Type type)
@@ -100,7 +100,7 @@ namespace PnPOrganizer.Services
                 }
                 else if (_contentFrame.SourcePageType is not null)
                 {
-                    (string Tag, Type PageType) = _navigationPages.FirstOrDefault(p => p.PageType == e.SourcePageType);
+                    (var Tag, Type PageType) = _navigationPages.FirstOrDefault(p => p.PageType == e.SourcePageType);
 
                     _navigationView.SelectedItem = _navigationView.MenuItems
                         .OfType<NavigationViewItem>()

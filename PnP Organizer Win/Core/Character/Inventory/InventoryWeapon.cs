@@ -1,4 +1,6 @@
-﻿using PnPOrganizer.Core.BattleAssistant;
+﻿using CommunityToolkit.WinUI.Helpers;
+using Microsoft.UI;
+using PnPOrganizer.Core.BattleAssistant;
 using PnPOrganizer.Models;
 
 namespace PnPOrganizer.Core.Character.Inventory
@@ -40,5 +42,7 @@ namespace PnPOrganizer.Core.Character.Inventory
             Weight = inventoryWeaponModel.Weight;
             IsTwoHanded = inventoryWeaponModel.IsTwoHanded;
         }
+
+        protected override int GetBaseColor() => DefaultPalette.Blue.ToInt();
     }
 }

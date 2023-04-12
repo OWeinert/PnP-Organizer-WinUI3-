@@ -50,8 +50,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Controls\InventoryItemDetailDescription.xaml" />
+    <None Remove="Controls\InventoryItemDetailHeader.xaml" />
+    <None Remove="Controls\InventoryItemHeader.xaml" />
     <None Remove="Views\CharacterPage.xaml" />
     <None Remove="Views\ExternalRulesPage.xaml" />
+    <None Remove="Views\InventoryItemDetailTemplates.xaml" />
     <None Remove="Views\InventoryPage.xaml" />
     <None Remove="Views\MainPage.xaml" />
     <None Remove="Views\MapPage.xaml" />
@@ -129,6 +133,18 @@
     <None Update="Assets\applicationIcon.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Page Update="Views\InventoryItemDetailTemplates.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Controls\InventoryItemDetailDescription.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Controls\InventoryItemDetailHeader.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Controls\InventoryItemHeader.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Views\Maps\MapPageAttica.xaml">
