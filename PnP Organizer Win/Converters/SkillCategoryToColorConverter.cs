@@ -20,9 +20,9 @@ namespace PnPOrganizer.Converters
             {
                 return (SkillCategory)value switch
                 {
-                    SkillCategory.Melee => Utils.ColorFromArgbValue((int)ISkillsService.MeleeSkillColor),
-                    SkillCategory.Ranged => Utils.ColorFromArgbValue((int)ISkillsService.RangedSkillColor),
-                    _ => Utils.ColorFromArgbValue((int)ISkillsService.CharSkillColor),
+                    SkillCategory.Melee => DefaultPalette.Blue,
+                    SkillCategory.Ranged => DefaultPalette.Green,
+                    _ => DefaultPalette.Red,
                 };
             }
             
