@@ -4,20 +4,196 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="using:PnPOrganizer"
+    xmlns:ani="using:CommunityToolkit.WinUI.UI.Animations"
+    xmlns:media="using:CommunityToolkit.WinUI.UI.Media"
+    xmlns:ui="using:CommunityToolkit.WinUI.UI"
+    xmlns:sData="using:PnPOrganizer.Services.Data"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     Style="{StaticResource CommonPageStyle}"
     mc:Ignorable="d">
 
-    <Grid Style="{StaticResource PageBodyGridStyle}">
-        <StackPanel
-            Margin="{StaticResource MediumMargin}"
-            Orientation="Vertical">
-            <!--  Title  -->
-            <TextBlock
-                x:Uid="MainPage_Title"
-                Style="{ThemeResource TitleTextBlockStyle}" />
-        </StackPanel>
+    <Page.Resources>
+        <AcrylicBrush x:Key="LightAcrylicBrush" 
+                      TintColor="#2C2C2C"
+                      TintOpacity="0.2"
+                      FallbackColor="#2C2C2C"
+                      TintLuminosityOpacity="1"
+                      Opacity="0.9"/>
+    </Page.Resources>
+
+    <Grid Style="{StaticResource PageBodyGridStyle}"
+          Margin="0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <TextBlock Grid.Row="0"
+                       x:Uid="MainPage_Header"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Center"
+                       FontSize="40"
+                       FontFamily="Display"
+                       FontWeight="SemiBold"
+                       Margin="0,6,0,0"/>
+        </Grid>
+
+        <ScrollViewer x:Name="ContentScrollViewer" 
+                      Grid.Row="1">
+            <Grid>
+                <Grid.Resources>
+                    <x:Double x:Key="CharacterImageBackgroundOpacity">0.4</x:Double>
+                </Grid.Resources>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <Grid x:Name="LastCharactersView"
+                      Grid.Row="0"
+                      Height="500">
+                    <Image x:Name="CharacterImageBackground"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           MaxWidth="700"
+                           Stretch="UniformToFill"
+                           Opacity="{StaticResource CharacterImageBackgroundOpacity}">
+                        <ani:Explicit.Animations>
+                            <ani:AnimationSet x:Name="FadeOutAnimation">
+                                <ani:OpacityAnimation From="{StaticResource CharacterImageBackgroundOpacity}"
+                                              To="0"
+                                              Duration="0:0:0.25"
+                                              Delay="0"
+                                              EasingType="Linear"
+                                              EasingMode="EaseOut"/>
+                            </ani:AnimationSet>
+                            <ani:AnimationSet x:Name="FadeInAnimation">
+                                <ani:OpacityAnimation From="0"
+                                              To="{StaticResource CharacterImageBackgroundOpacity}"
+                                              Duration="0:0:0.25"
+                                              Delay="0"
+                                              EasingType="Linear"
+                                              EasingMode="EaseIn"/>
+                            </ani:AnimationSet>
+                        </ani:Explicit.Animations>
+                    </Image>
+                    <Grid x:Name="BlurLayer">
+                        <Grid.Background>
+                            <media:BackdropBlurBrush Amount="4"/>
+                        </Grid.Background>
+                    </Grid>
+                    <Grid x:Name="HorizontalGradientFadeOut">
+                        <Grid.Background>
+                            <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
+                                <GradientStop Color="#ff171717" Offset="0.15"/>
+                                <GradientStop Color="#00171717" Offset="0.3"/>
+                                <GradientStop Color="#00171717" Offset="0.7"/>
+                                <GradientStop Color="#ff171717" Offset="0.85"/>
+                            </LinearGradientBrush>
+                        </Grid.Background>
+                    </Grid>
+                    <Grid x:Name="VerticalGradientFadeOut">
+                        <Grid.Background>
+                            <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                                <GradientStop Color="#ff171717" Offset="0.0"/>
+                                <GradientStop Color="#00171717" Offset="0.2"/>
+                                <GradientStop Color="#00171717" Offset="0.8"/>
+                                <GradientStop Color="#ff171717" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Grid.Background>
+                    </Grid>
+                    <Grid>
+                        <controls:Carousel x:Name="LastCharactersCarousel"
+                                           VerticalAlignment="Stretch"
+                                           HorizontalAlignment="Center"
+                                           ItemsSource="{x:Bind ViewModel.SaveFileInfos}"
+                                           InvertPositive="True"
+                                           ItemDepth="300"
+                                           ItemRotationY="45"
+                                           Orientation="Horizontal"
+                                           SelectedIndex="2"
+                                           TransitionDuration="300"
+                                           SelectionChanged="LastCharacterCarousel_SelectionChanged"
+                                           Loaded="LastCharactersCarousel_Loaded">
+                            <controls:Carousel.EasingFunction>
+                                <CubicEase EasingMode="EaseOut"/>
+                            </controls:Carousel.EasingFunction>
+                            <controls:Carousel.ItemTemplate>
+                                <DataTemplate x:DataType="sData:SaveFileInfo">
+                                    <Grid x:Name="CharacterCard"
+                                          Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+                                          CornerRadius="8"
+                                          Height="270"
+                                          Width="210"
+                                          BorderBrush="{StaticResource LightAcrylicBrush}">
+                                        <Image Source="{x:Bind CharacterImage, Mode=OneWay}"
+                                               Stretch="UniformToFill"
+                                               VerticalAlignment="Stretch"
+                                               HorizontalAlignment="Stretch"/>
+                                        <Grid VerticalAlignment="Bottom"
+                                              Height="100"
+                                              Background="{StaticResource LightAcrylicBrush}">
+                                            <StackPanel Margin="8,0,8,8">
+                                                <Viewbox MaxHeight="48"
+                                                         HorizontalAlignment="Left">
+                                                    <TextBlock Text="{x:Bind CharacterFirstName, Mode=OneWay}"
+                                                               Style="{ThemeResource SubheaderTextBlockStyle}"
+                                                               TextTrimming="CharacterEllipsis"/>
+                                                </Viewbox>
+                                                <Viewbox MaxHeight="48"
+                                                         HorizontalAlignment="Left">
+                                                    <TextBlock Text="{x:Bind CharacterLastName, Mode=OneWay}"
+                                                               Style="{ThemeResource SubheaderTextBlockStyle}"
+                                                               TextTrimming="CharacterEllipsis"/>
+                                                </Viewbox>
+                                            </StackPanel>
+                                        </Grid>
+                                    </Grid>
+                                </DataTemplate>
+                            </controls:Carousel.ItemTemplate>
+                        </controls:Carousel>
+                    </Grid>
+                    <Grid x:Name="HorizontalGradientFadeOutOverlay"
+                      VerticalAlignment="Stretch"
+                      HorizontalAlignment="Stretch"
+                      IsHitTestVisible="False">
+                        <Grid.Background>
+                            <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
+                                <GradientStop Color="#ff171717" Offset="0.03"/>
+                                <GradientStop Color="#00171717" Offset="0.16"/>
+                                <GradientStop Color="#00171717" Offset="0.84"/>
+                                <GradientStop Color="#ff171717" Offset="0.97"/>
+                            </LinearGradientBrush>
+                        </Grid.Background>
+                    </Grid>
+                </Grid>
+                <Grid Grid.Row="1"
+                  Margin="16,24,16,16">
+                    <Rectangle HorizontalAlignment="Stretch"
+                       Height="4"
+                       Fill="{ThemeResource AccentAcrylicBackgroundFillColorBaseBrush}"/>
+                </Grid>
+                <Grid Grid.Row="2">
+                    <Button x:Name="ScrollDownButton" Width="128"
+                            Height="64"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Top"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            Click="ScrollDownButton_Click">
+                        <FontIcon Glyph="&#xE972;"
+                              FontSize="64"
+                              Foreground="{ThemeResource AccentAAFillColorDefaultBrush}"/>
+                    </Button>
+
+                    <Grid Height="500"/>
+                </Grid>
+            </Grid>
+        </ScrollViewer>
     </Grid>
 
 </Page>
