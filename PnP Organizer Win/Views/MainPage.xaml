@@ -38,14 +38,17 @@
                        FontSize="40"
                        FontFamily="Display"
                        FontWeight="SemiBold"
-                       Margin="0,6,0,0"/>
+                       Margin="0,6,0,16"/>
         </Grid>
 
         <ScrollViewer x:Name="ContentScrollViewer" 
-                      Grid.Row="1">
+                      Grid.Row="1"
+                      VerticalScrollBarVisibility="Hidden">
             <Grid>
                 <Grid.Resources>
                     <x:Double x:Key="CharacterImageBackgroundOpacity">0.4</x:Double>
+                    <Color x:Key="OuterFadeColor">#ff171717</Color>
+                    <Color x:Key="InnerFadeColor">#00171717</Color>
                 </Grid.Resources>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
@@ -55,6 +58,7 @@
 
                 <Grid x:Name="LastCharactersView"
                       Grid.Row="0"
+                      MaxWidth="1350"
                       Height="500">
                     <Image x:Name="CharacterImageBackground"
                            HorizontalAlignment="Center"
@@ -89,20 +93,28 @@
                     <Grid x:Name="HorizontalGradientFadeOut">
                         <Grid.Background>
                             <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
-                                <GradientStop Color="#ff171717" Offset="0.15"/>
-                                <GradientStop Color="#00171717" Offset="0.3"/>
-                                <GradientStop Color="#00171717" Offset="0.7"/>
-                                <GradientStop Color="#ff171717" Offset="0.85"/>
+                                <GradientStop Color="{StaticResource OuterFadeColor}" 
+                                              Offset="0.15"/>
+                                <GradientStop Color="{StaticResource InnerFadeColor}" 
+                                              Offset="0.3"/>
+                                <GradientStop Color="{StaticResource InnerFadeColor}" 
+                                              Offset="0.7"/>
+                                <GradientStop Color="{StaticResource OuterFadeColor}" 
+                                              Offset="0.85"/>
                             </LinearGradientBrush>
                         </Grid.Background>
                     </Grid>
                     <Grid x:Name="VerticalGradientFadeOut">
                         <Grid.Background>
                             <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
-                                <GradientStop Color="#ff171717" Offset="0.0"/>
-                                <GradientStop Color="#00171717" Offset="0.2"/>
-                                <GradientStop Color="#00171717" Offset="0.8"/>
-                                <GradientStop Color="#ff171717" Offset="1"/>
+                                <GradientStop Color="{StaticResource OuterFadeColor}" 
+                                              Offset="0.0"/>
+                                <GradientStop Color="{StaticResource InnerFadeColor}" 
+                                              Offset="0.2"/>
+                                <GradientStop Color="{StaticResource InnerFadeColor}" 
+                                              Offset="0.8"/>
+                                <GradientStop Color="{StaticResource OuterFadeColor}" 
+                                              Offset="1"/>
                             </LinearGradientBrush>
                         </Grid.Background>
                     </Grid>
@@ -163,10 +175,14 @@
                       IsHitTestVisible="False">
                         <Grid.Background>
                             <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
-                                <GradientStop Color="#ff171717" Offset="0.03"/>
-                                <GradientStop Color="#00171717" Offset="0.16"/>
-                                <GradientStop Color="#00171717" Offset="0.84"/>
-                                <GradientStop Color="#ff171717" Offset="0.97"/>
+                                <GradientStop Color="{StaticResource OuterFadeColor}" 
+                                              Offset="0.12"/>
+                                <GradientStop Color="{StaticResource InnerFadeColor}" 
+                                              Offset="0.26"/>
+                                <GradientStop Color="{StaticResource InnerFadeColor}"
+                                              Offset="0.74"/>
+                                <GradientStop Color="{StaticResource OuterFadeColor}" 
+                                              Offset="0.88"/>
                             </LinearGradientBrush>
                         </Grid.Background>
                     </Grid>
@@ -177,7 +193,7 @@
                        Height="4"
                        Fill="{ThemeResource AccentAcrylicBackgroundFillColorBaseBrush}"/>
                 </Grid>
-                <Grid Grid.Row="2">
+                <StackPanel Grid.Row="2">
                     <Button x:Name="ScrollDownButton" Width="128"
                             Height="64"
                             HorizontalAlignment="Center"
@@ -190,8 +206,27 @@
                               Foreground="{ThemeResource AccentAAFillColorDefaultBrush}"/>
                     </Button>
 
-                    <Grid Height="500"/>
-                </Grid>
+                    <Grid Height="224"
+                          Margin="0,80,0,0">
+                        <StackPanel Orientation="Horizontal"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Top">
+                            <Button x:Uid="MainPage_OpenButton"
+                                    Width="128"
+                                    Height="128"
+                                    Margin="0,0,64,0">
+                                <FontIcon Glyph="&#xED25;"
+                                          FontSize="64"/>
+                            </Button>
+                            <Button x:Uid="MainPage_NewButton"
+                                    Width="128"
+                                    Height="128">
+                                <FontIcon Glyph="&#xF8AA;" 
+                                          FontSize="64"/>
+                            </Button>
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
             </Grid>
         </ScrollViewer>
     </Grid>

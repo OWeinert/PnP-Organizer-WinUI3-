@@ -144,8 +144,14 @@
   <data name="ja" xml:space="preserve">
     <value>日本語</value>
   </data>
-  <data name="MainPage_Title.Text" xml:space="preserve">
-    <value>Main Page</value>
+  <data name="MainPage_Header.Text" xml:space="preserve">
+    <value>Welcome Back</value>
+  </data>
+  <data name="MainPage_NewButton.[using:Microsoft.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>New Character</value>
+  </data>
+  <data name="MainPage_OpenButton.[using:Microsoft.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Open Character</value>
   </data>
   <data name="MainWindow_MenuEdit" xml:space="preserve">
     <value>Edit</value>
