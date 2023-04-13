@@ -91,20 +91,13 @@
                     DefaultLabelPosition="Right"
                     IsSticky="True">
             <CommandBar.Content>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="0"
+                <TextBlock Grid.Column="0"
                                x:Uid="InventoryPage_Header"
                                VerticalAlignment="Center"
                                FontSize="28"
                                FontFamily="Display"
                                FontWeight="SemiBold"
                                Margin="6,6,0,0"/>
-
-                </Grid>
             </CommandBar.Content>
             <AppBarElementContainer VerticalAlignment="Center">
                 <AutoSuggestBox x:Name="SearchItemBox"  
