@@ -1,4 +1,5 @@
-﻿using Microsoft.UI.Xaml;
+﻿using Microsoft.UI.Text;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Imaging;
@@ -89,6 +90,7 @@ namespace PnPOrganizer.Core
         /// <param name="bytes"></param>
         /// <returns></returns>
         public static BitmapImage BitmapFromBytes(byte[] bytes) => BitmapFromByteBuffer(bytes.AsBuffer());
+
         #endregion Image
 
         #region XML
@@ -231,7 +233,7 @@ namespace PnPOrganizer.Core
 
                 using (var stream = await file.OpenAsync(FileAccessMode.ReadWrite))
                 {
-                    rtBox.Document.SaveToStream(Microsoft.UI.Text.TextGetOptions.FormatRtf, stream);
+                    rtBox.Document.SaveToStream(TextGetOptions.FormatRtf, stream);
                 }
                 var status = await CachedFileManager.CompleteUpdatesAsync(file);
                 if (status != FileUpdateStatus.Complete)
