@@ -18,6 +18,9 @@ namespace PnPOrganizer.Views
 
         private int _notificationDuration = 2000;
 
+        public XamlRoot XamlRoot { get; }
+        public ElementTheme ActualTheme { get; }
+
         public MainWindow()
         {
             InitializeComponent();
@@ -29,6 +32,8 @@ namespace PnPOrganizer.Views
             AppWindow.Closing += AppWindow_Closing;
             Ioc.Default.GetRequiredService<ISaveDataService>().CharacterSaved += MainWindow_CharacterSaved;
             Ioc.Default.GetRequiredService<ISaveDataService>().CharacterLoaded += MainWindow_CharacterLoaded;
+            XamlRoot = ContentGrid.XamlRoot;
+            ActualTheme = ContentGrid.ActualTheme;
         }
 
         private void MainWindow_CharacterLoaded(object? sender, Core.Character.CharacterData e)

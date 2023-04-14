@@ -89,7 +89,7 @@
                 <Grid x:Name="LastCharactersView"
                       Grid.Row="0"
                       MaxWidth="1350"
-                      Height="500">
+                      MaxHeight="500">
                     <Image x:Name="CharacterImageBackground"
                            HorizontalAlignment="Center"
                            VerticalAlignment="Center"
@@ -245,7 +245,7 @@
                               Foreground="{ThemeResource AccentAAFillColorDefaultBrush}"/>
                     </Button>
 
-                    <Grid Height="224"
+                    <Grid Height="208"
                           Margin="0,80,0,0">
                         <StackPanel Orientation="Horizontal"
                                     HorizontalAlignment="Center"

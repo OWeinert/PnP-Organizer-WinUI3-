@@ -1,7 +1,12 @@
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+using PnPOrganizer.Helpers;
 using PnPOrganizer.Services.Interfaces;
 using PnPOrganizer.ViewModels.Interfaces;
+using PnPOrganizer.Views;
 using System;
 using System.Threading.Tasks;
 
@@ -34,7 +39,25 @@ namespace PnPOrganizer.ViewModels
         [RelayCommand]
         private async Task OpenCharacter()
         {
-            await _saveDataService.ShowOpenCharacterFilePicker();
+            if (!_saveDataService.IsSaved)
+            {
+                var window = Ioc.Default.GetRequiredService<MainWindow>();
+                var result = await Dialogs.GetLoadCharacterConfirmDialog(window.XamlRoot, window.ActualTheme).ShowAsync();
+                if (result == ContentDialogResult.Primary)
+                {
+                    await _saveDataService.ShowSaveCharacterFilePicker();
+                    await ShowFilePicker();
+                }
+                else if (result == ContentDialogResult.Secondary)
+                    await ShowFilePicker();
+            }
+            else
+                await ShowFilePicker();
+
+            async Task ShowFilePicker()
+            {
+                await _saveDataService.ShowOpenCharacterFilePicker();
+            }
         }
 
         [RelayCommand]

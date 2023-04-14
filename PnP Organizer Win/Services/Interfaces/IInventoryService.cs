@@ -25,5 +25,7 @@ namespace PnPOrganizer.Services.Interfaces
         public void LoadInventory(CharacterData data);
 
         public void SaveInventory(ref CharacterData data);
+
+        public void ResetInventory();
     }
 }

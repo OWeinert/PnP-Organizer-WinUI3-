@@ -852,5 +852,15 @@ namespace PnPorganizer.Core.Character
             });
             data.Skills = saveData;
         }
+
+        public void ResetSkills()
+        {
+            foreach(var skill in Registry.Values)
+            {
+                skill.SkillPoints = 0;
+                if (skill.IsRepeatable)
+                    skill.Repetition = 0;
+            }
+        }
     }
 }

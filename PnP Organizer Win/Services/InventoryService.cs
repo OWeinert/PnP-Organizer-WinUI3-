@@ -43,5 +43,10 @@ namespace PnPOrganizer.Services
             var currentInventory = ItemModels.ToList().ConvertAll(itemModel => itemModel.InventoryItem);
             data.Inventory = currentInventory;
         }
+
+        public void ResetInventory()
+        {
+            ItemModels.Clear();
+        }
     }
 }

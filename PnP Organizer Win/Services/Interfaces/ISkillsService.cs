@@ -29,5 +29,7 @@ namespace PnPOrganizer.Core.Character.SkillSystem
         public void LoadSkillSaveData(CharacterData data);
 
         public void SaveSkillSaveData(ref CharacterData data);
+
+        public void ResetSkills();
     }
 }

@@ -46,6 +46,10 @@ namespace PnPOrganizer.Services
         public CharacterData CreateNewCharacter()
         {
             _loadedCharacter = new CharacterData();
+            _loadedCharacterSaveInfo = null;
+            _inventoryService.ResetInventory();
+            _skillsService.ResetSkills();
+            MarkSaved();
             return LoadedCharacter!;
         }
 

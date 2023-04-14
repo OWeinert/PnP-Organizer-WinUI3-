@@ -3,7 +3,9 @@ using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.WinUI;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Animation;
+using PnPOrganizer.Helpers;
 using PnPOrganizer.Interfaces;
 using PnPOrganizer.Services;
 using PnPOrganizer.Services.Interfaces;
@@ -17,16 +19,18 @@ using Windows.Storage;
 
 namespace PnPOrganizer.Views
 {
-    [INotifyPropertyChanged]
     public sealed partial class MainPage : Page, IViewFor<MainPageViewModel>
     {
         public MainPageViewModel ViewModel { get; }
 
         public double BackgroundBaseOpacity => 0.4;
 
+        private ISaveDataService _saveDataService;
+
         public MainPage()
         {
             InitializeComponent();
+            _saveDataService = Ioc.Default.GetRequiredService<ISaveDataService>();
             ViewModel = Ioc.Default.GetRequiredService<MainPageViewModel>();
             ViewModel.SelectedSaveChanged += (sender, e) => Bindings.Update();
         }
@@ -87,8 +91,24 @@ namespace PnPOrganizer.Views
 
         private async void OpenButton_Click(object sender, RoutedEventArgs e)
         {
-            var saveDataService = Ioc.Default.GetRequiredService<ISaveDataService>();
-            await saveDataService.ShowOpenCharacterFilePicker();
+            if (!_saveDataService.IsSaved)
+            {
+                var result = await Dialogs.GetLoadCharacterConfirmDialog(XamlRoot, ActualTheme).ShowAsync();
+                if (result == ContentDialogResult.Primary)
+                {
+                    await _saveDataService.ShowSaveCharacterFilePicker();
+                    await ShowFilePicker();
+                }
+                else if (result == ContentDialogResult.Secondary)
+                    await ShowFilePicker();
+            }
+            else
+                await ShowFilePicker();
+
+            async Task ShowFilePicker()
+            {
+                await _saveDataService.ShowOpenCharacterFilePicker();
+            }
         }
 
         private async void CharacterCardOpenButton_Click(object sender, RoutedEventArgs e)
@@ -96,27 +116,59 @@ namespace PnPOrganizer.Views
             var selectedSave = ViewModel.SelectedSave!.SaveFileInfo;
             if(selectedSave != null)
             {
+                if (!_saveDataService.IsSaved)
+                {
+                    var result = await Dialogs.GetLoadCharacterConfirmDialog(XamlRoot, ActualTheme).ShowAsync();
+                    if(result == ContentDialogResult.Primary)
+                    {
+                        await _saveDataService.ShowSaveCharacterFilePicker();
+                        await LoadCharacter();
+                    }
+                    else if(result == ContentDialogResult.Secondary)
+                        await LoadCharacter();
+                }
+                else
+                    await LoadCharacter();
+            }   
+
+            async Task LoadCharacter()
+            {
                 try
                 {
-                    var saveDataService = Ioc.Default.GetRequiredService<ISaveDataService>();
-                    var file = await StorageFile.GetFileFromPathAsync(selectedSave.FilePath);
+                    var file = await StorageFile.GetFileFromPathAsync(selectedSave!.FilePath);
                     if (file != null)
-                        await saveDataService.LoadCharacter(file);
+                        await _saveDataService.LoadCharacter(file);
                 }
                 catch (Exception ex)
                 {
                     Log.Error(ex, "Exception thrown while trying to load Character!");
                     throw;
                 }
-            }   
+            }
         }
 
-        private void NewButton_Click(object sender, RoutedEventArgs e)
+        private async void NewButton_Click(object sender, RoutedEventArgs e)
         {
-            var saveDataService = Ioc.Default.GetRequiredService<ISaveDataService>();
-            saveDataService.CreateNewCharacter();
-            var navigationService = Ioc.Default.GetRequiredService<INavigationViewService>();
-            navigationService.NavigateTo(typeof(CharacterPage), new CommonNavigationTransitionInfo());
+            if (!_saveDataService.IsSaved)
+            {
+                var result = await Dialogs.GetNewCharacterConfirmDialog(XamlRoot, ActualTheme).ShowAsync();
+                if (result == ContentDialogResult.Primary)
+                {
+                    await _saveDataService.ShowSaveCharacterFilePicker();
+                    CreateNewCharacter();
+                }
+                else if (result == ContentDialogResult.Secondary)
+                    CreateNewCharacter();
+            }
+            else
+                CreateNewCharacter();
+
+            void CreateNewCharacter()
+            {
+                _saveDataService.CreateNewCharacter();
+                var navigationService = Ioc.Default.GetRequiredService<INavigationViewService>();
+                navigationService.NavigateTo(typeof(CharacterPage), new CommonNavigationTransitionInfo());
+            }
         }
     }
 }
