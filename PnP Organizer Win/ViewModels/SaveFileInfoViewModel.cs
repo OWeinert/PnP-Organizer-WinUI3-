@@ -44,7 +44,7 @@ namespace PnPOrganizer.ViewModels
             HasSaveFileInfo = value != null;
             if (value != null)
             {
-                CharacterImage = Utils.BitmapFromBytes(value.CharacterImage);
+                CharacterImage = Utils.BitmapFromBytes(value.CharacterImage!);
             }
             ObservableSelf = BindableInstance;
         }

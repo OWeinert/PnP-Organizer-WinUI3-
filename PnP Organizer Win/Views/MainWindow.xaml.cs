@@ -1,4 +1,5 @@
 using CommunityToolkit.Mvvm.DependencyInjection;
+using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Animation;
@@ -15,6 +16,8 @@ namespace PnPOrganizer.Views
     {
         private ISaveFileInfoService _saveFileInfoService;
 
+        private int _notificationDuration = 2000;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -25,17 +28,17 @@ namespace PnPOrganizer.Views
             AppWindow.SetIcon("Assets/applicationIcon.ico");
             AppWindow.Closing += AppWindow_Closing;
             Ioc.Default.GetRequiredService<ISaveDataService>().CharacterSaved += MainWindow_CharacterSaved;
-            Ioc.Default.GetRequiredService<ISaveDataService>().CharacterLoaded += MainWindow_CharacterLoaded; ;
+            Ioc.Default.GetRequiredService<ISaveDataService>().CharacterLoaded += MainWindow_CharacterLoaded;
         }
 
         private void MainWindow_CharacterLoaded(object? sender, Core.Character.CharacterData e)
         {
-            CharacterLoadedTeachingTip.IsOpen = true;
+            CharacterLoadedTT.Show(_notificationDuration);
         }
 
         private void MainWindow_CharacterSaved(object? sender, Core.Character.CharacterData e)
         {
-            CharacterSavedTeachingTip.IsOpen = true;
+            CharacterSavedTT.Show(_notificationDuration);
         }
 
         private async void AppWindow_Closing(Microsoft.UI.Windowing.AppWindow sender, Microsoft.UI.Windowing.AppWindowClosingEventArgs args)

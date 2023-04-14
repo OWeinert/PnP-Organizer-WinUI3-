@@ -3,12 +3,11 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:local="using:PnPOrganizer"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:views="using:PnPOrganizer.Views"
+    xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"
     mc:Ignorable="d">
     
-    <Grid
+    <Grid x:Name="ContentGrid"
         Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
         <Grid.RowDefinitions>
@@ -171,24 +170,14 @@
             </Grid>
         </NavigationView>
 
-        <TeachingTip x:Name="CharacterLoadedTeachingTip"
-                     VerticalContentAlignment="Center"
-	                 PreferredPlacement="Bottom"
-	                 PlacementMargin="20"
-	                 IsLightDismissEnabled="True">
-            <Grid>
-                
-            </Grid>
-        </TeachingTip>
-        <TeachingTip x:Name="CharacterSavedTeachingTip"
-                     VerticalContentAlignment="Center"
-	                 PreferredPlacement="Bottom"
-	                 PlacementMargin="20"
-	                 IsLightDismissEnabled="True">
-            <Grid>
-                
-            </Grid>
-        </TeachingTip>
+        <controls:InAppNotification x:Uid="MainWindow_CharacterLoadedTT"
+                                    x:Name="CharacterLoadedTT"
+                                    Grid.Row="1">
+        </controls:InAppNotification>
+        <controls:InAppNotification x:Uid="MainWindow_CharacterSavedTT"
+                                    x:Name="CharacterSavedTT"
+                                    Grid.Row="1">
+        </controls:InAppNotification>
     </Grid>
 
 </Window>

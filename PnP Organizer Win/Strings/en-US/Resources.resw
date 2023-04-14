@@ -153,6 +153,12 @@
   <data name="MainPage_OpenButton.[using:Microsoft.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>Open Character</value>
   </data>
+  <data name="MainWindow_CharacterLoadedTT.Content" xml:space="preserve">
+    <value>Character Loaded!</value>
+  </data>
+  <data name="MainWindow_CharacterSavedTT.Content" xml:space="preserve">
+    <value>Character Saved!</value>
+  </data>
   <data name="MainWindow_MenuEdit" xml:space="preserve">
     <value>Edit</value>
   </data>

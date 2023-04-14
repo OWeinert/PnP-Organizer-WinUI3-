@@ -1,15 +1,10 @@
 ﻿using CommunityToolkit.WinUI.Helpers;
-using CommunityToolkit.WinUI.UI.Media.Geometry;
-using Octokit;
-using PnPOrganizer.Interfaces;
 using PnPOrganizer.Services.Data;
 using PnPOrganizer.Services.Interfaces;
 using PnPOrganizer.ViewModels;
 using Serilog;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -29,6 +24,10 @@ namespace PnPOrganizer.Services
         public SaveFileInfoService()
         {
             _localFolder = ApplicationData.Current.LocalFolder;
+            if (!_localFolder.FileExistsAsync(LocalDataFileName).Result)
+            {
+                _ = _localFolder.CreateFileAsync(LocalDataFileName).GetResults();
+            }
             _saveFileInfos = new();
         }
 
@@ -49,11 +48,9 @@ namespace PnPOrganizer.Services
         /// <returns></returns>
         public async Task<List<SaveFileInfo?>?> LoadSaveFileInfos()
         {
-            await SetupFileStructure();
             try
             {
                 var file = await _localFolder.GetFileAsync(LocalDataFileName);
-                Debug.WriteLine(file.Path);
                 using var stream = await file.OpenStreamForReadAsync();
                 if(stream.Length > 0)
                 {
@@ -86,7 +83,6 @@ namespace PnPOrganizer.Services
         /// <returns></returns>
         public async Task SaveSaveFileInfos()
         {
-            await SetupFileStructure();
             try
             {
                 var file = await _localFolder.GetFileAsync(LocalDataFileName);
@@ -106,14 +102,6 @@ namespace PnPOrganizer.Services
                     Log.Error(e, "IOException while accessing \"{0}\": {1}", LocalDataFileName, e.Source);
                 }
                 throw;
-            }
-        }
-
-        private async Task SetupFileStructure()
-        {
-            if (!await _localFolder.FileExistsAsync(LocalDataFileName))
-            {
-                await _localFolder.CreateFileAsync(LocalDataFileName);
             }
         }
     }

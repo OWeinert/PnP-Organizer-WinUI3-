@@ -15,6 +15,7 @@ namespace PnPOrganizer.Services.Interfaces
         public event EventHandler<SaveFileInfo>? CharacterSaveInfoCreated;
 
         public CharacterData? LoadedCharacter { get; }
+        public SaveFileInfo? LoadedCharacterSaveInfo { get; }
 
         public bool IsSaved { get; }
 
@@ -25,6 +26,8 @@ namespace PnPOrganizer.Services.Interfaces
         public Task LoadCharacter(string path);
 
         public Task SaveCharacter(StorageFile file);
+
+        public Task SaveLoadedCharacter();
 
         public Task<bool> ShowSaveCharacterFilePicker(UIElement? currentUIElement = null);
 

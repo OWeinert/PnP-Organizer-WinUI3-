@@ -97,7 +97,7 @@ namespace PnPOrganizer.Views
 
         private async void CharacterCardOpenButton_Click(object sender, RoutedEventArgs e)
         {
-            var selectedSave = ViewModel.SelectedSave.SaveFileInfo;
+            var selectedSave = ViewModel.SelectedSave!.SaveFileInfo;
             if(selectedSave != null)
             {
                 try

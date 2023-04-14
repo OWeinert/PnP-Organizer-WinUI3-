@@ -85,12 +85,14 @@ namespace PnPOrganizer.Services
             await window.DispatcherQueue.EnqueueAsync(async() =>
             {
                 using var stream = await file.OpenStreamForWriteAsync();
+                stream.SetLength(0);
                 try
                 {
                     try
                     {
                         _inventoryService.SaveInventory(ref _loadedCharacter!);
                         _skillsService.SaveSkillSaveData(ref _loadedCharacter!);
+
                         Utils.SerializeAndWriteToXml(LoadedCharacter, stream);
                         MarkSaved();
                         CreateCharacterSaveFileInfo(file);
@@ -106,6 +108,15 @@ namespace PnPOrganizer.Services
                     Log.Error(e, "Error loading Character Save Data!");
                 }
             }, DispatcherQueuePriority.High);
+        }
+
+        public async Task SaveLoadedCharacter()
+        {
+            if(LoadedCharacter != null && LoadedCharacterSaveInfo != null)
+            {
+                var file = await StorageFile.GetFileFromPathAsync(LoadedCharacterSaveInfo.FilePath);
+                await SaveCharacter(file);
+            }
         }
 
         public async Task<bool> ShowSaveCharacterFilePicker(UIElement? currentUIElement = null)

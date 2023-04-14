@@ -40,7 +40,10 @@ namespace PnPOrganizer.ViewModels
         [RelayCommand]
         private async Task SaveCharacter()
         {
-            await _saveDataService.ShowOpenCharacterFilePicker();
+            if (_saveDataService.LoadedCharacterSaveInfo == null)
+                await _saveDataService.ShowSaveCharacterFilePicker();
+            else
+                await _saveDataService.SaveLoadedCharacter();
         }
 
         [RelayCommand]
