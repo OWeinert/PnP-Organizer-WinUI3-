@@ -252,6 +252,22 @@ namespace PnPOrganizer.Core
         private static partial Regex VersionExcludeRegex();
         #endregion
 
+        #region IO
+        public static bool TryGetFile(string filePath, out StorageFile? file)
+        {
+            try
+            {
+                file = StorageFile.GetFileFromPathAsync(filePath).GetResults();
+                return true;
+            }
+            catch
+            {
+                file = null;
+                return false;
+            }
+        }
+        #endregion
+
         /// <summary>
         /// Copies the Values of the source's Properties to the target's Properties
         /// </summary>

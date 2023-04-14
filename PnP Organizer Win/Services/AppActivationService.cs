@@ -1,5 +1,6 @@
 using Microsoft.UI.Xaml;
 using PnPOrganizer.Interfaces;
+using PnPOrganizer.Services.Interfaces;
 using PnPOrganizer.Views;
 using PnPOrganizer.ViewServices;
 

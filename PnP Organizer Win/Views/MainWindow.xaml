@@ -7,9 +7,10 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:views="using:PnPOrganizer.Views"
     mc:Ignorable="d">
-
+    
     <Grid
         Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
@@ -169,6 +170,25 @@
                 </Grid>
             </Grid>
         </NavigationView>
+
+        <TeachingTip x:Name="CharacterLoadedTeachingTip"
+                     VerticalContentAlignment="Center"
+	                 PreferredPlacement="Bottom"
+	                 PlacementMargin="20"
+	                 IsLightDismissEnabled="True">
+            <Grid>
+                
+            </Grid>
+        </TeachingTip>
+        <TeachingTip x:Name="CharacterSavedTeachingTip"
+                     VerticalContentAlignment="Center"
+	                 PreferredPlacement="Bottom"
+	                 PlacementMargin="20"
+	                 IsLightDismissEnabled="True">
+            <Grid>
+                
+            </Grid>
+        </TeachingTip>
     </Grid>
 
 </Window>

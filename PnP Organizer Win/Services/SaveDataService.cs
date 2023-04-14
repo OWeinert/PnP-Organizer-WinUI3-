@@ -5,7 +5,7 @@ using Microsoft.UI.Xaml;
 using PnPOrganizer.Core;
 using PnPOrganizer.Core.Character;
 using PnPOrganizer.Core.Character.SkillSystem;
-using PnPOrganizer.Helpers;
+using PnPOrganizer.Services.Data;
 using PnPOrganizer.Services.Interfaces;
 using PnPOrganizer.Views;
 using Serilog;
@@ -13,7 +13,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
-using Windows.Foundation;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 
@@ -24,8 +23,16 @@ namespace PnPOrganizer.Services
         public event EventHandler<CharacterData>? CharacterSaved;
         public event EventHandler<CharacterData>? CharacterLoaded;
 
+        public event EventHandler<SaveFileInfo>? CharacterSaveInfoCreated;
+
         private CharacterData? _loadedCharacter;
         public CharacterData? LoadedCharacter => _loadedCharacter;
+
+        private SaveFileInfo? _loadedCharacterSaveInfo;
+        public SaveFileInfo? LoadedCharacterSaveInfo => _loadedCharacterSaveInfo;
+
+        private bool _isSaved;
+        public bool IsSaved => _isSaved;
 
         private ISkillsService _skillsService;
         private IInventoryService _inventoryService;
@@ -53,13 +60,23 @@ namespace PnPOrganizer.Services
                     _loadedCharacter = Utils.ReadAndDeserializeFromXml<CharacterData>(stream);
                     _inventoryService.LoadInventory(_loadedCharacter);
                     _skillsService.LoadSkillSaveData(_loadedCharacter);
+                    MarkSaved();
                     CharacterLoaded?.Invoke(this, _loadedCharacter);
+                    CreateCharacterSaveFileInfo(file);
                 }
                 catch (IOException e)
                 {
                     Log.Error(e, "Error loading Character Save Data!");
                 }
             }, DispatcherQueuePriority.High);
+        }
+
+        public async Task LoadCharacter(string path)
+        {
+            if(Utils.TryGetFile(path, out var file))
+            {
+                await LoadCharacter(file!);
+            }
         }
 
         public async Task SaveCharacter(StorageFile file)
@@ -75,6 +92,8 @@ namespace PnPOrganizer.Services
                         _inventoryService.SaveInventory(ref _loadedCharacter!);
                         _skillsService.SaveSkillSaveData(ref _loadedCharacter!);
                         Utils.SerializeAndWriteToXml(LoadedCharacter, stream);
+                        MarkSaved();
+                        CreateCharacterSaveFileInfo(file);
                         CharacterSaved?.Invoke(this, LoadedCharacter!);
                     }
                     catch (ArgumentNullException e) when (_loadedCharacter == null)
@@ -109,7 +128,7 @@ namespace PnPOrganizer.Services
 
                 // Let Windows know that we're finished changing the file so the other app can update the remote version of the file.
                 // Completing updates may require Windows to ask for user input.
-                var status = await CachedFileManager.CompleteUpdatesAsync(file);
+                _ = await CachedFileManager.CompleteUpdatesAsync(file);
 
                 return true;
             }
@@ -134,5 +153,18 @@ namespace PnPOrganizer.Services
             }
             return false;
         }
+
+        public void CreateCharacterSaveFileInfo(StorageFile file)
+        {
+            if (LoadedCharacter != null)
+            {
+                _loadedCharacterSaveInfo = new SaveFileInfo(file.Path, "", "", LoadedCharacter!.CharacterImage);
+                CharacterSaveInfoCreated?.Invoke(this, _loadedCharacterSaveInfo);
+            }
+        }
+
+        public void MarkUnsaved() => _isSaved = false;
+
+        public void MarkSaved() => _isSaved = true;
     }
 }

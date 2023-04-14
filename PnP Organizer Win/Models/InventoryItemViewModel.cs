@@ -13,7 +13,7 @@ namespace PnPOrganizer.Models
     /// <summary>
     /// Data for Inventory items
     /// </summary>
-    public partial class InventoryItemViewModel : ObservableObject
+    public partial class InventoryItemViewModel : ObservableObject, ISelfBindable<InventoryItemViewModel>
     {
         public InventoryItemViewModel BindableInstance => this;
 

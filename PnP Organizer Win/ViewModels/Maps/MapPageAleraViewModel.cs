@@ -1,5 +1,4 @@
 ﻿using CommunityToolkit.Mvvm.Input;
-using Microsoft.UI.Xaml.Media.Animation;
 using PnPOrganizer.ViewModels.Interfaces;
 using PnPOrganizer.Views.Maps;
 using PnPOrganizer.ViewServices.Interfaces;

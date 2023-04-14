@@ -7,20 +7,50 @@
     xmlns:ani="using:CommunityToolkit.WinUI.UI.Animations"
     xmlns:media="using:CommunityToolkit.WinUI.UI.Media"
     xmlns:ui="using:CommunityToolkit.WinUI.UI"
-    xmlns:sData="using:PnPOrganizer.Services.Data"
+    xmlns:vm="using:PnPOrganizer.ViewModels"
+    xmlns:data="using:PnPOrganizer.Services.Data"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"
+    xmlns:sel="using:PnPOrganizer.Selectors"
+    xmlns:conv="using:CommunityToolkit.WinUI.UI.Converters"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     Style="{StaticResource CommonPageStyle}"
     mc:Ignorable="d">
 
     <Page.Resources>
         <AcrylicBrush x:Key="LightAcrylicBrush" 
-                      TintColor="#2C2C2C"
+                      TintColor="#393939"
                       TintOpacity="0.2"
-                      FallbackColor="#2C2C2C"
-                      TintLuminosityOpacity="1"
+                      FallbackColor="#393939"
+                      TintLuminosityOpacity="0.1"
+                      Opacity="0.93"/>
+        <AcrylicBrush x:Key="LightAcrylicCardBrush" 
+                      TintColor="#505050"
+                      TintOpacity="0.2"
+                      FallbackColor="#505050"
+                      TintLuminosityOpacity="0.2"
                       Opacity="0.9"/>
+
+        <DataTemplate x:Key="EmptyCharacterTemplate"
+                      x:DataType="vm:SaveFileInfoViewModel">
+            <FontIcon Glyph="&#xEE57;" 
+                      HorizontalAlignment="Center"
+                      VerticalAlignment="Center"
+                      FontSize="200"/>
+        </DataTemplate>
+        <DataTemplate x:Key="ValidCharacterTemplate"
+                      x:DataType="vm:SaveFileInfoViewModel">
+            <Image Source="{x:Bind CharacterImage, Mode=OneWay}"
+                   Stretch="UniformToFill"
+                   VerticalAlignment="Stretch"
+                   HorizontalAlignment="Stretch"/>
+        </DataTemplate>
+
+        <sel:SaveFileInfoTemplateSelector x:Key="SaveFileInfoTemplateSelector"
+                                          EmptyCharacter="{StaticResource EmptyCharacterTemplate}"
+                                          ValidCharacter="{StaticResource ValidCharacterTemplate}"/>
+
+        <conv:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
     </Page.Resources>
 
     <Grid Style="{StaticResource PageBodyGridStyle}"
@@ -46,7 +76,7 @@
                       VerticalScrollBarVisibility="Hidden">
             <Grid>
                 <Grid.Resources>
-                    <x:Double x:Key="CharacterImageBackgroundOpacity">0.4</x:Double>
+                    <x:Double x:Key="CharacterImageBackgroundOpacity">0.3</x:Double>
                     <Color x:Key="OuterFadeColor">#ff171717</Color>
                     <Color x:Key="InnerFadeColor">#00171717</Color>
                 </Grid.Resources>
@@ -70,7 +100,7 @@
                             <ani:AnimationSet x:Name="FadeOutAnimation">
                                 <ani:OpacityAnimation From="{StaticResource CharacterImageBackgroundOpacity}"
                                               To="0"
-                                              Duration="0:0:0.25"
+                                              Duration="0:0:0.2"
                                               Delay="0"
                                               EasingType="Linear"
                                               EasingMode="EaseOut"/>
@@ -78,7 +108,7 @@
                             <ani:AnimationSet x:Name="FadeInAnimation">
                                 <ani:OpacityAnimation From="0"
                                               To="{StaticResource CharacterImageBackgroundOpacity}"
-                                              Duration="0:0:0.25"
+                                              Duration="0:0:0.2"
                                               Delay="0"
                                               EasingType="Linear"
                                               EasingMode="EaseIn"/>
@@ -127,7 +157,6 @@
                                            ItemDepth="300"
                                            ItemRotationY="45"
                                            Orientation="Horizontal"
-                                           SelectedIndex="2"
                                            TransitionDuration="300"
                                            SelectionChanged="LastCharacterCarousel_SelectionChanged"
                                            Loaded="LastCharactersCarousel_Loaded">
@@ -135,35 +164,45 @@
                                 <CubicEase EasingMode="EaseOut"/>
                             </controls:Carousel.EasingFunction>
                             <controls:Carousel.ItemTemplate>
-                                <DataTemplate x:DataType="sData:SaveFileInfo">
+                                <DataTemplate x:DataType="vm:SaveFileInfoViewModel">
                                     <Grid x:Name="CharacterCard"
-                                          Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-                                          CornerRadius="8"
+                                          Background="{ThemeResource LightAcrylicCardBrush}"
+                                          CornerRadius="16"
                                           Height="270"
-                                          Width="210"
-                                          BorderBrush="{StaticResource LightAcrylicBrush}">
-                                        <Image Source="{x:Bind CharacterImage, Mode=OneWay}"
-                                               Stretch="UniformToFill"
-                                               VerticalAlignment="Stretch"
-                                               HorizontalAlignment="Stretch"/>
+                                          Width="210">
+                                        <ContentControl x:Name="CardBackground"
+                                                        VerticalAlignment="Stretch"
+                                                        HorizontalAlignment="Stretch"
+                                                        HorizontalContentAlignment="Center"
+                                                        VerticalContentAlignment="Center"
+                                                        ContentTemplateSelector="{StaticResource SaveFileInfoTemplateSelector}"
+                                                        Content="{x:Bind ObservableSelf, Mode=OneWay}"/>
+                                        
                                         <Grid VerticalAlignment="Bottom"
                                               Height="100"
-                                              Background="{StaticResource LightAcrylicBrush}">
+                                              Background="{StaticResource LightAcrylicBrush}"
+                                              Visibility="{x:Bind HasSaveFileInfo, Mode=OneWay}">
                                             <StackPanel Margin="8,0,8,8">
                                                 <Viewbox MaxHeight="48"
                                                          HorizontalAlignment="Left">
-                                                    <TextBlock Text="{x:Bind CharacterFirstName, Mode=OneWay}"
+                                                    <TextBlock Text="{x:Bind SaveFileInfo.CharacterFirstName, Mode=OneWay}"
                                                                Style="{ThemeResource SubheaderTextBlockStyle}"
                                                                TextTrimming="CharacterEllipsis"/>
                                                 </Viewbox>
                                                 <Viewbox MaxHeight="48"
                                                          HorizontalAlignment="Left">
-                                                    <TextBlock Text="{x:Bind CharacterLastName, Mode=OneWay}"
+                                                    <TextBlock Text="{x:Bind SaveFileInfo.CharacterLastName, Mode=OneWay}"
                                                                Style="{ThemeResource SubheaderTextBlockStyle}"
                                                                TextTrimming="CharacterEllipsis"/>
                                                 </Viewbox>
                                             </StackPanel>
                                         </Grid>
+                                        <Button x:Name="CharacterCardOpenButton"
+                                                HorizontalAlignment="Stretch"
+                                                VerticalAlignment="Stretch"
+                                                Visibility="{x:Bind vm:SaveFileInfoViewModel.IsValidAndVisible(BindableInstance, Parent.SelectedSave),Mode=OneWay}"
+                                                Click="CharacterCardOpenButton_Click"
+                                                DataContext="{x:Bind BindableInstance}"/>
                                     </Grid>
                                 </DataTemplate>
                             </controls:Carousel.ItemTemplate>
@@ -212,9 +251,11 @@
                                     HorizontalAlignment="Center"
                                     VerticalAlignment="Top">
                             <Button x:Uid="MainPage_OpenButton"
+                                    x:Name="OpenButton"
                                     Width="128"
                                     Height="128"
-                                    Margin="0,0,64,0">
+                                    Margin="0,0,64,0"
+                                    Click="OpenButton_Click">
                                 <FontIcon Glyph="&#xED25;"
                                           FontSize="64"/>
                             </Button>

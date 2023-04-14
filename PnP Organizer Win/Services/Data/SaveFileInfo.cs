@@ -1,13 +1,11 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using Microsoft.UI.Xaml.Media.Imaging;
-using System;
 
 namespace PnPOrganizer.Services.Data
 {
     public partial class SaveFileInfo : ObservableObject
     {
         [ObservableProperty]
-        private Uri? _filePath;
+        private string _filePath = string.Empty;
 
         [ObservableProperty]
         private string _characterFirstName = string.Empty;
@@ -15,9 +13,9 @@ namespace PnPOrganizer.Services.Data
         private string _characterLastName = string.Empty;
 
         [ObservableProperty]
-        private BitmapImage? _characterImage;
+        private byte[]? _characterImage;
 
-        public SaveFileInfo(Uri? filePath, string characterFirstName, string characterLastName, BitmapImage? characterImage)
+        public SaveFileInfo(string filePath, string characterFirstName, string characterLastName, byte[]? characterImage)
         {
             FilePath = filePath;
             CharacterFirstName = characterFirstName;
@@ -25,19 +23,8 @@ namespace PnPOrganizer.Services.Data
             CharacterImage = characterImage;
         }
 
-        public static SaveFileInfo Dummy
-        {
-            get
-            {
-                var defaultCharacterImage = new BitmapImage();
-                var uriCreationOptions = new UriCreationOptions();
-                if (Uri.TryCreate("ms-appx:///Assets/Artom.jpg", in uriCreationOptions, out var result))
-                {
-                    defaultCharacterImage.UriSource = result;
-                }
-                var dummy = new SaveFileInfo(null, "Parica", "Artom", defaultCharacterImage);
-                return dummy;
-            }
-        }
+        public SaveFileInfo() { }
+
+        public static SaveFileInfo Empty => new("_empty", string.Empty, string.Empty, null);
     }
 }
