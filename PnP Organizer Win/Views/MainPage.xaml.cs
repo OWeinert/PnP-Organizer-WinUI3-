@@ -1,20 +1,16 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.WinUI;
-using CommunityToolkit.WinUI.UI.Media.Geometry;
 using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Automation;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Hosting;
-using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media.Imaging;
-using PnPOrganizer.Services.Data;
+using Microsoft.UI.Xaml.Media.Animation;
+using PnPOrganizer.Interfaces;
+using PnPOrganizer.Services;
 using PnPOrganizer.Services.Interfaces;
 using PnPOrganizer.ViewModels;
 using PnPOrganizer.Views.Interfaces;
 using Serilog;
 using System;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.Storage;
@@ -113,6 +109,14 @@ namespace PnPOrganizer.Views
                     throw;
                 }
             }   
+        }
+
+        private void NewButton_Click(object sender, RoutedEventArgs e)
+        {
+            var saveDataService = Ioc.Default.GetRequiredService<ISaveDataService>();
+            saveDataService.CreateNewCharacter();
+            var navigationService = Ioc.Default.GetRequiredService<INavigationViewService>();
+            navigationService.NavigateTo(typeof(CharacterPage), new CommonNavigationTransitionInfo());
         }
     }
 }

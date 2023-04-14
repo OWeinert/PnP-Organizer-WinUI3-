@@ -260,8 +260,10 @@
                                           FontSize="64"/>
                             </Button>
                             <Button x:Uid="MainPage_NewButton"
+                                    x:Name="NewButton"
                                     Width="128"
-                                    Height="128">
+                                    Height="128"
+                                    Click="NewButton_Click">
                                 <FontIcon Glyph="&#xF8AA;" 
                                           FontSize="64"/>
                             </Button>
