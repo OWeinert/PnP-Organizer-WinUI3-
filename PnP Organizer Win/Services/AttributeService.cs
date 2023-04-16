@@ -1,4 +1,5 @@
-﻿using PnPOrganizer.Core.Attributes;
+﻿using Microsoft.UI;
+using PnPOrganizer.Core.Attributes;
 using PnPOrganizer.Core.Character;
 using PnPOrganizer.Services.Interfaces;
 using System;
@@ -18,12 +19,12 @@ namespace PnPOrganizer.Services
             var resourceLoader = ResourceLoader.GetForViewIndependentUse();
             _attributes = new Dictionary<AttributeType, Core.Attributes.Attribute>()
             {
-                { AttributeType.Strength, new Core.Attributes.Attribute(resourceLoader.GetString("Attributes_Strength"))},
-                { AttributeType.Constitution, new Core.Attributes.Attribute(resourceLoader.GetString("Attributes_Constitution"))},
-                { AttributeType.Dexterity, new Core.Attributes.Attribute(resourceLoader.GetString("Attributes_Dexterity"))},
-                { AttributeType.Intelligence, new Core.Attributes.Attribute(resourceLoader.GetString("Attributes_Intelligence"))},
-                { AttributeType.Wisdom, new Core.Attributes.Attribute(resourceLoader.GetString("Attributes_Wisdom"))},
-                { AttributeType.Charisma, new Core.Attributes.Attribute(resourceLoader.GetString("Attributes_Charisma"))},
+                { AttributeType.Strength, new Core.Attributes.Attribute(resourceLoader.GetString("Attributes_Strength"), Colors.LightSalmon)},
+                { AttributeType.Constitution, new Core.Attributes.Attribute(resourceLoader.GetString("Attributes_Constitution"), Colors.LightGreen)},
+                { AttributeType.Dexterity, new Core.Attributes.Attribute(resourceLoader.GetString("Attributes_Dexterity"), Colors.LightSkyBlue)},
+                { AttributeType.Intelligence, new Core.Attributes.Attribute(resourceLoader.GetString("Attributes_Intelligence"), Colors.Moccasin)},
+                { AttributeType.Wisdom, new Core.Attributes.Attribute(resourceLoader.GetString("Attributes_Wisdom"), Colors.LightGray)},
+                { AttributeType.Charisma, new Core.Attributes.Attribute(resourceLoader.GetString("Attributes_Charisma"), Colors.LightPink)},
             }.ToImmutableDictionary();
         }
 

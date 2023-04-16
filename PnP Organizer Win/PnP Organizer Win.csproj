@@ -50,6 +50,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Controls\CharacterStatControl.xaml" />
     <None Remove="Controls\InventoryItemDetailDescription.xaml" />
     <None Remove="Controls\InventoryItemDetailHeader.xaml" />
     <None Remove="Controls\InventoryItemHeader.xaml" />
@@ -138,6 +139,9 @@
     <None Update="Assets\applicationIcon.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Page Update="Controls\CharacterStatControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Views\InventoryItemDetailTemplates.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

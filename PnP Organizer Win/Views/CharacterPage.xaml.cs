@@ -1,9 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.DependencyInjection;
-using CommunityToolkit.WinUI.UI.Media.Geometry;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Imaging;
 using PnPOrganizer.Core;
-using PnPOrganizer.Services.Interfaces;
 using PnPOrganizer.ViewModels;
 using PnPOrganizer.Views.Interfaces;
 using System;
@@ -28,14 +26,18 @@ namespace PnPOrganizer.Views
 
         private void SetNumberBoxNumberFormatter(NumberBox numberBox)
         {
-            var rounder = new IncrementNumberRounder();
-            rounder.Increment = 0.01;
-            rounder.RoundingAlgorithm = RoundingAlgorithm.RoundHalfUp;
+            var rounder = new IncrementNumberRounder
+            {
+                Increment = 0.01,
+                RoundingAlgorithm = RoundingAlgorithm.RoundHalfUp
+            };
 
-            var formatter = new DecimalFormatter();
-            formatter.IntegerDigits = 1;
-            formatter.FractionDigits = 2;
-            formatter.NumberRounder = rounder;
+            var formatter = new DecimalFormatter
+            {
+                IntegerDigits = 1,
+                FractionDigits = 2,
+                NumberRounder = rounder
+            };
             numberBox.NumberFormatter = formatter;
         }
 

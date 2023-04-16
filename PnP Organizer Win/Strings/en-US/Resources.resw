@@ -144,7 +144,10 @@
   <data name="CharacterPage_DragDropCaption" xml:space="preserve">
     <value>Choose Image</value>
   </data>
-  <data name="CharacterPage_FirstNameBox.Text" xml:space="preserve">
+  <data name="CharacterPage_EnergyStat.DisplayName" xml:space="preserve">
+    <value>Energy</value>
+  </data>
+  <data name="CharacterPage_FirstNameBox.PlaceholderText" xml:space="preserve">
     <value>First Name</value>
   </data>
   <data name="CharacterPage_Form.Text" xml:space="preserve">
@@ -162,14 +165,23 @@
   <data name="CharacterPage_HeaderStats.Text" xml:space="preserve">
     <value>Stats, Attributes &amp; Pearls</value>
   </data>
+  <data name="CharacterPage_HealthStat.DisplayName" xml:space="preserve">
+    <value>Health</value>
+  </data>
   <data name="CharacterPage_HeightBox.Text" xml:space="preserve">
     <value>Height</value>
   </data>
-  <data name="CharacterPage_LastNameBox.Text" xml:space="preserve">
+  <data name="CharacterPage_InitiativeStat.DisplayName" xml:space="preserve">
+    <value>Initiative</value>
+  </data>
+  <data name="CharacterPage_LastNameBox.PlaceholderText" xml:space="preserve">
     <value>Last Name</value>
   </data>
   <data name="CharacterPage_PhysicalDescrBox.Text" xml:space="preserve">
     <value>Physical Description</value>
+  </data>
+  <data name="CharacterPage_PhysicalDescrInputBox.PlaceholderText" xml:space="preserve">
+    <value>Describe your Character...</value>
   </data>
   <data name="CharacterPage_RemoveImageButton.Text" xml:space="preserve">
     <value>Remove Image</value>
@@ -177,8 +189,14 @@
   <data name="CharacterPage_SelectImageButton.Text" xml:space="preserve">
     <value>Select Image</value>
   </data>
+  <data name="CharacterPage_StaminaStat.DisplayName" xml:space="preserve">
+    <value>Stamina</value>
+  </data>
   <data name="CharacterPage_StrengthsBox.Text" xml:space="preserve">
     <value>Strengths</value>
+  </data>
+  <data name="CharacterPage_StrengthsInputBox.PlaceholderText" xml:space="preserve">
+    <value>List your Character's strengths...</value>
   </data>
   <data name="CharacterPage_SubHeaderAttributes.Text" xml:space="preserve">
     <value>Attributes</value>
@@ -191,6 +209,9 @@
   </data>
   <data name="CharacterPage_WeaknessesBox.Text" xml:space="preserve">
     <value>Weaknesses</value>
+  </data>
+  <data name="CharacterPage_WeaknessesInputBox.PlaceholderText" xml:space="preserve">
+    <value>List your Character's weaknesses...</value>
   </data>
   <data name="en-US" xml:space="preserve">
     <value>English</value>
@@ -280,7 +301,7 @@
     <value>Skills</value>
   </data>
   <data name="Pearls_Air" xml:space="preserve">
-    <value>AIr</value>
+    <value>Air</value>
   </data>
   <data name="Pearls_Earth" xml:space="preserve">
     <value>Earth</value>

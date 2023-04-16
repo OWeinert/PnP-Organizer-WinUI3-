@@ -21,13 +21,23 @@ namespace PnPOrganizer.ViewModels
         [ObservableProperty]
         private CharacterData? _characterData;
 
-        // HACK
-        public static object MaxHealthModifierBonus { get; internal set; }
-        public static object MaxStaminaModifierBonus { get; internal set; }
-        public static object InitiativeModifierBonus { get; internal set; }
+        [ObservableProperty]
+        private int _maxHealth;
+        [ObservableProperty]
+        private int _maxEnergy;
+        [ObservableProperty]
+        private int _maxStamina;
+        [ObservableProperty]
+        private int _initiative;
 
-        internal static object MaxEnergyModifierBonus;
-        //
+        [ObservableProperty]
+        private int _maxHealthModifierBonus;
+        [ObservableProperty]
+        private int _maxEnergyModifierBonus;
+        [ObservableProperty]
+        private int _maxStaminaModifierBonus;
+        [ObservableProperty]
+        private int _initiativeModifierBonus;
 
         public event EventHandler? Initialized;
 
@@ -48,7 +58,11 @@ namespace PnPOrganizer.ViewModels
             CharacterData = _saveDataService.LoadedCharacter;
             Attributes = _attributeService.Attributes.Values.ToList();
             Pearls = _pearlService.Pearls.Values.ToList();
-            foreach(var pearl in Pearls)
+
+            CharacterData.PropertyChanged += CharacterData_PropertyChanged;
+            PropertyChanged += CharacterPageViewModel_PropertyChanged;
+
+            foreach (var pearl in Pearls)
             {
                 var index = Pearls.IndexOf(pearl);
                 pearl.PropertyChanged += (sender, e) =>
@@ -59,6 +73,35 @@ namespace PnPOrganizer.ViewModels
                             pearl.Form = 1;
                     }
                 };
+            }
+            foreach(var attribute in Attributes)
+            {
+                attribute.PropertyChanged += (sender, e) =>
+                {
+                    if(e.PropertyName is not nameof(Core.Attributes.Attribute.DisplayName))
+                    {
+                        CalculateMaxStats();
+                    }
+                };
+            }
+            CalculateMaxStats();
+        }
+
+        private void CharacterPageViewModel_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName is nameof(MaxHealthModifierBonus) or nameof(MaxEnergyModifierBonus)
+                or nameof(MaxStaminaModifierBonus) or nameof(InitiativeModifierBonus))
+            {
+                CalculateMaxStats();
+            }
+        }
+
+        private void CharacterData_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if(e.PropertyName is nameof(CharacterData.MaxHealthBonus) or nameof(CharacterData.MaxEnergyBonus)
+                or nameof(CharacterData.MaxStaminaBonus) or nameof(CharacterData.InitiativeBonus))
+            {
+                CalculateMaxStats();
             }
         }
 
@@ -76,6 +119,22 @@ namespace PnPOrganizer.ViewModels
                 NumberRounder = rounder
             };
             return formatter;
+        }
+
+        private void CalculateMaxStats()
+        {
+            var strength = _attributeService.Attributes[Core.Attributes.AttributeType.Strength].Value;
+            var constitution = _attributeService.Attributes[Core.Attributes.AttributeType.Constitution].Value;
+            var charisma = _attributeService.Attributes[Core.Attributes.AttributeType.Charisma].Value;
+            var intelligence = _attributeService.Attributes[Core.Attributes.AttributeType.Intelligence].Value;
+            var dexterity = _attributeService.Attributes[Core.Attributes.AttributeType.Dexterity].Value;
+            var constitutionBonus = _attributeService.Attributes[Core.Attributes.AttributeType.Constitution].Bonus;
+            var dexterityBonus = _attributeService.Attributes[Core.Attributes.AttributeType.Dexterity].Bonus;
+
+            MaxHealth = strength + constitution + CharacterData.MaxHealthBonus + MaxHealthModifierBonus;
+            MaxEnergy = (int)Math.Ceiling((constitution + charisma + intelligence) / 3f) + CharacterData.MaxEnergyBonus + MaxEnergyModifierBonus;
+            MaxStamina = 15 + constitutionBonus + dexterityBonus + CharacterData.MaxStaminaBonus + MaxStaminaModifierBonus;
+            Initiative = constitution + dexterity;
         }
     }
 }

@@ -20,7 +20,7 @@ namespace PnPOrganizer.Services
             {
                 { PearlType.Fire, new Pearl(resourceLoader.GetString("Pearls_Fire"), Colors.OrangeRed) },
                 { PearlType.Earth, new Pearl(resourceLoader.GetString("Pearls_Earth"), Colors.SaddleBrown) },
-                { PearlType.Metal, new Pearl(resourceLoader.GetString("Pearls_Metal"), Colors.SlateGray) },
+                { PearlType.Metal, new Pearl(resourceLoader.GetString("Pearls_Metal"), Colors.LightSlateGray) },
                 { PearlType.Air, new Pearl(resourceLoader.GetString("Pearls_Air"), Colors.White) },
                 { PearlType.Water, new Pearl(resourceLoader.GetString("Pearls_Water"), Colors.CornflowerBlue) },
                 { PearlType.Wood, new Pearl(resourceLoader.GetString("Pearls_Wood"), Colors.LimeGreen) }

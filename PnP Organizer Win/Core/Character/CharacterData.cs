@@ -15,13 +15,20 @@ namespace PnPOrganizer.Core.Character
         public byte[] CharacterImage { get; set; } = Array.Empty<byte>();
         public string CharacterImageFileExt { get; set; } = string.Empty;
 
-        public int CurrentHealth { get; set; }
-        public int MaxHealthBonus { get; set; }
-        public int CurrentEnergy { get; set; }
-        public int MaxEnergyBonus { get; set; }
-        public int CurrentStamina { get; set; }
-        public int MaxStaminaBonus { get; set; }
-        public int InitiativeBonus { get; set; }
+        [ObservableProperty]
+        private int _currentHealth;
+        [ObservableProperty]
+        private int _maxHealthBonus;
+        [ObservableProperty]
+        private int _currentEnergy;
+        [ObservableProperty]
+        private int _maxEnergyBonus;
+        [ObservableProperty]
+        private int _currentStamina;
+        [ObservableProperty]
+        private int _maxStaminaBonus;
+        [ObservableProperty]
+        private int _initiativeBonus;
 
         [ObservableProperty]
         private CharacterPearls _pearls = new();

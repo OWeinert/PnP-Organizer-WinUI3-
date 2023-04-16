@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 using System.Diagnostics;
+using Windows.UI;
 
 namespace PnPOrganizer.Core.Attributes
 {
@@ -15,9 +16,13 @@ namespace PnPOrganizer.Core.Attributes
         [ObservableProperty]
         private int _bonus;
 
-        public Attribute(string displayName)
+        [ObservableProperty]
+        private Color _color;
+
+        public Attribute(string displayName, Color color = default)
         {
             DisplayName = displayName;
+            Color = color;
         }
 
         partial void OnValueChanged(int value)
