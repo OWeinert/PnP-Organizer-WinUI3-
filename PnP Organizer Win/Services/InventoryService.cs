@@ -28,7 +28,7 @@ namespace PnPOrganizer.Services
 
         public void ClearInventory() => ItemModels.Clear();
 
-        public void LoadInventory(CharacterData data)
+        public void LoadFromCharacter(CharacterData data)
         {
             ClearInventory();
             var characterInventory = data.Inventory;
@@ -38,7 +38,7 @@ namespace PnPOrganizer.Services
             }
         }
 
-        public void SaveInventory(ref CharacterData data)
+        public void SaveToCharacter(ref CharacterData data)
         {
             var currentInventory = ItemModels.ToList().ConvertAll(itemModel => itemModel.InventoryItem);
             data.Inventory = currentInventory;

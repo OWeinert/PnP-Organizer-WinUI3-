@@ -66,6 +66,8 @@ namespace PnPOrganizer
                     .AddSingleton<IMapService, MapService>()
                     .AddSingleton<ISkillsService, SkillsService>()
                     .AddSingleton<IInventoryService, InventoryService>()
+                    .AddSingleton<IPearlService, PearlService>()
+                    .AddSingleton<IAttributeService, AttributeService>()
                     .AddSingleton<ISaveDataService, SaveDataService>()
                     .AddSingleton<ISaveFileInfoService, SaveFileInfoService>()
                     .AddSingleton<IAppActivationService, AppActivationService>()

@@ -5,8 +5,7 @@ using System.Collections.Generic;
 
 namespace PnPOrganizer.Core.Character
 {
-    [INotifyPropertyChanged]
-    public partial class CharacterData
+    public partial class CharacterData : ObservableObject
     {
         public string FileName { get; set; } = string.Empty;
         public string Name { get; set; } = string.Empty;
@@ -26,6 +25,9 @@ namespace PnPOrganizer.Core.Character
 
         [ObservableProperty]
         private CharacterPearls _pearls = new();
+
+        [ObservableProperty]
+        private byte[] _forms = new byte[6];
 
         [ObservableProperty]
         private CharacterAttributes _attributes = new();

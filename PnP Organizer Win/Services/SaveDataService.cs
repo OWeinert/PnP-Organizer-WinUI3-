@@ -34,13 +34,15 @@ namespace PnPOrganizer.Services
         private bool _isSaved;
         public bool IsSaved => _isSaved;
 
-        private ISkillsService _skillsService;
-        private IInventoryService _inventoryService;
+        private readonly ISkillsService _skillsService;
+        private readonly IInventoryService _inventoryService;
+        private readonly IPearlService _pearlService;
 
-        public SaveDataService(ISkillsService skillsService, IInventoryService inventoryService)
+        public SaveDataService(ISkillsService skillsService, IInventoryService inventoryService, IPearlService pearlService)
         {
             _skillsService = skillsService;
             _inventoryService = inventoryService;
+            _pearlService = pearlService;
         }
 
         public CharacterData CreateNewCharacter()
@@ -62,8 +64,11 @@ namespace PnPOrganizer.Services
                 try
                 {
                     _loadedCharacter = Utils.ReadAndDeserializeFromXml<CharacterData>(stream);
-                    _inventoryService.LoadInventory(_loadedCharacter);
-                    _skillsService.LoadSkillSaveData(_loadedCharacter);
+
+                    _inventoryService.LoadFromCharacter(_loadedCharacter);
+                    _skillsService.LoadFromCharacter(_loadedCharacter);
+                    _pearlService.LoadFromCharacter(_loadedCharacter);
+
                     MarkSaved();
                     CharacterLoaded?.Invoke(this, _loadedCharacter);
                     CreateCharacterSaveFileInfo(file);
@@ -94,8 +99,9 @@ namespace PnPOrganizer.Services
                 {
                     try
                     {
-                        _inventoryService.SaveInventory(ref _loadedCharacter!);
-                        _skillsService.SaveSkillSaveData(ref _loadedCharacter!);
+                        _inventoryService.SaveToCharacter(ref _loadedCharacter!);
+                        _skillsService.SaveToCharacter(ref _loadedCharacter);
+                        _pearlService.SaveToCharacter(ref _loadedCharacter);
 
                         Utils.SerializeAndWriteToXml(LoadedCharacter, stream);
                         MarkSaved();

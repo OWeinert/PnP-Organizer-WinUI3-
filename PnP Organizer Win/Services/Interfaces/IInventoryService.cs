@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace PnPOrganizer.Services.Interfaces
 {
-    public interface IInventoryService
+    public interface IInventoryService : ISaveData
     {
         public ObservableCollection<InventoryItemViewModel> ItemModels { get; }
 
@@ -21,10 +21,6 @@ namespace PnPOrganizer.Services.Interfaces
         public void RemoveItem(InventoryItemViewModel item);
 
         public void ClearInventory();
-
-        public void LoadInventory(CharacterData data);
-
-        public void SaveInventory(ref CharacterData data);
 
         public void ResetInventory();
     }

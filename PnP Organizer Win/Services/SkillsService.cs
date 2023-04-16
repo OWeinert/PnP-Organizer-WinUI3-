@@ -827,7 +827,7 @@ namespace PnPorganizer.Core.Character
             }
         }
 
-        public void LoadSkillSaveData(CharacterData data)
+        public void LoadFromCharacter(CharacterData data)
         {
             Registry.Values.ToList().ForEach(skill => skill.SkillPoints = 0);
 
@@ -841,7 +841,7 @@ namespace PnPorganizer.Core.Character
             ViewRefreshRequested?.Invoke(this, EventArgs.Empty);
         }
 
-        public void SaveSkillSaveData(ref CharacterData data)
+        public void SaveToCharacter(ref CharacterData data)
         {
             var activeSkills = Registry.Values.Where(skill => skill.IsActive);
             var saveData = activeSkills.ToList().ConvertAll(skill => new SkillSaveData()

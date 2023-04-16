@@ -5,11 +5,362 @@
     xmlns:local="using:PnPOrganizer.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:char="using:PnPOrganizer.Core.Character"
+    xmlns:attr="using:PnPOrganizer.Core.Attributes"
+    xmlns:vm="using:PnPOrganizer.ViewModels"
+    xmlns:conv="using:PnPOrganizer.Converters"
+    xmlns:ak="using:AK.Toolkit.WinUI3"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid Style="{ThemeResource PageBodyGridStyle}"
-          Margin="0">
+    <Page.Resources>
+        <Style x:Key="ExpanderHeaderTextBlock"
+               TargetType="TextBlock">
+            <Style.Setters>
+                <Setter Property="FontWeight" Value="SemiBold"/>
+                <Setter Property="FontSize" Value="16"/>
+            </Style.Setters>
+        </Style>
+        <Style x:Key="InputFieldHeaderTextBlock"
+               TargetType="TextBlock">
+            <Style.Setters>
+                <Setter Property="FontWeight" Value="SemiBold"/>
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="Margin" Value="0,0,0,8"/>
+            </Style.Setters>
+        </Style>
+        <Style x:Key="MultiLineTextBox"
+               TargetType="TextBox">
+            <Style.Setters>
+                <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                <Setter Property="VerticalAlignment" Value="Stretch"/>
+                <Setter Property="AcceptsReturn" Value="True"/>
+                <Setter Property="TextWrapping" Value="Wrap"/>
+                <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+                <Setter Property="CornerRadius" Value="4"/>
+            </Style.Setters>
+        </Style>
+        <conv:ColorToBrushConverter x:Key="ColorToBrushConverter"/>
+        <conv:PearlsColorConverter x:Key="PearlsColorConverter"/>
+        <conv:AttributeBonusToColorConverter x:Key="AttributeBonusToColorConverter"/>
+    </Page.Resources>
 
-    </Grid>
+    <ScrollViewer>
+        <Grid Style="{ThemeResource PageBodyGridStyle}"
+              Margin="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <CommandBar Grid.Row="0"
+                        DefaultLabelPosition="Right"
+                        IsSticky="True">
+                <CommandBar.Content>
+                    <TextBlock Grid.Column="0"
+                               x:Uid="CharacterPage_Header"
+                               VerticalAlignment="Center"
+                               FontSize="28"
+                               FontFamily="Display"
+                               FontWeight="SemiBold"
+                               Margin="6,6,0,0"/>
+                </CommandBar.Content>
+            </CommandBar>
+
+            <StackPanel Grid.Row="1"
+                        Margin="32,16">
+                <Expander x:Name="GeneralInfoExpander"
+                          HorizontalAlignment="Stretch"
+                          HorizontalContentAlignment="Stretch"
+                          VerticalContentAlignment="Stretch"
+                          IsExpanded="True"
+                          Margin="0,0,0,16">
+                    <Expander.Header>
+                        <TextBlock x:Uid="CharacterPage_HeaderGeneralInfo"
+                                   Style="{StaticResource ExpanderHeaderTextBlock}"/>
+                    </Expander.Header>
+                    <Grid Margin="8"
+                          HorizontalAlignment="Stretch">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Border Grid.Column="0"
+                                x:Name="CharacterImageBorder"
+                                x:Uid="CharacterPage_CharacterImageBorder"
+                                Background="{ThemeResource ControlFillColorDefaultBrush}"
+                                HorizontalAlignment="Left"
+                                CornerRadius="16"
+                                AllowDrop="True"
+                                DragOver="CharacterImage_DragOver"
+                                Drop="CharacterImage_Drop">
+                            <Grid>
+                                <FontIcon HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"
+                                          Glyph="&#xE9CE;"
+                                          FontSize="128"
+                                          Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                          IsHitTestVisible="False"/>
+                                <Image x:Name="CharacterImage"
+                                   Width="240"
+                                   Height="340"
+                                   AllowDrop="True"
+                                   DragOver="CharacterImage_DragOver"
+                                   Drop="CharacterImage_Drop"
+                                       Stretch="UniformToFill"/>
+                                <Button x:Name="CharacterImageButton"
+                                        Width="32"
+                                        Height="32"
+                                        HorizontalAlignment="Right"
+                                        VerticalAlignment="Top"
+                                        CornerRadius="16"
+                                        Padding="0">
+                                    <FontIcon Glyph="&#xE712;"/>
+                                    <Button.Flyout>
+                                        <MenuFlyout Placement="Right">
+                                            <MenuFlyoutItem x:Uid="CharacterPage_SelectImageButton"
+                                                            x:Name="SelectImageButton"
+                                                            Text="Select Image"
+                                                            Click="SelectImageButton_Click">
+                                                <MenuFlyoutItem.Icon>
+                                                    <FontIcon Glyph="&#xED25;" />
+                                                </MenuFlyoutItem.Icon>
+                                            </MenuFlyoutItem>
+                                            <MenuFlyoutItem x:Uid="CharacterPage_RemoveImageButton"
+                                                            x:Name="RemoveImageButton"
+                                                            Click="RemoveImageButton_Click">
+                                                <MenuFlyoutItem.Icon>
+                                                    <FontIcon Glyph="&#xE74D;"/>
+                                                </MenuFlyoutItem.Icon>
+                                            </MenuFlyoutItem>
+                                        </MenuFlyout>
+                                    </Button.Flyout>
+                                </Button>
+                            </Grid>
+                        </Border>
+                        <StackPanel Grid.Column="1"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Top"
+                                    Margin="32,2">
+                            <TextBlock Text="Name"
+                                       Style="{StaticResource InputFieldHeaderTextBlock}"/>
+                            <Grid Margin="0,0,0,16">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBox Grid.Column="0"
+                                         x:Uid="CharacterPage_FirstNameBox"
+                                         Text="{x:Bind ViewModel.CharacterData.Name, Mode=TwoWay}"
+                                         Margin="0,0,16,0"/>
+                                <TextBox Grid.Column="1"
+                                         x:Uid="CharacterPage_LastNameBox"
+                                         Text="{x:Bind ViewModel.CharacterData.LastName, Mode=TwoWay}"/>
+                            </Grid>
+                            <TextBlock x:Uid="CharacterPage_HeightBox"
+                                       Style="{StaticResource InputFieldHeaderTextBlock}"/>
+                            <NumberBox x:Name="HeightNumberBox"
+                                       Margin="0,0,0,16"
+                                       Value="{x:Bind ViewModel.CharacterData.Height, Mode=TwoWay}"
+                                       PlaceholderText="0.00"/>
+                            <TextBlock x:Uid="CharacterPage_AgeBox"
+                                       Style="{StaticResource InputFieldHeaderTextBlock}"/>
+                            <NumberBox x:Name="AgeNumberBox"
+                                       PlaceholderText="0"
+                                       Value="{x:Bind ViewModel.CharacterData.Age, Mode=TwoWay}"
+                                       Margin="0,0,0,16"/>
+
+                            <TextBlock x:Uid="CharacterPage_PhysicalDescrBox"
+                                       Style="{StaticResource InputFieldHeaderTextBlock}"/>
+                            <TextBox HorizontalAlignment="Stretch"
+                                     Height="84"
+                                     AcceptsReturn="True"
+                                     IsTabStop="True"
+                                     TextWrapping="Wrap"
+                                     ScrollViewer.VerticalScrollBarVisibility="Auto"/>
+                        </StackPanel>
+
+                        <Grid Grid.Column="2"
+                              VerticalAlignment="Stretch"
+                              HorizontalAlignment="Stretch">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <StackPanel>
+                                <TextBlock x:Uid="CharacterPage_StrengthsBox"
+                                           Style="{StaticResource InputFieldHeaderTextBlock}"/>
+                                <TextBox Style="{StaticResource MultiLineTextBox}"
+                                         Height="134"/>
+                            </StackPanel>
+                            <StackPanel Grid.Row="1"
+                                        Margin="0,7,0,0">
+                                <TextBlock x:Uid="CharacterPage_WeaknessesBox"
+                                           Style="{StaticResource InputFieldHeaderTextBlock}"/>
+                                <TextBox Height="134"
+                                         Style="{StaticResource MultiLineTextBox}"/>
+                            </StackPanel>
+                        </Grid>
+                    </Grid>
+                </Expander>
+                <Expander x:Name="StatsExpander"
+                          HorizontalAlignment="Stretch"
+                          HorizontalContentAlignment="Stretch"
+                          VerticalContentAlignment="Stretch"
+                          IsExpanded="True"
+                          Margin="0,0,0,16">
+                    <Expander.Header>
+                        <TextBlock x:Uid="CharacterPage_HeaderStats"
+                                   Style="{StaticResource ExpanderHeaderTextBlock}"/>
+                    </Expander.Header>
+                    <Grid Grid.Margin="8,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0"
+                                    Margin="0,0,8,0">
+                            <TextBlock x:Uid="CharacterPage_SubHeaderStats"
+                                       Style="{StaticResource ExpanderHeaderTextBlock}"
+                                       Margin="8,0,0,4"/>
+                            <NavigationViewItemSeparator Margin="0,0,0,8"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="1">
+                            <TextBlock x:Uid="CharacterPage_SubHeaderAttributes"
+                                       Style="{StaticResource ExpanderHeaderTextBlock}"
+                                       Margin="8,0,0,4"/>
+                            <NavigationViewItemSeparator Margin="0,0,0,8"/>
+                            <GridView ItemsSource="{x:Bind ViewModel.Attributes}"
+                                      HorizontalAlignment="Center"
+                                      SelectionMode="None"
+                                      IsItemClickEnabled="False"
+                                      Margin="0,3,0,0">
+                                <GridView.ItemTemplate>
+                                    <DataTemplate x:DataType="attr:Attribute">
+                                        <Grid Margin="16,2,0,0"
+                                              Width="146"
+                                              Height="64">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="*"/>
+                                                <RowDefinition Height="*"/>
+                                            </Grid.RowDefinitions>
+                                            
+                                            <Viewbox Grid.Row="0"
+                                                     Grid.Column="0"
+                                                     MaxWidth="64"
+                                                     MaxHeight="25"
+                                                     HorizontalAlignment="Left"
+                                                     VerticalAlignment="Bottom"
+                                                     Margin="2,0,0,0">
+                                                <TextBlock Text="{x:Bind DisplayName}"
+                                                           Style="{StaticResource InputFieldHeaderTextBlock}"/>
+                                            </Viewbox>
+                                            <ak:NumberBoxEx Grid.Row="1"
+                                                            Grid.Column="0"
+                                                            NumberFormatter="{x:Bind vm:CharacterPageViewModel.GetIntFormatter()}"
+                                                            Value="{x:Bind Value, Mode=TwoWay}"
+                                                            HorizontalAlignment="Left"
+                                                            VerticalAlignment="Bottom"
+                                                            IsDeleteButtonVisible="False"
+                                                            PlaceholderText="10"
+                                                            Width="70"
+                                                            SpinButtonPlacementMode="Compact"
+                                                            Minimum="0"
+                                                            Maximum="999"
+                                                            SmallChange="1"
+                                                            LargeChange="3"/>
+                                            <TextBlock Grid.Row="0"
+                                                       Grid.Column="1"
+                                                       Text="Bonus"
+                                                       VerticalAlignment="Center"
+                                                       Foreground="{ThemeResource TextFillColorTertiaryBrush}"
+                                                       FontWeight="Normal"
+                                                       Style="{StaticResource InputFieldHeaderTextBlock}"
+                                                       Margin="6,0,0,0"/>
+                                            <TextBox Grid.Row="1"
+                                                     Grid.Column="1"
+                                                     IsReadOnly="True"
+                                                     MaxWidth="64"
+                                                     Text="{x:Bind Bonus, Mode=OneWay}"
+                                                     Foreground="{x:Bind Bonus, Mode=OneWay, Converter={StaticResource AttributeBonusToColorConverter}}"/>
+                                        </Grid>
+                                    </DataTemplate>
+                                </GridView.ItemTemplate>
+                            </GridView>
+                        </StackPanel>
+                        
+                        <StackPanel Grid.Column="2"
+                                    Margin="8,0,0,0">
+                            <TextBlock x:Uid="CharacterPage_SubHeaderPearls"
+                                       Style="{StaticResource ExpanderHeaderTextBlock}"
+                                       Margin="8,0,0,4"/>
+                            <NavigationViewItemSeparator Margin="0,0,0,8"/>
+                            <GridView HorizontalAlignment="Center"
+                                      ItemsSource="{x:Bind ViewModel.Pearls}"
+                                      SelectionMode="None"
+                                      IsItemClickEnabled="False">
+                                <GridView.ItemTemplate>
+                                    <DataTemplate x:DataType="char:Pearl">
+                                        <StackPanel Orientation="Horizontal"
+                                                    Margin="0,8,24,0">
+                                            <StackPanel Margin="0,0,8,0">
+                                                <TextBlock Text="{x:Bind DisplayName, Mode=OneWay}"
+                                                           Style="{StaticResource InputFieldHeaderTextBlock}"
+                                                           Foreground="{x:Bind Color, Mode=OneWay, Converter={StaticResource ColorToBrushConverter}}"/>
+                                                <ak:NumberBoxEx NumberFormatter="{x:Bind vm:CharacterPageViewModel.GetIntFormatter()}"
+                                                                Value="{x:Bind Amount, Mode=TwoWay}"
+                                                                Foreground="{x:Bind Amount,Mode=OneWay, Converter={StaticResource PearlsColorConverter}}"
+                                                                IsDeleteButtonVisible="False"
+                                                                PlaceholderText="0"
+                                                                MinWidth="64"
+                                                                SpinButtonPlacementMode="Compact"
+                                                                Minimum="0"
+                                                                Maximum="999"
+                                                                SmallChange="1"
+                                                                LargeChange="3"/>
+                                            </StackPanel>
+                                            <StackPanel>
+                                                <TextBlock x:Uid="CharacterPage_Form"
+                                                           Foreground="{ThemeResource TextFillColorTertiaryBrush}"
+                                                           Margin="0,0,0,8"/>
+                                                <ak:NumberBoxEx NumberFormatter="{x:Bind vm:CharacterPageViewModel.GetIntFormatter()}"
+                                                                PlaceholderText="1"
+                                                                Value="{x:Bind Form,Mode=TwoWay}"
+                                                                IsDeleteButtonVisible="False"
+                                                                SpinButtonPlacementMode="Hidden"
+                                                                Minimum="1"
+                                                                Maximum="2"
+                                                                SmallChange="1"
+                                                                LargeChange="1"
+                                                                IsEnabled="{x:Bind IsUsed, Mode=OneWay}"/>
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </GridView.ItemTemplate>
+                            </GridView>
+                        </StackPanel>
+                    </Grid>
+                </Expander>
+                <Expander x:Name="AttributeChecksExpander"
+                          HorizontalAlignment="Stretch"
+                          HorizontalContentAlignment="Stretch"
+                          VerticalContentAlignment="Stretch"
+                          IsExpanded="True"
+                          Margin="0,0,0,16">
+                    <Expander.Header>
+                        <TextBlock x:Uid="CharacterPage_HeaderAttributeChecks"
+                                   Style="{StaticResource ExpanderHeaderTextBlock}"/>
+                    </Expander.Header>
+                </Expander>
+            </StackPanel>
+        </Grid>
+    </ScrollViewer>
 </Page>

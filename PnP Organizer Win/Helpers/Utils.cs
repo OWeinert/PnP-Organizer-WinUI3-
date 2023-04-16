@@ -37,7 +37,7 @@ namespace PnPOrganizer.Core
         /// </summary>
         /// <param name="bitmapImage"></param>
         /// <returns></returns>
-        public static async Task<byte[]?> BitmapToBytesAsync(BitmapImage? bitmap)
+        public static async Task<byte[]> BitmapToBytesAsync(BitmapImage? bitmap)
         {
             if(bitmap == null || bitmap.UriSource == null)
                 return null;
@@ -52,7 +52,7 @@ namespace PnPOrganizer.Core
             {
                 Log.Error(e, "Could not read from Bitmap stream!");
             }
-            return null;
+            return Array.Empty<byte>();
         }
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace PnPOrganizer.Core
         /// </summary>
         /// <param name="bitmapImage"></param>
         /// <returns></returns>
-        public static async Task<IBuffer?> BitmapToByteBufferAsync(BitmapImage? bitmap) => (await BitmapToBytesAsync(bitmap)).AsBuffer();
+        public static async Task<IBuffer> BitmapToByteBufferAsync(BitmapImage? bitmap) => (await BitmapToBytesAsync(bitmap)).AsBuffer();
 
         public static Task<BitmapImage> BitmapFromBytesAsync(IBuffer buffer)
         {

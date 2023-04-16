@@ -1,11 +1,12 @@
 ﻿using PnPOrganizer.Core.Character.StatModifiers;
+using PnPOrganizer.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace PnPOrganizer.Core.Character.SkillSystem
 {
-    public interface ISkillsService
+    public interface ISkillsService : ISaveData
     {
         public event EventHandler? ViewRefreshRequested;
 
@@ -25,10 +26,6 @@ namespace PnPOrganizer.Core.Character.SkillSystem
         public Skill? GetSkillFromStatModifier(IStatModifier statModifier);
 
         public IReadOnlyDictionary<SkillIdentifier, Skill> GetSkillsFromStatModifier(IStatModifier statModifier);
-
-        public void LoadSkillSaveData(CharacterData data);
-
-        public void SaveSkillSaveData(ref CharacterData data);
 
         public void ResetSkills();
     }

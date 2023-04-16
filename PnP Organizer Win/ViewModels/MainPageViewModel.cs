@@ -57,7 +57,7 @@ namespace PnPOrganizer.ViewModels
                 {
                     saveFileInfoVM.SaveFileInfo = _saveFileInfoService.SaveFileInfos[i];
                 }
-                saveFileInfoVM.PropertyChanged += async (sender, e) =>
+                saveFileInfoVM.PropertyChanged += (sender, e) =>
                 {
                     if (e.PropertyName is nameof(SaveFileInfoViewModel.SaveFileInfo))
                     {

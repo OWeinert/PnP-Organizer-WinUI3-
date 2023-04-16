@@ -117,6 +117,81 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Attributes_Charisma" xml:space="preserve">
+    <value>Charisma</value>
+  </data>
+  <data name="Attributes_Constitution" xml:space="preserve">
+    <value>Constitution</value>
+  </data>
+  <data name="Attributes_Dexterity" xml:space="preserve">
+    <value>Dexterity</value>
+  </data>
+  <data name="Attributes_Intelligence" xml:space="preserve">
+    <value>Intelligence</value>
+  </data>
+  <data name="Attributes_Strength" xml:space="preserve">
+    <value>Strength</value>
+  </data>
+  <data name="Attributes_Wisdom" xml:space="preserve">
+    <value>Wisdom</value>
+  </data>
+  <data name="CharacterPage_AgeBox.Text" xml:space="preserve">
+    <value>Age</value>
+  </data>
+  <data name="CharacterPage_CharacterImageBorder.[using:Microsoft.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Drag &amp; Drop Image here</value>
+  </data>
+  <data name="CharacterPage_DragDropCaption" xml:space="preserve">
+    <value>Choose Image</value>
+  </data>
+  <data name="CharacterPage_FirstNameBox.Text" xml:space="preserve">
+    <value>First Name</value>
+  </data>
+  <data name="CharacterPage_Form.Text" xml:space="preserve">
+    <value>Form</value>
+  </data>
+  <data name="CharacterPage_Header.Text" xml:space="preserve">
+    <value>Character</value>
+  </data>
+  <data name="CharacterPage_HeaderAttributeChecks.Text" xml:space="preserve">
+    <value>Attribute Checks</value>
+  </data>
+  <data name="CharacterPage_HeaderGeneralInfo.Text" xml:space="preserve">
+    <value>General Information</value>
+  </data>
+  <data name="CharacterPage_HeaderStats.Text" xml:space="preserve">
+    <value>Stats, Attributes &amp; Pearls</value>
+  </data>
+  <data name="CharacterPage_HeightBox.Text" xml:space="preserve">
+    <value>Height</value>
+  </data>
+  <data name="CharacterPage_LastNameBox.Text" xml:space="preserve">
+    <value>Last Name</value>
+  </data>
+  <data name="CharacterPage_PhysicalDescrBox.Text" xml:space="preserve">
+    <value>Physical Description</value>
+  </data>
+  <data name="CharacterPage_RemoveImageButton.Text" xml:space="preserve">
+    <value>Remove Image</value>
+  </data>
+  <data name="CharacterPage_SelectImageButton.Text" xml:space="preserve">
+    <value>Select Image</value>
+  </data>
+  <data name="CharacterPage_StrengthsBox.Text" xml:space="preserve">
+    <value>Strengths</value>
+  </data>
+  <data name="CharacterPage_SubHeaderAttributes.Text" xml:space="preserve">
+    <value>Attributes</value>
+  </data>
+  <data name="CharacterPage_SubHeaderPearls.Text" xml:space="preserve">
+    <value>Pearls</value>
+  </data>
+  <data name="CharacterPage_SubHeaderStats.Text" xml:space="preserve">
+    <value>Stats</value>
+  </data>
+  <data name="CharacterPage_WeaknessesBox.Text" xml:space="preserve">
+    <value>Weaknesses</value>
+  </data>
   <data name="en-US" xml:space="preserve">
     <value>English</value>
   </data>
@@ -203,6 +278,24 @@
   </data>
   <data name="NavigationViewItem_Skills.Content" xml:space="preserve">
     <value>Skills</value>
+  </data>
+  <data name="Pearls_Air" xml:space="preserve">
+    <value>AIr</value>
+  </data>
+  <data name="Pearls_Earth" xml:space="preserve">
+    <value>Earth</value>
+  </data>
+  <data name="Pearls_Fire" xml:space="preserve">
+    <value>Fire</value>
+  </data>
+  <data name="Pearls_Metal" xml:space="preserve">
+    <value>Metal</value>
+  </data>
+  <data name="Pearls_Water" xml:space="preserve">
+    <value>Water</value>
+  </data>
+  <data name="Pearls_Wood" xml:space="preserve">
+    <value>Wood</value>
   </data>
   <data name="RulesPage_ButtonTooltip.Content" xml:space="preserve">
     <value>Open in new Window</value>
@@ -1212,9 +1305,6 @@ Fail: -1 on Parade and Dodge Throws until your next Turn.</value>
   </data>
   <data name="Skill_WeaponProfessionDescription" xml:space="preserve">
     <value>+1 Damage</value>
-  </data>
-  <data name="String" xml:space="preserve">
-    <value>+0.5 * Air pearls incoming damage</value>
   </data>
   <data name="Word_And" xml:space="preserve">
     <value>AND</value>
