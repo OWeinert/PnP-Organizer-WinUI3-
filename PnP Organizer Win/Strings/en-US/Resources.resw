@@ -261,6 +261,9 @@
   <data name="CharacterPage_WeaknessesInputBox.PlaceholderText" xml:space="preserve">
     <value>List your Character's weaknesses...</value>
   </data>
+  <data name="ElementsPage_Header.Text" xml:space="preserve">
+    <value>Elements</value>
+  </data>
   <data name="en-US" xml:space="preserve">
     <value>English</value>
   </data>
@@ -371,6 +374,9 @@
   </data>
   <data name="RulesPage_ButtonTooltip.Content" xml:space="preserve">
     <value>Open in new Window</value>
+  </data>
+  <data name="RulesPage_Header.Text" xml:space="preserve">
+    <value>Rules</value>
   </data>
   <data name="SettingsPage_ApplicationTheme.Header" xml:space="preserve">
     <value>Application theme</value>

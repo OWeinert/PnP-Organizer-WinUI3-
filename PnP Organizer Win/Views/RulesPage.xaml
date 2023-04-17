@@ -18,8 +18,8 @@
 
         <CommandBar Grid.Row="0">
             <CommandBar.Content>
-                <TextBlock Grid.Column="0"
-                           Text="Rules"
+                <TextBlock x:Uid="RulesPage_Header"
+                           Grid.Column="0"
                            VerticalAlignment="Center"
                            FontSize="28"
                            FontFamily="Display"
