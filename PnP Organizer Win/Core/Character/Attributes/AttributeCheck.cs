@@ -6,6 +6,10 @@ using System.Text;
 
 namespace PnPOrganizer.Core.Attributes
 {
+    /// <summary>
+    /// In-Game Checks for when the Character performs an Action
+    /// Base values depend on the Attribute boni
+    /// </summary>
     public partial class AttributeCheck : ObservableObject
     {
         public AttributeCheckType CheckType { get; }
@@ -120,6 +124,10 @@ namespace PnPOrganizer.Core.Attributes
         }
     }
 
+    /// <summary>
+    /// All AttributeCheck Types as enum to prevent using Strings or magic values
+    /// to identify AttributeChecks
+    /// </summary>
     public enum AttributeCheckType
     {
         Athletics,

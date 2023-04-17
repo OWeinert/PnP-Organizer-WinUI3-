@@ -4,6 +4,9 @@ using System;
 
 namespace PnPOrganizer.Converters
 {
+    /// <summary>
+    /// Converts a boolean to a Visibility
+    /// </summary>
     public class BoolToVisibilityConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)

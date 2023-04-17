@@ -3,6 +3,9 @@ using System;
 
 namespace PnPOrganizer.Converters
 {
+    /// <summary>
+    /// Inverts a boolean
+    /// </summary>
     public class BoolInverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language) => Invert(value);

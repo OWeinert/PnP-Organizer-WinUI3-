@@ -2,6 +2,9 @@
 
 namespace PnPOrganizer.Core.Attributes
 {
+    /// <summary>
+    /// Professions give a Bonus to the attached AttributeCheck
+    /// </summary>
     public partial class Profession : ObservableObject
     {
         [ObservableProperty]

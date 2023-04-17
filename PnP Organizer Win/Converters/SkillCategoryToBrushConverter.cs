@@ -6,6 +6,9 @@ using Windows.UI;
 
 namespace PnPOrganizer.Converters
 {
+    /// <summary>
+    /// See SkillCategoryToColorConverter
+    /// </summary>
     public class SkillCategoryToBrushConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)

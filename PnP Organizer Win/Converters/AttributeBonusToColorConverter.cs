@@ -5,6 +5,14 @@ using System;
 
 namespace PnPOrganizer.Converters
 {
+    /// <summary>
+    /// Converts an int value into a SolidColorBrush with the Color depending on the value.
+    /// value < 0 => Red
+    /// value = 0 => White
+    /// value > 0 => Green
+    /// 
+    /// Generally used in Attribute boni
+    /// </summary>
     public class AttributeBonusToColorConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)

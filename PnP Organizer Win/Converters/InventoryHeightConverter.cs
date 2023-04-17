@@ -3,6 +3,9 @@ using System;
 
 namespace PnPOrganizer.Converters
 {
+    /// <summary>
+    /// Used in the InventoryPage. Subtracts the input value by 30
+    /// </summary>
     public class InventoryHeightConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)

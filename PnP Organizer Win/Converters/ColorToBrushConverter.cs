@@ -5,6 +5,9 @@ using Windows.UI;
 
 namespace PnPOrganizer.Converters
 {
+    /// <summary>
+    /// Converts a Windows.UI.Color to a SolidColorBrush of the given Color
+    /// </summary>
     public class ColorToBrushConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
