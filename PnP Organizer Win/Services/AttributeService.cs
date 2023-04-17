@@ -1,10 +1,12 @@
 ﻿using Microsoft.UI;
+using PnPOrganizer.Core;
 using PnPOrganizer.Core.Attributes;
 using PnPOrganizer.Core.Character;
 using PnPOrganizer.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Collections.ObjectModel;
 using Windows.ApplicationModel.Resources;
 
 namespace PnPOrganizer.Services
@@ -19,12 +21,12 @@ namespace PnPOrganizer.Services
             var resourceLoader = ResourceLoader.GetForViewIndependentUse();
             _attributes = new Dictionary<AttributeType, Core.Attributes.Attribute>()
             {
-                { AttributeType.Strength, new Core.Attributes.Attribute(resourceLoader.GetString("Attributes_Strength"), Colors.Coral)},
-                { AttributeType.Constitution, new Core.Attributes.Attribute(resourceLoader.GetString("Attributes_Constitution"), Colors.LightGreen)},
-                { AttributeType.Dexterity, new Core.Attributes.Attribute(resourceLoader.GetString("Attributes_Dexterity"), Colors.LightSkyBlue)},
-                { AttributeType.Intelligence, new Core.Attributes.Attribute(resourceLoader.GetString("Attributes_Intelligence"), Colors.Moccasin)},
-                { AttributeType.Wisdom, new Core.Attributes.Attribute(resourceLoader.GetString("Attributes_Wisdom"), Colors.LightGray)},
-                { AttributeType.Charisma, new Core.Attributes.Attribute(resourceLoader.GetString("Attributes_Charisma"), Colors.LightPink)},
+                { AttributeType.Strength, new Core.Attributes.Attribute(resourceLoader.GetString("Attributes_Strength"), Palette.LightRed)},
+                { AttributeType.Constitution, new Core.Attributes.Attribute(resourceLoader.GetString("Attributes_Constitution"), Palette.LightGreen)},
+                { AttributeType.Dexterity, new Core.Attributes.Attribute(resourceLoader.GetString("Attributes_Dexterity"), Palette.LightBlue)},
+                { AttributeType.Intelligence, new Core.Attributes.Attribute(resourceLoader.GetString("Attributes_Intelligence"), Palette.Yellow)},
+                { AttributeType.Wisdom, new Core.Attributes.Attribute(resourceLoader.GetString("Attributes_Wisdom"), Palette.LightGray)},
+                { AttributeType.Charisma, new Core.Attributes.Attribute(resourceLoader.GetString("Attributes_Charisma"), Palette.Pink)},
             }.ToImmutableDictionary();
         }
 
@@ -49,6 +51,14 @@ namespace PnPOrganizer.Services
                 Wisdom = Attributes[AttributeType.Wisdom].Value,
                 Charisma = Attributes[AttributeType.Charisma].Value
             };
+        }
+
+        public void ResetData()
+        {
+            foreach(var attribute in Attributes.Values)
+            {
+                attribute.Value = 10;
+            }
         }
     }
 }

@@ -43,6 +43,6 @@ namespace PnPOrganizer.Core.Character.Inventory
             IsTwoHanded = inventoryWeaponModel.IsTwoHanded;
         }
 
-        protected override int GetBaseColor() => DefaultPalette.Blue.ToInt();
+        protected override int GetBaseColor() => Palette.Blue.ToInt();
     }
 }

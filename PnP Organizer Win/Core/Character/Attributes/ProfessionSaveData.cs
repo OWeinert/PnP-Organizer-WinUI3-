@@ -1,8 +1,10 @@
-﻿namespace PnPOrganizer.Core.Character
+﻿using PnPOrganizer.Core.Attributes;
+
+namespace PnPOrganizer.Core.Character
 {
     public struct ProfessionSaveData
     {
-        public int AttributeTestIndex { get; set; }
+        public AttributeCheckType AttributeCheckType { get; set; }
         public int Bonus { get; set; }
     }
 }

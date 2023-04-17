@@ -21,7 +21,5 @@ namespace PnPOrganizer.Services.Interfaces
         public void RemoveItem(InventoryItemViewModel item);
 
         public void ClearInventory();
-
-        public void ResetInventory();
     }
 }

@@ -858,7 +858,7 @@ namespace PnPorganizer.Core.Character
             data.Skills = saveData;
         }
 
-        public void ResetSkills()
+        public void ResetData()
         {
             foreach(var skill in Registry.Values)
             {

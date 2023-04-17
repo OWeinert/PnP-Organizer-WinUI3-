@@ -27,6 +27,6 @@ namespace PnPOrganizer.Core.Character.Inventory
             Loudness = inventoryShieldModel.Loudness;
         }
 
-        protected override int GetBaseColor() => DefaultPalette.Green.ToInt();
+        protected override int GetBaseColor() => Palette.Green.ToInt();
     }
 }

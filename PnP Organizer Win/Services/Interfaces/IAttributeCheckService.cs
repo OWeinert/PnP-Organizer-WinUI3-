@@ -7,11 +7,14 @@ using System.Threading.Tasks;
 
 namespace PnPOrganizer.Services.Interfaces
 {
-    public interface IAttributeCheckService
+    public interface IAttributeCheckService : ISaveData
     {
         public IDictionary<AttributeType, IList<AttributeCheck>> AttributeChecks { get; }
+        public ICollection<Profession> Professions { get; }
 
         public List<AttributeCheck> GetAsList();
+
+        public Dictionary<AttributeCheckType, AttributeCheck> GetSubDictionary();
 
         public void ApplyStatModifiers();
 

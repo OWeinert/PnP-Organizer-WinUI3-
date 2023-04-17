@@ -47,6 +47,6 @@ namespace PnPOrganizer.Core.Character.Inventory
             ItemImageBytes = Utils.BitmapToBytesAsync(image).Result;
         }
 
-        protected virtual int GetBaseColor() => DefaultPalette.Gray.ToInt();
+        protected virtual int GetBaseColor() => Palette.DarkGray.ToInt();
     }
 }

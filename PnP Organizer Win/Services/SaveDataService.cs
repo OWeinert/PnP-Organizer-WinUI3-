@@ -22,6 +22,7 @@ namespace PnPOrganizer.Services
     {
         public event EventHandler<CharacterData>? CharacterSaved;
         public event EventHandler<CharacterData>? CharacterLoaded;
+        public event EventHandler<CharacterData>? CharacterCreated;
 
         public event EventHandler<SaveFileInfo>? CharacterSaveInfoCreated;
 
@@ -38,23 +39,31 @@ namespace PnPOrganizer.Services
         private readonly IInventoryService _inventoryService;
         private readonly IPearlService _pearlService;
         private readonly IAttributeService _attributeService;
+        private readonly IAttributeCheckService _attributeCheckService;
 
         public SaveDataService(ISkillsService skillsService, IInventoryService inventoryService, IPearlService pearlService,
-            IAttributeService attributeService)
+            IAttributeService attributeService, IAttributeCheckService attributeCheckService)
         {
             _skillsService = skillsService;
             _inventoryService = inventoryService;
             _pearlService = pearlService;
             _attributeService = attributeService;
+            _attributeCheckService = attributeCheckService;
         }
 
         public CharacterData CreateNewCharacter()
         {
             _loadedCharacter = new CharacterData();
             _loadedCharacterSaveInfo = null;
-            _inventoryService.ResetInventory();
-            _skillsService.ResetSkills();
+
+            _inventoryService.ResetData();
+            _skillsService.ResetData();
+            _pearlService.ResetData();
+            _attributeService.ResetData();
+            _attributeCheckService.ResetData();
+            
             MarkSaved();
+            CharacterCreated?.Invoke(this, _loadedCharacter);
             return LoadedCharacter!;
         }
 
@@ -72,6 +81,7 @@ namespace PnPOrganizer.Services
                     _skillsService.LoadFromCharacter(_loadedCharacter);
                     _pearlService.LoadFromCharacter(_loadedCharacter);
                     _attributeService.LoadFromCharacter(_loadedCharacter);
+                    _attributeCheckService.LoadFromCharacter(_loadedCharacter);
 
                     MarkSaved();
                     CharacterLoaded?.Invoke(this, _loadedCharacter);
@@ -107,6 +117,7 @@ namespace PnPOrganizer.Services
                         _skillsService.SaveToCharacter(ref _loadedCharacter);
                         _pearlService.SaveToCharacter(ref _loadedCharacter);
                         _attributeService.SaveToCharacter(ref _loadedCharacter);
+                        _attributeCheckService.SaveToCharacter(ref _loadedCharacter);
 
                         Utils.SerializeAndWriteToXml(LoadedCharacter, stream);
                         MarkSaved();

@@ -8,6 +8,7 @@
     xmlns:char="using:PnPOrganizer.Core.Character"
     xmlns:attr="using:PnPOrganizer.Core.Attributes"
     xmlns:controls="using:PnPOrganizer.Controls"
+    xmlns:core="using:PnPOrganizer.Core"
     xmlns:toolkit="using:CommunityToolkit.WinUI.UI.Controls"
     xmlns:vm="using:PnPOrganizer.ViewModels"
     xmlns:conv="using:PnPOrganizer.Converters"
@@ -241,13 +242,13 @@
                                 <StackPanel Grid.Column="0"
                                             Margin="0,0,32,0">
                                     <controls:CharacterStatControl x:Uid="CharacterPage_HealthStat"
-                                                                   Foreground="Coral"
+                                                                   Foreground="{x:Bind core:Palette.LightRed, Converter={StaticResource ColorToBrushConverter}}"
                                                                    Value="{x:Bind ViewModel.CharacterData.CurrentHealth,Mode=TwoWay}"
                                                                    MaxValue="{x:Bind ViewModel.MaxHealth, Mode=OneWay}"
                                                                    ValueBonus="{x:Bind ViewModel.CharacterData.MaxHealthBonus, Mode=TwoWay}"
                                                                    Margin="0,0,0,12"/>
                                     <controls:CharacterStatControl x:Uid="CharacterPage_EnergyStat"
-                                                                   Foreground="Moccasin"
+                                                                   Foreground="{x:Bind core:Palette.Yellow, Converter={StaticResource ColorToBrushConverter}}"
                                                                    Value="{x:Bind ViewModel.CharacterData.CurrentEnergy,Mode=TwoWay}"
                                                                    MaxValue="{x:Bind ViewModel.MaxEnergy, Mode=OneWay}"
                                                                    ValueBonus="{x:Bind ViewModel.CharacterData.MaxEnergyBonus, Mode=TwoWay}"
@@ -255,13 +256,13 @@
                                 </StackPanel>
                                 <StackPanel Grid.Column="1">
                                     <controls:CharacterStatControl x:Uid="CharacterPage_StaminaStat"
-                                                                   Foreground="LightGreen"
+                                                                   Foreground="{x:Bind core:Palette.LightGreen, Converter={StaticResource ColorToBrushConverter}}"
                                                                    Value="{x:Bind ViewModel.CharacterData.CurrentStamina,Mode=TwoWay}"
                                                                    MaxValue="{x:Bind ViewModel.MaxStamina, Mode=OneWay}"
                                                                    ValueBonus="{x:Bind ViewModel.CharacterData.MaxStaminaBonus, Mode=TwoWay}"
                                                                    Margin="0,0,0,12"/>
                                     <controls:CharacterStatControl x:Uid="CharacterPage_InitiativeStat"
-                                                                   Foreground="LightSkyBlue"
+                                                                   Foreground="{x:Bind core:Palette.LightBlue, Converter={StaticResource ColorToBrushConverter}}"
                                                                    MaxValue="{x:Bind ViewModel.Initiative, Mode=OneWay}"
                                                                    ValueBonus="{x:Bind ViewModel.CharacterData.InitiativeBonus, Mode=TwoWay}"
                                                                    NumberBoxEnabled="False"

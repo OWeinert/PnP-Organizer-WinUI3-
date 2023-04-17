@@ -71,6 +71,7 @@ namespace PnPOrganizer.ViewModels
             Pearls = _pearlService.Pearls.Values.ToList();
             Professions = new ObservableCollection<Profession>();
 
+            _saveDataService.CharacterCreated += SaveDataService_CharacterCreated;
             CharacterData!.PropertyChanged += CharacterData_PropertyChanged;
             PropertyChanged += CharacterPageViewModel_PropertyChanged;
 
@@ -96,6 +97,12 @@ namespace PnPOrganizer.ViewModels
                     }
                 };
             }
+            CalculateMaxStats();
+        }
+
+        private void SaveDataService_CharacterCreated(object? sender, CharacterData e)
+        {
+            CharacterData = e;
             CalculateMaxStats();
         }
 

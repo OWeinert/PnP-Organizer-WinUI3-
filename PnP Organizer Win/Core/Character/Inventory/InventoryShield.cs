@@ -25,6 +25,6 @@ namespace PnPOrganizer.Core.Character.Inventory
             Weight = inventoryShieldModel.Weight;
         }
 
-        protected override int GetBaseColor() => DefaultPalette.Red.ToInt();
+        protected override int GetBaseColor() => Palette.LightRed.ToInt();
     }
 }

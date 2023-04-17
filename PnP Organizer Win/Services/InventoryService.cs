@@ -44,7 +44,7 @@ namespace PnPOrganizer.Services
             data.Inventory = currentInventory;
         }
 
-        public void ResetInventory()
+        public void ResetData()
         {
             ItemModels.Clear();
         }

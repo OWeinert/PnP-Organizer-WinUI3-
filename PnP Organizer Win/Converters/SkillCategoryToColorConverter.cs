@@ -20,9 +20,9 @@ namespace PnPOrganizer.Converters
             {
                 return (SkillCategory)value switch
                 {
-                    SkillCategory.Melee => DefaultPalette.Blue,
-                    SkillCategory.Ranged => DefaultPalette.Green,
-                    _ => DefaultPalette.Red,
+                    SkillCategory.Melee => Palette.Blue,
+                    SkillCategory.Ranged => Palette.Green,
+                    _ => Palette.LightRed,
                 };
             }
             

@@ -1,4 +1,5 @@
 ﻿using Microsoft.UI;
+using PnPOrganizer.Core;
 using PnPOrganizer.Core.Character;
 using PnPOrganizer.Services.Interfaces;
 using System.Collections.Generic;
@@ -18,12 +19,12 @@ namespace PnPOrganizer.Services
             var resourceLoader = ResourceLoader.GetForViewIndependentUse();
             _pearls = new Dictionary<PearlType, Pearl>()
             {
-                { PearlType.Fire, new Pearl(resourceLoader.GetString("Pearls_Fire"), Colors.OrangeRed) },
-                { PearlType.Earth, new Pearl(resourceLoader.GetString("Pearls_Earth"), Colors.SaddleBrown) },
-                { PearlType.Metal, new Pearl(resourceLoader.GetString("Pearls_Metal"), Colors.LightSlateGray) },
-                { PearlType.Air, new Pearl(resourceLoader.GetString("Pearls_Air"), Colors.White) },
-                { PearlType.Water, new Pearl(resourceLoader.GetString("Pearls_Water"), Colors.CornflowerBlue) },
-                { PearlType.Wood, new Pearl(resourceLoader.GetString("Pearls_Wood"), Colors.LimeGreen) }
+                { PearlType.Fire, new Pearl(resourceLoader.GetString("Pearls_Fire"), Palette.Orange) },
+                { PearlType.Earth, new Pearl(resourceLoader.GetString("Pearls_Earth"), Palette.Brown) },
+                { PearlType.Metal, new Pearl(resourceLoader.GetString("Pearls_Metal"), Palette.BlueGray) },
+                { PearlType.Air, new Pearl(resourceLoader.GetString("Pearls_Air"), Palette.White) },
+                { PearlType.Water, new Pearl(resourceLoader.GetString("Pearls_Water"), Palette.Blue) },
+                { PearlType.Wood, new Pearl(resourceLoader.GetString("Pearls_Wood"), Palette.Green) }
             }.ToImmutableDictionary();
         }
 
@@ -62,6 +63,15 @@ namespace PnPOrganizer.Services
             data.Forms[3] = Pearls[PearlType.Air].Form;
             data.Forms[4] = Pearls[PearlType.Water].Form;
             data.Forms[5] = Pearls[PearlType.Wood].Form;
+        }
+
+        public void ResetData()
+        {
+            foreach(var pearl in Pearls.Values)
+            {
+                pearl.Amount = 0;
+                pearl.Form = 1;
+            }
         }
     }
 }

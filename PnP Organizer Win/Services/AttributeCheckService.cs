@@ -1,8 +1,10 @@
 ﻿using PnPOrganizer.Core.Attributes;
+using PnPOrganizer.Core.Character;
 using PnPOrganizer.Core.Character.SkillSystem;
 using PnPOrganizer.Core.Character.StatModifiers;
 using PnPOrganizer.Services.Interfaces;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using Windows.ApplicationModel.Resources;
 
@@ -13,10 +15,15 @@ namespace PnPOrganizer.Services
         private readonly IDictionary<AttributeType, IList<AttributeCheck>> _attributeChecks;
         public IDictionary<AttributeType, IList<AttributeCheck>> AttributeChecks => _attributeChecks;
 
+        private ICollection<Profession> _professions;
+        public ICollection<Profession> Professions => _professions;
+
         private readonly ISkillsService _skillsService;
+        private readonly IAttributeService _attributeService;
 
         public AttributeCheckService(IAttributeService attributeService, ISkillsService skillsService)
         {
+            _attributeService = attributeService;
             _skillsService = skillsService;
             var resourceLoader = ResourceLoader.GetForViewIndependentUse();
 
@@ -71,12 +78,20 @@ namespace PnPOrganizer.Services
                 { AttributeType.Wisdom, wisChecks },
                 { AttributeType.Charisma, chaChecks }
             };
+
+            _professions = new Collection<Profession>();
         }
 
         public List<AttributeCheck> GetAsList()
         {
             var resultList = AttributeChecks.SelectMany(attrCheck => attrCheck.Value).ToList();
             return resultList;
+        }
+
+        public Dictionary<AttributeCheckType, AttributeCheck> GetSubDictionary()
+        {
+            var resultDict = GetAsList().ToDictionary(attrCheck => attrCheck.CheckType);
+            return resultDict;
         }
 
         public void ApplyStatModifiers()
@@ -118,6 +133,44 @@ namespace PnPOrganizer.Services
             foreach(var attributeCheck in GetAsList())
             {
                 attributeCheck.Refresh();
+            }
+        }
+
+        public void LoadFromCharacter(CharacterData data)
+        {
+            Professions.Clear();
+            foreach(var professionSaveData in data.Professions)
+            {
+                var attributeCheck = GetSubDictionary()[professionSaveData.AttributeCheckType];
+                var profession = new Profession(attributeCheck);
+                profession.Bonus = professionSaveData.Bonus;
+                Professions.Add(profession);
+            }
+        }
+
+        public void SaveToCharacter(ref CharacterData data)
+        {
+            data.Professions.Clear();
+            foreach(var profession in Professions)
+            {
+                data.Professions.Add(new ProfessionSaveData()
+                {
+                    AttributeCheckType = profession.AttributeCheck.CheckType,
+                    Bonus = profession.Bonus
+                });
+            }
+        }
+
+        public void ResetData()
+        {
+            Professions.Clear();
+            foreach (var attributeCheck in GetAsList())
+            {
+                attributeCheck.AttributeBonus = 0;
+                attributeCheck.PearlBonus = 0;
+                attributeCheck.ProfessionBoni.Clear();
+                attributeCheck.StatModifierBoni.Clear();
+                attributeCheck.StatModifierDiceBoni.Clear();
             }
         }
     }

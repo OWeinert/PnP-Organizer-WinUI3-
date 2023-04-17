@@ -11,6 +11,7 @@ namespace PnPOrganizer.Services.Interfaces
     {
         public event EventHandler<CharacterData>? CharacterSaved;
         public event EventHandler<CharacterData>? CharacterLoaded;
+        public event EventHandler<CharacterData>? CharacterCreated;
 
         public event EventHandler<SaveFileInfo>? CharacterSaveInfoCreated;
 
