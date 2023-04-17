@@ -42,7 +42,7 @@ namespace PnPOrganizer.Core
 
         public static readonly Color Blue = Colors.SteelBlue;
         public static readonly Color LightBlue = Colors.LightSkyBlue;
-        public static readonly Color BlueGray = Colors.LightSteelBlue;
+        public static readonly Color BlueGray = Colors.LightSlateGray;
         
         public static readonly Color White = Colors.White;
         public static readonly Color Black = Colors.Black;
