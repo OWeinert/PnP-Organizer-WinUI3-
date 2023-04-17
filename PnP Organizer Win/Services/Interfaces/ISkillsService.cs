@@ -1,10 +1,9 @@
-﻿using PnPOrganizer.Core.Character.StatModifiers;
-using PnPOrganizer.Services.Interfaces;
+﻿using PnPOrganizer.Core.Character.SkillSystem;
+using PnPOrganizer.Core.Character.StatModifiers;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
-namespace PnPOrganizer.Core.Character.SkillSystem
+namespace PnPOrganizer.Services.Interfaces
 {
     public interface ISkillsService : ISaveData
     {

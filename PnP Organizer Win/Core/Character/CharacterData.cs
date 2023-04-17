@@ -1,5 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using PnPOrganizer.Core.Character.Attributes;
 using PnPOrganizer.Core.Character.Inventory;
+using PnPOrganizer.Core.Character.SkillSystem;
 using System;
 using System.Collections.Generic;
 

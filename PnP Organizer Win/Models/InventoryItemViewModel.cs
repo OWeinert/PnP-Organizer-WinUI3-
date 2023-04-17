@@ -1,11 +1,10 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.WinUI.Helpers;
-using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Imaging;
 using PnPOrganizer.Core;
 using PnPOrganizer.Core.Character.Inventory;
-using System;
+using PnPOrganizer.Helpers;
 using System.ComponentModel;
 
 namespace PnPOrganizer.Models

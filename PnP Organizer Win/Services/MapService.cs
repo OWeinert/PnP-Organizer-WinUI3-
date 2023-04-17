@@ -1,10 +1,8 @@
 ﻿using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Animation;
-using PnPOrganizer.ViewServices.Interfaces;
-using System.Collections.ObjectModel;
-using Windows.Services.Maps;
+using PnPOrganizer.Services.Interfaces;
 
-namespace PnPOrganizer.ViewServices
+namespace PnPOrganizer.Services
 {
     public class MapService : IMapService
     {
@@ -20,9 +18,9 @@ namespace PnPOrganizer.ViewServices
         private Page? _rootMap;
         public Page? RootMap => _rootMap;
 
-        public void Initialize(Frame contentFrame) 
-        { 
-            _mapFrame = contentFrame; 
+        public void Initialize(Frame contentFrame)
+        {
+            _mapFrame = contentFrame;
         }
 
         public void SetRootMap<TPage>() where TPage : Page
@@ -39,15 +37,13 @@ namespace PnPOrganizer.ViewServices
         {
             if (CurrentMap!.GetType() == RootMap!.GetType())
                 return;
-            if(LastMap != null)
+            if (LastMap != null)
             {
                 transitionInfo ??= new SuppressNavigationTransitionInfo();
                 PrepareAnimation();
                 MapFrame.GoBack();
                 if (MapFrame.Content is Page page)
-                {
                     _currentMap = page;
-                }
             }
         }
 
@@ -56,7 +52,7 @@ namespace PnPOrganizer.ViewServices
             transitionInfo ??= new SuppressNavigationTransitionInfo();
             PrepareAnimation();
             _mapFrame.Navigate(typeof(TPage), parameters, transitionInfo);
-            if(MapFrame.Content is TPage page)
+            if (MapFrame.Content is TPage page)
             {
                 _lastMap = _currentMap;
                 _currentMap = page;

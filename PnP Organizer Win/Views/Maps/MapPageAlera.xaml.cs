@@ -1,9 +1,9 @@
-﻿using Microsoft.UI.Xaml.Controls;
+﻿using CommunityToolkit.Mvvm.DependencyInjection;
+using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Animation;
-using PnPOrganizer.Views.Interfaces;
-using PnPOrganizer.ViewModels.Maps;
-using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Xaml.Navigation;
+using PnPOrganizer.ViewModels.Maps;
+using PnPOrganizer.Views.Interfaces;
 
 namespace PnPOrganizer.Views.Maps
 {

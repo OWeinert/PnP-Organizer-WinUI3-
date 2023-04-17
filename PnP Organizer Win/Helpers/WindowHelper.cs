@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
-namespace PnPOrganizer.Core
+namespace PnPOrganizer.Helpers
 {
     using Microsoft.UI;
     using Microsoft.UI.Windowing;
@@ -26,7 +22,7 @@ namespace PnPOrganizer.Core
         public static IntPtr GetHandle(this Window window)
         {
             WindowWrapper? windowWrapper = WindowWrapper.FromAbi(window.GetHandle());
-            if(windowWrapper != null)
+            if (windowWrapper != null)
                 return windowWrapper.WindowHandle;
             return IntPtr.Zero;
         }
@@ -46,7 +42,7 @@ namespace PnPOrganizer.Core
             public struct Vftbl
             {
                 public delegate int _get_WindowHandle_0(IntPtr thisPtr, out IntPtr windowHandle);
-                internal global::WinRT.Interop.IUnknownVftbl IUnknownVftbl;
+                internal IUnknownVftbl IUnknownVftbl;
                 public _get_WindowHandle_0 get_WindowHandle_0;
                 public static readonly Vftbl AbiToProjectionVftable;
                 public static readonly IntPtr AbiToProjectionVftablePtr;
@@ -55,7 +51,7 @@ namespace PnPOrganizer.Core
                 {
                     AbiToProjectionVftable = new Vftbl
                     {
-                        IUnknownVftbl = global::WinRT.Interop.IUnknownVftbl.AbiToProjectionVftbl,
+                        IUnknownVftbl = IUnknownVftbl.AbiToProjectionVftbl,
                         get_WindowHandle_0 = Do_Abi_get_WindowHandle_0
                     };
                     AbiToProjectionVftablePtr = Marshal.AllocHGlobal(Marshal.SizeOf<Vftbl>());
@@ -83,7 +79,7 @@ namespace PnPOrganizer.Core
 
             public static implicit operator WindowWrapper?(IObjectReference obj)
             {
-                return (obj != null) ? new WindowWrapper(obj) : null;
+                return obj != null ? new WindowWrapper(obj) : null;
             }
 
             protected readonly ObjectReference<Vftbl> _obj;
@@ -125,7 +121,8 @@ namespace PnPOrganizer.Core
 
         static public void TrackWindow(Window window)
         {
-            window.Closed += (sender, args) => {
+            window.Closed += (sender, args) =>
+            {
                 _activeWindows.Remove(window);
             };
             _activeWindows.Add(window);
@@ -142,12 +139,10 @@ namespace PnPOrganizer.Core
         {
             if (element.XamlRoot != null)
             {
-                foreach (Window window in _activeWindows)
+                foreach (var window in _activeWindows)
                 {
                     if (element.XamlRoot == window.Content.XamlRoot)
-                    {
                         return window;
-                    }
                 }
             }
             return null;

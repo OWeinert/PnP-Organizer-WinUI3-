@@ -1,5 +1,4 @@
 ﻿using CommunityToolkit.WinUI.Helpers;
-using Microsoft.UI;
 using PnPOrganizer.Core.BattleAssistant;
 using PnPOrganizer.Models;
 

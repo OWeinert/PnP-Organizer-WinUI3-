@@ -1,6 +1,5 @@
 ﻿using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using PnPOrganizer.Services.Data;
 using PnPOrganizer.ViewModels;
 
 namespace PnPOrganizer.Selectors

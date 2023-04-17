@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace PnPOrganizer.Core.Character
+namespace PnPOrganizer.Core.Character.SkillSystem
 {
     [Serializable]
     public enum SkillCategory

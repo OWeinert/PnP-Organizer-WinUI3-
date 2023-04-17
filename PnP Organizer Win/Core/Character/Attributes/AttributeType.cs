@@ -1,4 +1,4 @@
-﻿namespace PnPOrganizer.Core.Attributes
+﻿namespace PnPOrganizer.Core.Character.Attributes
 {
     public enum AttributeType
     {

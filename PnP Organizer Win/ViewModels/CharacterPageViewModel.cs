@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using PnPOrganizer.Core.Attributes;
 using PnPOrganizer.Core.Character;
+using PnPOrganizer.Core.Character.Attributes;
 using PnPOrganizer.Services.Interfaces;
 using PnPOrganizer.ViewModels.Interfaces;
 using System;

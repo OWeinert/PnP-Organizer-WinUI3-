@@ -1,9 +1,6 @@
 ﻿using PnPOrganizer.Core.Attributes;
-using System;
+using PnPOrganizer.Core.Character.Attributes;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PnPOrganizer.Services.Interfaces
 {

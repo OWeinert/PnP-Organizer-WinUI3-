@@ -1,5 +1,4 @@
-﻿using Microsoft.UI;
-using PnPOrganizer.Core;
+﻿using PnPOrganizer.Core;
 using PnPOrganizer.Core.Character;
 using PnPOrganizer.Services.Interfaces;
 using System.Collections.Generic;

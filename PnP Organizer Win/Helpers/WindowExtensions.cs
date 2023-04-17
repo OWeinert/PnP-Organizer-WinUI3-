@@ -11,27 +11,27 @@ namespace PnPOrganizer.Helpers
     {
         public static AppWindow GetAppWindow(this Window window)
         {
-            IntPtr windowHandle = WindowNative.GetWindowHandle(window);
-            WindowId windowId = Win32Interop.GetWindowIdFromWindow(windowHandle);
+            var windowHandle = WindowNative.GetWindowHandle(window);
+            var windowId = Win32Interop.GetWindowIdFromWindow(windowHandle);
             return AppWindow.GetFromWindowId(windowId);
         }
 
         public static (int Width, int Height) GetCurrentWindowSize(this Window window)
         {
-            SizeInt32 size = window.GetAppWindow().Size;
+            var size = window.GetAppWindow().Size;
             return (size.Width, size.Height);
         }
 
         public static void SetWindowSize(this Window window, int width, int height)
         {
-            AppWindow appWindow = window.GetAppWindow();
+            var appWindow = window.GetAppWindow();
             SizeInt32 size = new(width, height);
             appWindow.Resize(size);
         }
 
         public static void SetIsAlwaysOnTop(this Window window, bool value)
         {
-            AppWindow appWindow = window.GetAppWindow();
+            var appWindow = window.GetAppWindow();
 
             if (appWindow.Presenter is OverlappedPresenter overlappedPresenter)
             {
@@ -44,7 +44,7 @@ namespace PnPOrganizer.Helpers
 
         public static bool GetIsAlwaysOnTop(this Window window)
         {
-            AppWindow appWindow = window.GetAppWindow();
+            var appWindow = window.GetAppWindow();
 
             if (appWindow.Presenter is OverlappedPresenter overlappedPresenter)
             {

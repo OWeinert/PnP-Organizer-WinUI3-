@@ -1,6 +1,6 @@
 ﻿using PnPOrganizer.Core.Attributes;
 
-namespace PnPOrganizer.Core.Character
+namespace PnPOrganizer.Core.Character.Attributes
 {
     public struct ProfessionSaveData
     {

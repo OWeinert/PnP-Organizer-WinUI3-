@@ -1,7 +1,4 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Media;
-using PnPOrganizer.Core;
 using PnPOrganizer.Core.Character.Inventory;
 
 namespace PnPOrganizer.Models

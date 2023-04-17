@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace PnPOrganizer.Interfaces
+namespace PnPOrganizer.Services.Interfaces
 {
     public interface ILocalizationService
     {

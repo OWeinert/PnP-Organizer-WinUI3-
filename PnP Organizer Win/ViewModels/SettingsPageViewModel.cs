@@ -2,12 +2,10 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.WinUI;
 using Microsoft.UI.Xaml;
-using PnPOrganizer.Interfaces;
-using PnPOrganizer.ViewServices;
+using PnPOrganizer.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Windows.UI;
 
 namespace PnPOrganizer.ViewModels
 {
@@ -59,7 +57,7 @@ namespace PnPOrganizer.ViewModels
             _availableLanguages = _localizationService.AvailableLanguages
                 .Select(language => new LanguageViewModel(language, language.GetLocalized("Resources")));
 
-            string? language = _localizationService.GetLanguage();
+            var language = _localizationService.GetLanguage();
 
             if (language is not null && _availableLanguages.Any(i => i.Language == language) is true)
             {
@@ -94,7 +92,7 @@ namespace PnPOrganizer.ViewModels
         [RelayCommand]
         private void Initialize()
         {
-            (int Width, int Height)? windowSize = _windowingService.GetWindowSize();
+            var windowSize = _windowingService.GetWindowSize();
             windowSize ??= _windowingService.GetWindowSize();
 
             if (windowSize is not null)
@@ -103,7 +101,7 @@ namespace PnPOrganizer.ViewModels
                 WindowHeight = windowSize.Value.Height;
             }
 
-            ElementTheme? theme = _appThemeService.LoadThemeSettings();
+            var theme = _appThemeService.LoadThemeSettings();
             theme ??= _appThemeService.GetTheme();
 
             if (AvailableAppThemes.FirstOrDefault(item => item.Theme.Equals(theme)) is ThemeViewModel themeItemViewModel)

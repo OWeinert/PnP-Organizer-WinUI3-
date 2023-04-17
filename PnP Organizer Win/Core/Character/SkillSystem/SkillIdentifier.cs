@@ -1,6 +1,4 @@
-﻿using PnPOrganizer.Core.Character;
-
-namespace PnPOrganizer.Core.Character.SkillSystem
+﻿namespace PnPOrganizer.Core.Character.SkillSystem
 {
     public struct SkillIdentifier
     {

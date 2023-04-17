@@ -1,5 +1,4 @@
 ﻿using CommunityToolkit.WinUI.Helpers;
-using Microsoft.UI;
 using PnPOrganizer.Models;
 
 namespace PnPOrganizer.Core.Character.Inventory

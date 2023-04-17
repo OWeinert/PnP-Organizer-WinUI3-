@@ -2,7 +2,7 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Animation;
 using System;
 
-namespace PnPOrganizer.Interfaces
+namespace PnPOrganizer.Services.Interfaces
 {
     public interface INavigationViewService
     {

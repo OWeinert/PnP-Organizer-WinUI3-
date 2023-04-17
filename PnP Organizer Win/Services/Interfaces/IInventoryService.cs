@@ -1,12 +1,6 @@
-﻿using PnPOrganizer.Core.Character;
-using PnPOrganizer.Core.Character.Inventory;
+﻿using PnPOrganizer.Core.Character.Inventory;
 using PnPOrganizer.Models;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PnPOrganizer.Services.Interfaces
 {

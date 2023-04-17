@@ -1,14 +1,10 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Input;
 using PnPOrganizer.Core.Character.StatModifiers;
 using Serilog;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using System.Text;
-using Windows.ApplicationModel.Resources;
 
 namespace PnPOrganizer.Core.Character.SkillSystem
 {

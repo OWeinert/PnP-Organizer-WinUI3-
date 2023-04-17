@@ -1,6 +1,4 @@
-﻿using Microsoft.UI.Xaml;
-
-namespace PnPOrganizer.ViewServices
+﻿namespace PnPOrganizer.Services.Interfaces
 {
     public interface ISoundSettingsService
     {

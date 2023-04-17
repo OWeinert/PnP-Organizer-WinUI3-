@@ -2,16 +2,11 @@ using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.UI.Xaml;
-using PnPorganizer.Core.Character;
-using PnPOrganizer.Core.Character.SkillSystem;
-using PnPOrganizer.Interfaces;
 using PnPOrganizer.Services;
 using PnPOrganizer.Services.Interfaces;
 using PnPOrganizer.ViewModels;
 using PnPOrganizer.ViewModels.Maps;
 using PnPOrganizer.Views;
-using PnPOrganizer.ViewServices;
-using PnPOrganizer.ViewServices.Interfaces;
 using Serilog;
 
 namespace PnPOrganizer
@@ -36,7 +31,7 @@ namespace PnPOrganizer
         protected override void OnLaunched(LaunchActivatedEventArgs args)
         {
             base.OnLaunched(args);
-            IAppActivationService appWindowService = Ioc.Default.GetRequiredService<IAppActivationService>();
+            var appWindowService = Ioc.Default.GetRequiredService<IAppActivationService>();
             appWindowService.Activate(args);
         }
 

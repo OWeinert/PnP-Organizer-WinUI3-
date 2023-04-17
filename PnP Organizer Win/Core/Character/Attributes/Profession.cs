@@ -1,5 +1,4 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using PnPOrganizer.Core.Attributes;
 
 namespace PnPOrganizer.Core.Attributes
 {

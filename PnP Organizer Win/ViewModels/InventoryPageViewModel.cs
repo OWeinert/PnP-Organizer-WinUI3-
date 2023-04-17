@@ -1,13 +1,11 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.WinUI.UI;
-using Microsoft.UI.Xaml.Media;
 using PnPOrganizer.Models;
 using PnPOrganizer.Services.Interfaces;
 using PnPOrganizer.ViewModels.Interfaces;
 using System;
 using System.Collections.ObjectModel;
-using Windows.UI;
 
 namespace PnPOrganizer.ViewModels
 {

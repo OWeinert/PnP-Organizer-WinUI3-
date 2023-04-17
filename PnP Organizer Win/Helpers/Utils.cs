@@ -4,6 +4,7 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Imaging;
 using Octokit;
+using PnPOrganizer.Helpers;
 using Serilog;
 using System;
 using System.Collections.Generic;

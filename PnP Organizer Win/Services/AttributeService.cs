@@ -1,12 +1,9 @@
-﻿using Microsoft.UI;
-using PnPOrganizer.Core;
-using PnPOrganizer.Core.Attributes;
+﻿using PnPOrganizer.Core;
 using PnPOrganizer.Core.Character;
+using PnPOrganizer.Core.Character.Attributes;
 using PnPOrganizer.Services.Interfaces;
-using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
-using System.Collections.ObjectModel;
 using Windows.ApplicationModel.Resources;
 
 namespace PnPOrganizer.Services

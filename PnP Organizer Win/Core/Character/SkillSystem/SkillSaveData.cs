@@ -1,6 +1,4 @@
-﻿using PnPOrganizer.Core.Character.SkillSystem;
-
-namespace PnPOrganizer.Core.Character
+﻿namespace PnPOrganizer.Core.Character.SkillSystem
 {
     /// <summary>
     /// Simplified Skill which only contains it's index in the Skills.SkilList and the currently invested SkillPoints

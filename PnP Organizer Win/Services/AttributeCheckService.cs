@@ -1,6 +1,6 @@
 ﻿using PnPOrganizer.Core.Attributes;
 using PnPOrganizer.Core.Character;
-using PnPOrganizer.Core.Character.SkillSystem;
+using PnPOrganizer.Core.Character.Attributes;
 using PnPOrganizer.Core.Character.StatModifiers;
 using PnPOrganizer.Services.Interfaces;
 using System.Collections.Generic;

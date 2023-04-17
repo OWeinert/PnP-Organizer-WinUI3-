@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.WinUI.UI;
 using PnPOrganizer.Core.Character.SkillSystem;
+using PnPOrganizer.Services.Interfaces;
 using PnPOrganizer.ViewModels.Interfaces;
 using System;
 using System.Collections.Generic;

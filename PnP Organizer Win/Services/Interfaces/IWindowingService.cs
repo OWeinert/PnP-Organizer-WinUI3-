@@ -1,6 +1,6 @@
 using Microsoft.UI.Xaml;
 
-namespace PnPOrganizer.Interfaces
+namespace PnPOrganizer.Services.Interfaces
 {
     public interface IWindowingService
     {

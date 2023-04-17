@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.Input;
+using PnPOrganizer.Services.Interfaces;
 using PnPOrganizer.ViewModels.Interfaces;
 using PnPOrganizer.Views.Maps;
-using PnPOrganizer.ViewServices.Interfaces;
 using System;
 
 namespace PnPOrganizer.ViewModels.Maps

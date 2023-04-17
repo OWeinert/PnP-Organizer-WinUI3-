@@ -1,7 +1,7 @@
 ﻿using Microsoft.UI.Xaml;
-using PnPOrganizer.Interfaces;
+using PnPOrganizer.Services.Interfaces;
 
-namespace PnPOrganizer.ViewServices
+namespace PnPOrganizer.Services
 {
     public class SoundSettingsService : ISoundSettingsService
     {
@@ -24,7 +24,7 @@ namespace PnPOrganizer.ViewServices
 
         public bool SaveSoundSettings() => _settingsService.TrySave(SettingsName, SoundsEnabledSettingsKey, SoundsEnabled);
 
-        public bool LoadSoundSettings() 
+        public bool LoadSoundSettings()
         {
             if (_settingsService.TryLoad(SettingsName, SoundsEnabledSettingsKey, out bool soundsEnabled) is true)
                 SoundsEnabled = soundsEnabled;

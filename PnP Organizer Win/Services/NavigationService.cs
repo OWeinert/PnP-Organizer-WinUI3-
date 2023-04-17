@@ -1,7 +1,7 @@
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Animation;
 using Microsoft.UI.Xaml.Navigation;
-using PnPOrganizer.Interfaces;
+using PnPOrganizer.Services.Interfaces;
 using PnPOrganizer.Views;
 using System;
 using System.Collections.Generic;
@@ -64,7 +64,7 @@ namespace PnPOrganizer.Services
             else if (args.SelectedItemContainer is NavigationViewItemBase item &&
                      item.Tag.ToString() is string itemTag)
             {
-                Type pageType = _navigationPages.FirstOrDefault(p => p.Tag == itemTag).PageType;
+                var pageType = _navigationPages.FirstOrDefault(p => p.Tag == itemTag).PageType;
                 NavigateTo(pageType, args.RecommendedNavigationTransitionInfo);
             }
         }
@@ -100,7 +100,7 @@ namespace PnPOrganizer.Services
                 }
                 else if (_contentFrame.SourcePageType is not null)
                 {
-                    (var Tag, Type PageType) = _navigationPages.FirstOrDefault(p => p.PageType == e.SourcePageType);
+                    (var Tag, var PageType) = _navigationPages.FirstOrDefault(p => p.PageType == e.SourcePageType);
 
                     _navigationView.SelectedItem = _navigationView.MenuItems
                         .OfType<NavigationViewItem>()

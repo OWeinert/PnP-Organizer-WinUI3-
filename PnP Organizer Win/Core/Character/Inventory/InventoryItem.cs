@@ -1,14 +1,8 @@
 ﻿using CommunityToolkit.WinUI.Helpers;
-using Microsoft.UI;
-using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Imaging;
 using PnPOrganizer.Models;
 using System;
-using System.IO;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Xml.Serialization;
-using Windows.Graphics.Imaging;
 
 namespace PnPOrganizer.Core.Character.Inventory
 {

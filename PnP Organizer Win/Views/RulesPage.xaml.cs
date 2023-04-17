@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using PnPOrganizer.Core;
+using PnPOrganizer.Helpers;
 using PnPOrganizer.ViewModels;
 using PnPOrganizer.Views.Interfaces;
 

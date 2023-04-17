@@ -1,5 +1,5 @@
 using Microsoft.UI.Xaml;
-using PnPOrganizer.Interfaces;
+using PnPOrganizer.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 
@@ -26,7 +26,7 @@ namespace PnPOrganizer.Services
         {
             _rootElement = rootElement;
 
-            ElementTheme? theme = LoadThemeSettings();
+            var theme = LoadThemeSettings();
             SetTheme(theme is not null ? theme.Value : ElementTheme.Default);
         }
 

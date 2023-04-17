@@ -1,4 +1,4 @@
-namespace PnPOrganizer.Interfaces
+namespace PnPOrganizer.Services.Interfaces
 {
     public interface ISettingsService
     {

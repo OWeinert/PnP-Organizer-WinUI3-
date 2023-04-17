@@ -1,7 +1,7 @@
 ﻿using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Animation;
 
-namespace PnPOrganizer.ViewServices.Interfaces
+namespace PnPOrganizer.Services.Interfaces
 {
     public interface IMapService
     {

@@ -4,7 +4,7 @@ using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 using PnPOrganizer.Core;
 using PnPOrganizer.Core.Character;
-using PnPOrganizer.Core.Character.SkillSystem;
+using PnPOrganizer.Helpers;
 using PnPOrganizer.Services.Data;
 using PnPOrganizer.Services.Interfaces;
 using PnPOrganizer.Views;
@@ -157,7 +157,7 @@ namespace PnPOrganizer.Services
             var enteredFileName = LoadedCharacter?.FileName;
             savePicker.SuggestedFileName = enteredFileName ?? string.Empty;
 
-            StorageFile file = await savePicker.PickSaveFileAsync();
+            var file = await savePicker.PickSaveFileAsync();
             if (file != null)
             {
                 CachedFileManager.DeferUpdates(file);

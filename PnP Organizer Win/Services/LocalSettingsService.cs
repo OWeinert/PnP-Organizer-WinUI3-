@@ -1,4 +1,4 @@
-using PnPOrganizer.Interfaces;
+using PnPOrganizer.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
@@ -40,7 +40,7 @@ namespace PnPOrganizer.Services
 
         public void Save<T>(string containerName, string key, T value)
         {
-            ApplicationDataContainer? container = _rootContainer.Containers.GetValueOrDefault(containerName);
+            var container = _rootContainer.Containers.GetValueOrDefault(containerName);
             container ??= _rootContainer.CreateContainer(containerName, ApplicationDataCreateDisposition.Always);
             container.Values[key] = JsonSerializer.Serialize(value);
         }
@@ -66,12 +66,12 @@ namespace PnPOrganizer.Services
 
         public void RemoveAllSettings()
         {
-            foreach (KeyValuePair<string, ApplicationDataContainer> container in _rootContainer.Containers)
+            foreach (var container in _rootContainer.Containers)
             {
                 _rootContainer.DeleteContainer(container.Key);
             }
 
-            foreach (KeyValuePair<string, object> value in _rootContainer.Values)
+            foreach (var value in _rootContainer.Values)
             {
                 _rootContainer.Values.Clear();
             }

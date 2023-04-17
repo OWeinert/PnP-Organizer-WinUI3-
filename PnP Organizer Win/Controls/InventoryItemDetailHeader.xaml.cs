@@ -1,7 +1,7 @@
 ﻿using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Imaging;
-using PnPOrganizer.Core;
+using PnPOrganizer.Helpers;
 using PnPOrganizer.Models;
 using System;
 using Windows.Storage.Pickers;

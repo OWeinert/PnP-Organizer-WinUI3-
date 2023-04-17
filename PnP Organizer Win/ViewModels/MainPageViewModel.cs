@@ -1,14 +1,10 @@
 using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
 using PnPOrganizer.Services.Data;
 using PnPOrganizer.Services.Interfaces;
 using PnPOrganizer.ViewModels.Interfaces;
-using Serilog;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Threading.Tasks;
-using Windows.Storage;
 
 namespace PnPOrganizer.ViewModels
 {

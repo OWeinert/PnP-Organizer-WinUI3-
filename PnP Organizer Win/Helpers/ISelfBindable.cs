@@ -1,4 +1,4 @@
-﻿namespace PnPOrganizer.Core
+﻿namespace PnPOrganizer.Helpers
 {
     public interface ISelfBindable<T> where T : class
     {

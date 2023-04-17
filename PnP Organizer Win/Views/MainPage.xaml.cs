@@ -1,13 +1,9 @@
-using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.WinUI;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Animation;
 using PnPOrganizer.Helpers;
-using PnPOrganizer.Interfaces;
-using PnPOrganizer.Services;
 using PnPOrganizer.Services.Interfaces;
 using PnPOrganizer.ViewModels;
 using PnPOrganizer.Views.Interfaces;

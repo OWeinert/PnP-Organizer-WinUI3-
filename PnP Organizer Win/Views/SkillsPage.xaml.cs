@@ -1,19 +1,18 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 using PnPOrganizer.Core.Character.SkillSystem;
+using PnPOrganizer.Services.Interfaces;
 using PnPOrganizer.ViewModels;
 using PnPOrganizer.Views.Interfaces;
-using Microsoft.UI.Xaml;
-using Windows.ApplicationModel.Resources;
-using System.Text;
-using System.Linq;
-using System.Collections.Generic;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
-using PnPOrganizer.Core.Character;
-using PnPOrganizer.Services.Interfaces;
+using System.Linq;
+using System.Text;
+using Windows.ApplicationModel.Resources;
 
 namespace PnPOrganizer.Views
 {

@@ -1,4 +1,5 @@
 ﻿using PnPOrganizer.Core.Attributes;
+using PnPOrganizer.Core.Character.Attributes;
 using System.Collections.Generic;
 
 namespace PnPOrganizer.Services.Interfaces

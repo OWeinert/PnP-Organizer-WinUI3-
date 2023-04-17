@@ -1,10 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.WinUI.UI.Converters;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Media.Imaging;
 using PnPOrganizer.Core;
+using PnPOrganizer.Helpers;
 using PnPOrganizer.Services.Data;
-using PnPOrganizer.ViewModels.Interfaces;
 
 namespace PnPOrganizer.ViewModels
 {

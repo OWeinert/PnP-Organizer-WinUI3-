@@ -1,25 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Navigation;
-using PnPOrganizer.ViewModels;
-using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Xaml.Media.Animation;
-using Windows.Foundation.Metadata;
-using PnPOrganizer.Models;
-using CommunityToolkit.Mvvm.ComponentModel;
-using Windows.UI;
-using PnPOrganizer.Views.Interfaces;
-using System.Threading.Tasks;
+using Microsoft.UI.Xaml.Navigation;
 using PnPOrganizer.Core;
-using Windows.Storage.Pickers;
-using Microsoft.UI.Xaml.Media.Imaging;
-using System.Diagnostics;
+using PnPOrganizer.Models;
+using PnPOrganizer.ViewModels;
+using PnPOrganizer.Views.Interfaces;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Windows.Foundation.Metadata;
+using Windows.UI;
 
 namespace PnPOrganizer.Views
 {
@@ -72,7 +69,7 @@ namespace PnPOrganizer.Views
 
         private async Task PlayTransitionAnimationAsync()
         {
-            ConnectedAnimation animation = ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("backwardsAnimation", ItemDetails);
+            var animation = ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("backwardsAnimation", ItemDetails);
             SmokeGrid.Children.Remove(ItemDetails);
 
             animation.Completed += Animation_Completed;

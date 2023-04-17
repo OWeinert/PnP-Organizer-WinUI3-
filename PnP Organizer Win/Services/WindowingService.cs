@@ -1,6 +1,6 @@
 using Microsoft.UI.Xaml;
 using PnPOrganizer.Helpers;
-using PnPOrganizer.Interfaces;
+using PnPOrganizer.Services.Interfaces;
 using Windows.Graphics;
 
 namespace PnPOrganizer.Services
@@ -56,7 +56,7 @@ namespace PnPOrganizer.Services
         {
             if (_window is not null)
             {
-                SizeInt32 currentSize = _window.GetAppWindow().Size;
+                var currentSize = _window.GetAppWindow().Size;
                 return (currentSize.Width, currentSize.Height);
             }
 

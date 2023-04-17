@@ -1,5 +1,5 @@
 using Microsoft.Windows.ApplicationModel.Resources;
-using PnPOrganizer.Interfaces;
+using PnPOrganizer.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,7 +30,7 @@ namespace PnPOrganizer.Services
 
         public void Initialize()
         {
-            string? language = GetLanguage();
+            var language = GetLanguage();
             SetLanguage(language is not null && IsAvailable(language) ? language : DefaultLanguage);
         }
 
@@ -41,7 +41,7 @@ namespace PnPOrganizer.Services
 
         public string? GetLanguage()
         {
-            string language = ApplicationLanguages.PrimaryLanguageOverride;
+            var language = ApplicationLanguages.PrimaryLanguageOverride;
             return (IsAvailable(language) is true) ? language : null;
         }
 

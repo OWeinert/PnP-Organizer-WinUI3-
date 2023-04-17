@@ -1,9 +1,5 @@
-﻿using CommunityToolkit.WinUI.UI.Controls.ColorPickerConverters;
-using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Data;
-using Microsoft.UI.Xaml.Media;
+﻿using Microsoft.UI.Xaml.Data;
 using PnPOrganizer.Core;
-using PnPOrganizer.Core.Character;
 using PnPOrganizer.Core.Character.SkillSystem;
 using System;
 namespace PnPOrganizer.Converters
