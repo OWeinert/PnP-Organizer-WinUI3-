@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System;
 using System.ComponentModel;
 using PnPOrganizer.Core.Character;
+using PnPOrganizer.Services.Interfaces;
 
 namespace PnPOrganizer.Views
 {

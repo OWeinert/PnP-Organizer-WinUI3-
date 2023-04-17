@@ -117,6 +117,54 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AttributeCheck_Acrobatics" xml:space="preserve">
+    <value>Acrobatics</value>
+  </data>
+  <data name="AttributeCheck_Athletics" xml:space="preserve">
+    <value>Athletics</value>
+  </data>
+  <data name="AttributeCheck_Bluff" xml:space="preserve">
+    <value>Bluff</value>
+  </data>
+  <data name="AttributeCheck_FirstAid" xml:space="preserve">
+    <value>First Aid</value>
+  </data>
+  <data name="AttributeCheck_HandleAnimals" xml:space="preserve">
+    <value>Handle Animals</value>
+  </data>
+  <data name="AttributeCheck_History" xml:space="preserve">
+    <value>History</value>
+  </data>
+  <data name="AttributeCheck_Insight" xml:space="preserve">
+    <value>Insight</value>
+  </data>
+  <data name="AttributeCheck_Inspect" xml:space="preserve">
+    <value>Inspect</value>
+  </data>
+  <data name="AttributeCheck_Intimidate" xml:space="preserve">
+    <value>Intimidate</value>
+  </data>
+  <data name="AttributeCheck_Nature" xml:space="preserve">
+    <value>Nature</value>
+  </data>
+  <data name="AttributeCheck_Perceive" xml:space="preserve">
+    <value>Perceive</value>
+  </data>
+  <data name="AttributeCheck_Performance" xml:space="preserve">
+    <value>Performance</value>
+  </data>
+  <data name="AttributeCheck_Persuade" xml:space="preserve">
+    <value>Persuade</value>
+  </data>
+  <data name="AttributeCheck_Physique" xml:space="preserve">
+    <value>Physique</value>
+  </data>
+  <data name="AttributeCheck_SleightOfHand" xml:space="preserve">
+    <value>Sleight of Hand</value>
+  </data>
+  <data name="AttributeCheck_SneakHide" xml:space="preserve">
+    <value>Sneak / Hide</value>
+  </data>
   <data name="Attributes_Charisma" xml:space="preserve">
     <value>Charisma</value>
   </data>
@@ -281,6 +329,9 @@
   </data>
   <data name="MainWindow_Title.Text" xml:space="preserve">
     <value>PnP Organizer</value>
+  </data>
+  <data name="NavigationViewItem_Elements.Content" xml:space="preserve">
+    <value>Elements</value>
   </data>
   <data name="NavigationViewItem_Inventory.Content" xml:space="preserve">
     <value>Inventory</value>

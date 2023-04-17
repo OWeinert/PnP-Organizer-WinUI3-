@@ -1,9 +1,11 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using PnPOrganizer.Core.Attributes;
 using PnPOrganizer.Core.Character;
 using PnPOrganizer.Services.Interfaces;
 using PnPOrganizer.ViewModels.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using Windows.Globalization.NumberFormatting;
 
@@ -15,8 +17,12 @@ namespace PnPOrganizer.ViewModels
         
         public bool IsInitialized => _isInitialized;
 
+        public List<AttributeCheck>? AttributeChecks { get; private set; }
         public IList<Core.Attributes.Attribute>? Attributes { get; private set; }
         public IList<Pearl>? Pearls { get; private set; }
+
+        [ObservableProperty]
+        private ObservableCollection<Profession>? _professions;
 
         [ObservableProperty]
         private CharacterData? _characterData;
@@ -44,12 +50,16 @@ namespace PnPOrganizer.ViewModels
         private readonly ISaveDataService _saveDataService;
         private readonly IPearlService _pearlService;
         private readonly IAttributeService _attributeService;
+        private readonly IAttributeCheckService _attributeCheckService;
 
-        public CharacterPageViewModel(ISaveDataService saveDataService, IPearlService pearlService, IAttributeService attributeService)
+        public CharacterPageViewModel(ISaveDataService saveDataService, IPearlService pearlService, IAttributeService attributeService,
+            IAttributeCheckService attributeCheckService)
         {
             _saveDataService = saveDataService;
             _pearlService = pearlService;
             _attributeService = attributeService;
+            _attributeCheckService = attributeCheckService;
+
             Initialize();
         }
 
@@ -57,9 +67,11 @@ namespace PnPOrganizer.ViewModels
         {
             CharacterData = _saveDataService.LoadedCharacter;
             Attributes = _attributeService.Attributes.Values.ToList();
+            AttributeChecks = _attributeCheckService.GetAsList();
             Pearls = _pearlService.Pearls.Values.ToList();
+            Professions = new ObservableCollection<Profession>();
 
-            CharacterData.PropertyChanged += CharacterData_PropertyChanged;
+            CharacterData!.PropertyChanged += CharacterData_PropertyChanged;
             PropertyChanged += CharacterPageViewModel_PropertyChanged;
 
             foreach (var pearl in Pearls)
@@ -123,18 +135,34 @@ namespace PnPOrganizer.ViewModels
 
         private void CalculateMaxStats()
         {
-            var strength = _attributeService.Attributes[Core.Attributes.AttributeType.Strength].Value;
-            var constitution = _attributeService.Attributes[Core.Attributes.AttributeType.Constitution].Value;
-            var charisma = _attributeService.Attributes[Core.Attributes.AttributeType.Charisma].Value;
-            var intelligence = _attributeService.Attributes[Core.Attributes.AttributeType.Intelligence].Value;
-            var dexterity = _attributeService.Attributes[Core.Attributes.AttributeType.Dexterity].Value;
-            var constitutionBonus = _attributeService.Attributes[Core.Attributes.AttributeType.Constitution].Bonus;
-            var dexterityBonus = _attributeService.Attributes[Core.Attributes.AttributeType.Dexterity].Bonus;
+            var strength = _attributeService.Attributes[AttributeType.Strength].Value;
+            var constitution = _attributeService.Attributes[AttributeType.Constitution].Value;
+            var charisma = _attributeService.Attributes[AttributeType.Charisma].Value;
+            var intelligence = _attributeService.Attributes[AttributeType.Intelligence].Value;
+            var dexterity = _attributeService.Attributes[AttributeType.Dexterity].Value;
+            var constitutionBonus = _attributeService.Attributes[AttributeType.Constitution].Bonus;
+            var dexterityBonus = _attributeService.Attributes[AttributeType.Dexterity].Bonus;
 
-            MaxHealth = strength + constitution + CharacterData.MaxHealthBonus + MaxHealthModifierBonus;
+            MaxHealth = strength + constitution + CharacterData!.MaxHealthBonus + MaxHealthModifierBonus;
             MaxEnergy = (int)Math.Ceiling((constitution + charisma + intelligence) / 3f) + CharacterData.MaxEnergyBonus + MaxEnergyModifierBonus;
             MaxStamina = 15 + constitutionBonus + dexterityBonus + CharacterData.MaxStaminaBonus + MaxStaminaModifierBonus;
-            Initiative = constitution + dexterity;
+            Initiative = constitution + dexterity + CharacterData.InitiativeBonus + InitiativeModifierBonus;
+        }
+
+        public void RefreshAttributeCheckBoni()
+        {
+            _attributeCheckService.ApplyStatModifiers();
+            _attributeCheckService.RefreshAll();
+        }
+
+        public void CreateProfession(AttributeCheck attributeCheck)
+        {
+            Professions!.Add(new Profession(attributeCheck));
+        }
+
+        public void RemoveProfession(Profession profession)
+        {
+            Professions!.Remove(profession);
         }
     }
 }

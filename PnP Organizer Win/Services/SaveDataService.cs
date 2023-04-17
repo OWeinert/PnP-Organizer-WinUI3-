@@ -37,12 +37,15 @@ namespace PnPOrganizer.Services
         private readonly ISkillsService _skillsService;
         private readonly IInventoryService _inventoryService;
         private readonly IPearlService _pearlService;
+        private readonly IAttributeService _attributeService;
 
-        public SaveDataService(ISkillsService skillsService, IInventoryService inventoryService, IPearlService pearlService)
+        public SaveDataService(ISkillsService skillsService, IInventoryService inventoryService, IPearlService pearlService,
+            IAttributeService attributeService)
         {
             _skillsService = skillsService;
             _inventoryService = inventoryService;
             _pearlService = pearlService;
+            _attributeService = attributeService;
         }
 
         public CharacterData CreateNewCharacter()
@@ -68,6 +71,7 @@ namespace PnPOrganizer.Services
                     _inventoryService.LoadFromCharacter(_loadedCharacter);
                     _skillsService.LoadFromCharacter(_loadedCharacter);
                     _pearlService.LoadFromCharacter(_loadedCharacter);
+                    _attributeService.LoadFromCharacter(_loadedCharacter);
 
                     MarkSaved();
                     CharacterLoaded?.Invoke(this, _loadedCharacter);
@@ -75,7 +79,7 @@ namespace PnPOrganizer.Services
                 }
                 catch (IOException e)
                 {
-                    Log.Error(e, "Error loading Character Save Data!");
+                    Log.Error(e, "Error while loading Character Save Data!");
                 }
             }, DispatcherQueuePriority.High);
         }
@@ -102,6 +106,7 @@ namespace PnPOrganizer.Services
                         _inventoryService.SaveToCharacter(ref _loadedCharacter!);
                         _skillsService.SaveToCharacter(ref _loadedCharacter);
                         _pearlService.SaveToCharacter(ref _loadedCharacter);
+                        _attributeService.SaveToCharacter(ref _loadedCharacter);
 
                         Utils.SerializeAndWriteToXml(LoadedCharacter, stream);
                         MarkSaved();

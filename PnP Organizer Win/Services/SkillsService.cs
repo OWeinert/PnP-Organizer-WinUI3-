@@ -1,4 +1,5 @@
-﻿using PnPOrganizer.Core.BattleAssistant;
+﻿using PnPOrganizer.Core.Attributes;
+using PnPOrganizer.Core.BattleAssistant;
 using PnPOrganizer.Core.Character;
 using PnPOrganizer.Core.Character.SkillSystem;
 using PnPOrganizer.Core.Character.StatModifiers;
@@ -186,64 +187,64 @@ namespace PnPorganizer.Core.Character
             #region Character
             // Checkpoint 0
             Sneaking = CreateAndRegisterSkill(nameof(Sneaking), resourceLoader.GetString("Skills_SkillSneaking"), SkillCategory.Character, 2, resourceLoader.GetString("Skills_SkillSneakingDescr"),
-                new IStatModifier[] { new AttributeTestStatModifier(resourceLoader.GetString("AttributeTests_SneakHide"), Dice.D4) });
+                new IStatModifier[] { new AttributeCheckStatModifier(AttributeCheckType.Sneak, Dice.D4) });
             Intimidate = CreateAndRegisterSkill(nameof(Intimidate), resourceLoader.GetString("Skills_SkillIntimidate"), SkillCategory.Character, 2, resourceLoader.GetString("Skills_SkillIntimidateDescr"), 
-                new IStatModifier[] { new AttributeTestStatModifier(resourceLoader.GetString("AttributeTests_Intimidate"), Dice.D4) });
+                new IStatModifier[] { new AttributeCheckStatModifier(AttributeCheckType.Intimidate, Dice.D4) });
             Flirting = CreateAndRegisterSkill(nameof(Flirting), resourceLoader.GetString("Skills_SkillFlirting"), SkillCategory.Character, 2, resourceLoader.GetString("Skills_SkillFlirtingDescr"), 
-                new IStatModifier[] { new AttributeTestStatModifier(resourceLoader.GetString("AttributeTests_Performance"), 0, true) }); // Dummy StatModifier to show the skill on the AttributeTestsPage
+                new IStatModifier[] { new AttributeCheckStatModifier(AttributeCheckType.Performance, 0, true) }); // Dummy StatModifier to show the skill on the AttributeTestsPage
             NatureStudy = CreateAndRegisterSkill(nameof(NatureStudy), resourceLoader.GetString("Skills_SkillNatureStudy"), SkillCategory.Character, 2, resourceLoader.GetString("Skills_SkillNatureStudyDescr"),
-                new IStatModifier[] { new AttributeTestStatModifier(resourceLoader.GetString("AttributeTests_Nature"), Dice.D4) });
+                new IStatModifier[] { new AttributeCheckStatModifier(AttributeCheckType.Nature, Dice.D4) });
             VirtuallyInvisible = CreateAndRegisterSkill(nameof(VirtuallyInvisible), resourceLoader.GetString("Skills_SkillVirtuallyInvisible"), SkillCategory.Character, 2,
                 resourceLoader.GetString("Skills_SkillVirtuallyInvisibleDescr"), 
-                new IStatModifier[] { new AttributeTestStatModifier(resourceLoader.GetString("AttributeTests_SneakHide"), 1) }, 
+                new IStatModifier[] { new AttributeCheckStatModifier(AttributeCheckType.Sneak, 1) }, 
                 new SkillIdentifier[] { Sneaking.Identifier });
             Theft = CreateAndRegisterSkill(nameof(Theft), resourceLoader.GetString("Skills_SkillTheft"), SkillCategory.Character, 2, 
                 resourceLoader.GetString("Skills_SkillTheftDescr"),
-                new IStatModifier[] { new AttributeTestStatModifier(resourceLoader.GetString("AttributeTests_SleightOfHand"), Dice.D4, 0, true) },
+                new IStatModifier[] { new AttributeCheckStatModifier(AttributeCheckType.SleightOfHand, Dice.D4, 0, true) },
                 new SkillIdentifier[] { Sneaking.Identifier });
             Lockpicking = CreateAndRegisterSkill(nameof(Lockpicking), resourceLoader.GetString("Skills_SkillLockpicking"), SkillCategory.Character, 1, 
                 resourceLoader.GetString("Skills_SkillLockpickingDescr"), 
-                new IStatModifier[] { new AttributeTestStatModifier(resourceLoader.GetString("AttributeTests_SleightOfHand"), Dice.D4, 0, true) }, 
+                new IStatModifier[] { new AttributeCheckStatModifier(AttributeCheckType.SleightOfHand, Dice.D4, 0, true) }, 
                 new SkillIdentifier[] { Sneaking.Identifier });
             Counterfeiting = CreateAndRegisterSkill(nameof(Counterfeiting), resourceLoader.GetString("Skills_SkillCounterfeiting"), SkillCategory.Character, 1, 
                 resourceLoader.GetString("Skills_SkillCounterfeitingDescr"),
-                new IStatModifier[] { new AttributeTestStatModifier(resourceLoader.GetString("AttributeTests_SleightOfHand"), Dice.D4, 0, true) }, 
+                new IStatModifier[] { new AttributeCheckStatModifier(AttributeCheckType.SleightOfHand, Dice.D4, 0, true) }, 
                 new SkillIdentifier[] { Sneaking.Identifier });
             KnowledgeOfPeople = CreateAndRegisterSkill(nameof(KnowledgeOfPeople), resourceLoader.GetString("Skills_SkillKnowledgeOfPeople"), SkillCategory.Character, 2, 
                 resourceLoader.GetString("Skills_SkillKnowledgeOfPeopleDescr"), 
-                new IStatModifier[] { new AttributeTestStatModifier(resourceLoader.GetString("AttributeTests_Insight"), 1) }, 
+                new IStatModifier[] { new AttributeCheckStatModifier(AttributeCheckType.Insight, 1) }, 
                 new SkillIdentifier[] { Intimidate.Identifier, Flirting.Identifier });
             ActorByBirth = CreateAndRegisterSkill(nameof(ActorByBirth), resourceLoader.GetString("Skills_SkillActorByBirth"), SkillCategory.Character, 3, 
                 resourceLoader.GetString("Skills_SkillActorByBirthDescr"), 
-                new IStatModifier[] { new AttributeTestStatModifier(resourceLoader.GetString("AttributeTests_Performance"), Dice.D4, 2) },
+                new IStatModifier[] { new AttributeCheckStatModifier(AttributeCheckType.Performance, Dice.D4, 2) },
                 new SkillIdentifier[] { KnowledgeOfPeople.Identifier });
             Tracking = CreateAndRegisterSkill(nameof(Tracking), resourceLoader.GetString("Skills_SkillTracking"), SkillCategory.Character, 1, 
                 resourceLoader.GetString("Skills_SkillTrackingDescr"),
-                new IStatModifier[] { new AttributeTestStatModifier(resourceLoader.GetString("AttributeTests_Nature"), Dice.D4, 0, true) }, 
+                new IStatModifier[] { new AttributeCheckStatModifier(AttributeCheckType.Nature, Dice.D4, 0, true) }, 
                 new SkillIdentifier[] { NatureStudy.Identifier });
             PoisonKnowledge = CreateAndRegisterSkill(nameof(PoisonKnowledge), resourceLoader.GetString("Skills_SkillPoisonKnowledge"), SkillCategory.Character, 2, 
                 resourceLoader.GetString("Skills_SkillPoisonKnowledgeDescr"),
-                new IStatModifier[] { new AttributeTestStatModifier(resourceLoader.GetString("AttributeTests_Nature"), Dice.D4, 0, true) },
+                new IStatModifier[] { new AttributeCheckStatModifier(AttributeCheckType.Nature, Dice.D4, 0, true) },
                 new SkillIdentifier[] { NatureStudy.Identifier });
             Gambling = CreateAndRegisterSkill(nameof(Gambling), resourceLoader.GetString("Skills_SkillGambling"), SkillCategory.Character, 1, 
                 resourceLoader.GetString("Skills_SkillGamblingDescr"),
                 new IStatModifier[] 
                 { 
-                    new AttributeTestStatModifier(resourceLoader.GetString("AttributeTests_SleightOfHand"), Dice.D4, 0, true),
-                    new AttributeTestStatModifier(resourceLoader.GetString("AttributeTests_Performance"), Dice.D4, 0, true)
+                    new AttributeCheckStatModifier(AttributeCheckType.SleightOfHand, Dice.D4, 0, true),
+                    new AttributeCheckStatModifier(AttributeCheckType.Performance, Dice.D4, 0, true)
                 }, 
                 new SkillIdentifier[] { Theft.Identifier, Lockpicking.Identifier, Counterfeiting.Identifier });
             SkilledLier = CreateAndRegisterSkill(nameof(SkilledLier), resourceLoader.GetString("Skills_SkillSkilledLier"), SkillCategory.Character, 2, 
                 resourceLoader.GetString("Skills_SkillSkilledLierDescr"), 
-                new IStatModifier[] { new AttributeTestStatModifier(resourceLoader.GetString("AttributeTests_Bluff"), 1) },
+                new IStatModifier[] { new AttributeCheckStatModifier(AttributeCheckType.Bluff, 1) },
                 new SkillIdentifier[] { Theft.Identifier, Lockpicking.Identifier, Counterfeiting.Identifier });
             LieDetector = CreateAndRegisterSkill(nameof(LieDetector), resourceLoader.GetString("Skills_SkillLieDetector"), SkillCategory.Character, 2, 
                 resourceLoader.GetString("Skills_SkillLieDetectorDescr"),
-                new IStatModifier[] { new AttributeTestStatModifier(resourceLoader.GetString("AttributeTests_Insight"), Dice.D4, 0, true) }, 
+                new IStatModifier[] { new AttributeCheckStatModifier(AttributeCheckType.Insight, Dice.D4, 0, true) }, 
                 new SkillIdentifier[] { SkilledLier.Identifier, KnowledgeOfPeople.Identifier });
             SkilledSpeaker = CreateAndRegisterSkill(nameof(SkilledSpeaker), resourceLoader.GetString("Skills_SkillSkilledSpeaker"), SkillCategory.Character, 3, 
                 resourceLoader.GetString("Skills_SkillSkilledSpeakerDescr"),
-                new IStatModifier[] { new AttributeTestStatModifier(resourceLoader.GetString("AttributeTests_Persuade"), Dice.D4, 1) }, 
+                new IStatModifier[] { new AttributeCheckStatModifier(AttributeCheckType.Persuade, Dice.D4, 1) }, 
                 new SkillIdentifier[] { KnowledgeOfPeople.Identifier });
 
             // Checkpoint 1
@@ -251,8 +252,8 @@ namespace PnPorganizer.Core.Character
                 resourceLoader.GetString("Skills_SkillClimbingDescr"), 
                 new IStatModifier[] 
                 {
-                    new AttributeTestStatModifier(resourceLoader.GetString("AttributeTests_Athletic"), Dice.D4, 0, true),
-                    new AttributeTestStatModifier(resourceLoader.GetString("AttributeTests_Acrobatic"), Dice.D4, 0, true)
+                    new AttributeCheckStatModifier(AttributeCheckType.Athletics, Dice.D4, 0, true),
+                    new AttributeCheckStatModifier(AttributeCheckType.Acrobatics, Dice.D4, 0, true)
                 },
                 new SkillIdentifier[] { Gambling.Identifier, SkilledLier.Identifier, LieDetector.Identifier, SkilledSpeaker.Identifier, ActorByBirth.Identifier, Tracking.Identifier, PoisonKnowledge.Identifier });
             Teacher = CreateAndRegisterSkill(nameof(Teacher), resourceLoader.GetString("Skills_SkillTeacher"), SkillCategory.Character, 2, 
@@ -271,14 +272,18 @@ namespace PnPorganizer.Core.Character
                 new SkillIdentifier[] { Gambling.Identifier, SkilledLier.Identifier, LieDetector.Identifier, SkilledSpeaker.Identifier, ActorByBirth.Identifier, Tracking.Identifier, PoisonKnowledge.Identifier });
             Alertness = CreateAndRegisterSkill(nameof(Alertness), resourceLoader.GetString("Skills_SkillAlertness"), SkillCategory.Character, 2, 
                 resourceLoader.GetString("Skills_SkillAlertnessDescr"), 
-                new IStatModifier[] { new AttributeTestStatModifier(resourceLoader.GetString("AttributeTests_Perceive"), 1), new AttributeTestStatModifier(resourceLoader.GetString("AttributeTests_Inspect"), 1) },
+                new IStatModifier[] 
+                { 
+                    new AttributeCheckStatModifier(AttributeCheckType.Perceive, 1), 
+                    new AttributeCheckStatModifier(AttributeCheckType.Inspect, 1) 
+                },
                 new SkillIdentifier[] { Gambling.Identifier, SkilledLier.Identifier, LieDetector.Identifier, SkilledSpeaker.Identifier, ActorByBirth.Identifier, Tracking.Identifier, PoisonKnowledge.Identifier });
             RescueIsNear = CreateAndRegisterSkill(nameof(RescueIsNear), resourceLoader.GetString("Skills_SkillRescueIsNear"), SkillCategory.Character, 2, 
                 resourceLoader.GetString("Skills_SkillRescueIsNearDescr"), null, new SkillIdentifier[] { Plunge.Identifier }, activationType: ActivationType.Active);
             Etiquette = CreateAndRegisterSkill(nameof(Etiquette), resourceLoader.GetString("Skills_SkillEtiquette"), SkillCategory.Character, 1, 
                 resourceLoader.GetString("Skills_SkillEtiquetteDescr"), null, new SkillIdentifier[] { Sympathic.Identifier });
             Trading = CreateAndRegisterSkill(nameof(Trading), resourceLoader.GetString("Skills_SkillTrading"), SkillCategory.Character, 2, 
-                resourceLoader.GetString("Skills_SkillTradingDescr"), new IStatModifier[] { new AttributeTestStatModifier(resourceLoader.GetString("AttributeTests_Persuade"), Dice.D4, 0, true) },
+                resourceLoader.GetString("Skills_SkillTradingDescr"), new IStatModifier[] { new AttributeCheckStatModifier(AttributeCheckType.Persuade, Dice.D4, 0, true) },
                 new SkillIdentifier[] { Sympathic.Identifier });
 
             // Checkpoint 2
@@ -408,7 +413,7 @@ namespace PnPorganizer.Core.Character
                     new CalculatorStatModifier(CalculatorValueType.Damage, ApplianceMode.EndValue, 0.5, CalculatorBonusType.Multiplicative)
                 }, activationType: ActivationType.Active, staminaCost: 1);
             Smithing = CreateAndRegisterSkill(nameof(Smithing), resourceLoader.GetString("Skills_SkillSmithing"), SkillCategory.Melee, 1, resourceLoader.GetString("Skills_SkillSmithingDescr"),
-                new IStatModifier[] { new AttributeTestStatModifier(resourceLoader.GetString("AttributeTests_Performance"), 0, true) }); // Dummy StatModifier to show the skill on the AttributeTestsPage
+                new IStatModifier[] { new AttributeCheckStatModifier(AttributeCheckType.Performance, 0, true) }); // Dummy StatModifier to show the skill on the AttributeTestsPage
             RunOver = CreateAndRegisterSkill(nameof(RunOver), resourceLoader.GetString("Skills_SkillRunOver"), SkillCategory.Melee, 2, resourceLoader.GetString("Skills_SkillRunOverDescr"), 
                 new IStatModifier[] { new CalculatorStatModifier(CalculatorValueType.Hit, ApplianceMode.BaseValue, Dice.D4, 2) },
                 activationType: ActivationType.Active, staminaCost: 3);
@@ -861,6 +866,38 @@ namespace PnPorganizer.Core.Character
                 if (skill.IsRepeatable)
                     skill.Repetition = 0;
             }
+        }
+
+        public List<Skill> GetFromStatModifierType<TStatModifier>() where TStatModifier : IStatModifier
+        {
+            var result = Registry.Values.Where(skill =>
+            {
+                if(skill.StatModifiers != null && skill.StatModifiers.Length > 0)
+                {
+                    return skill.StatModifiers.Any(statMod => statMod is TStatModifier);
+                }
+                return false;
+            });
+            return result.ToList();
+        }
+
+        public List<TStatModifier> GetStatModifiers<TStatModifier>() where TStatModifier : IStatModifier
+        {
+            var statModifierSkills = GetFromStatModifierType<TStatModifier>();
+            var result = statModifierSkills.SelectMany(skill => SelectStatModifiers<TStatModifier>(skill));
+            return result.ToList();
+        }
+
+        public List<TStatModifier> GetActiveStatModifiers<TStatModifier>() where TStatModifier : IStatModifier
+        {
+            var activeStatModifierSkills = GetFromStatModifierType<TStatModifier>().Where(skill => skill.IsActive);
+            var result = activeStatModifierSkills.SelectMany(skill => SelectStatModifiers<TStatModifier>(skill));
+            return result.ToList();
+        }
+
+        private IEnumerable<TStatModifier> SelectStatModifiers<TStatModifier>(Skill skill) where TStatModifier : IStatModifier
+        {
+            return skill.StatModifiers!.Where(statMod => statMod is TStatModifier).Cast<TStatModifier>(); 
         }
     }
 }

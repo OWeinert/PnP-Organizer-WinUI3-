@@ -68,6 +68,7 @@ namespace PnPOrganizer
                     .AddSingleton<IInventoryService, InventoryService>()
                     .AddSingleton<IPearlService, PearlService>()
                     .AddSingleton<IAttributeService, AttributeService>()
+                    .AddSingleton<IAttributeCheckService, AttributeCheckService>()
                     .AddSingleton<ISaveDataService, SaveDataService>()
                     .AddSingleton<ISaveFileInfoService, SaveFileInfoService>()
                     .AddSingleton<IAppActivationService, AppActivationService>()
@@ -78,6 +79,7 @@ namespace PnPOrganizer
                     .AddSingleton<InventoryPageViewModel>()
                     .AddSingleton<SkillsPageViewModel>()
                     .AddSingleton<RulesPageViewModel>()
+                    .AddSingleton<ElementsPageViewModel>()
                     .AddSingleton<MapPageAleraViewModel>()
                     .AddSingleton<MapPageViewModel>()
                     .AddSingleton<MainWindow>();

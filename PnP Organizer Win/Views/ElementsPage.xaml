@@ -1,0 +1,78 @@
+﻿<Page
+    x:Class="PnPOrganizer.Views.ElementsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:PnPOrganizer.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid Style="{ThemeResource PageBodyGridStyle}"
+          Margin="0">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <CommandBar Grid.Row="0">
+            <CommandBar.Content>
+                <TextBlock Grid.Column="0"
+                           Text="Rules"
+                           VerticalAlignment="Center"
+                           FontSize="28"
+                           FontFamily="Display"
+                           FontWeight="SemiBold"
+                           Margin="6,6,0,0"/>
+            </CommandBar.Content>
+        </CommandBar>
+
+        <Grid Grid.Row="1">
+            <WebView2 x:Name="MyWebView2" 
+                  Source="https://docs.google.com/document/d/11JSqorApuXC8UnbsaRcz5qgjuOYFuPHRPPTiAXCGPlA/edit" 
+                  HorizontalAlignment="Stretch" 
+                  VerticalAlignment="Stretch" 
+                  Grid.Row="1" 
+                  MinHeight="200" 
+                  MinWidth="200"/>
+            <Button x:Name="OpenWindowButton"
+                Style="{ThemeResource DefaultButtonStyle}"
+                Background="{ThemeResource AccentAcrylicBackgroundFillColorDefaultBrush}"
+                Foreground="{ThemeResource TextFillColorPrimaryBrush}"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Bottom"
+                Margin="16,16"
+                Width="64"
+                Height="64"
+                Translation="0,0,35"
+                Click="OpenWindowButton_Click">
+                <Button.Shadow>
+                    <ThemeShadow x:Name="ButtonShadow"/>
+                </Button.Shadow>
+                <ToolTipService.ToolTip>
+                    <ToolTip x:Uid="RulesPage_ButtonTooltip"
+                         Style="{ThemeResource DefaultToolTipStyle}"/>
+                </ToolTipService.ToolTip>
+                <Button.Resources>
+                    <ResourceDictionary>
+                        <ResourceDictionary.ThemeDictionaries>
+                            <ResourceDictionary x:Key="Dark">
+                                <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="{ThemeResource ControlSolidFillColorDefault}"/>
+                                <SolidColorBrush x:Key="ButtonForegroundPressed" Color="{ThemeResource TextFillColorInverse}"/>
+                            </ResourceDictionary>
+                            <ResourceDictionary x:Key="Light">
+                                <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="{ThemeResource ControlSolidFillColorDefault}"/>
+                                <SolidColorBrush x:Key="ButtonForegroundPressed" Color="{ThemeResource TextFillColorInverse}"/>
+                            </ResourceDictionary>
+                        </ResourceDictionary.ThemeDictionaries>
+                    </ResourceDictionary>
+                </Button.Resources>
+                <FontIcon x:Name="ButtonIcon"
+                      Glyph="&#xF7ED;"
+                      FontSize="36">
+                </FontIcon>
+            </Button>
+        </Grid>
+    </Grid>
+</Page>

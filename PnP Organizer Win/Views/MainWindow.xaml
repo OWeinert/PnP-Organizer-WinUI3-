@@ -81,7 +81,14 @@
                     x:Uid="NavigationViewItem_Rules"
                     Tag="PnPOrganizer.Views.RulesPage">
                     <NavigationViewItem.Icon>
-                        <FontIcon Glyph="&#xE7BE;" />
+                        <FontIcon Glyph="&#xE736;"/>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem
+                    x:Uid="NavigationViewItem_Elements"
+                    Tag="PnPOrganizer.Views.ElementsPage">
+                    <NavigationViewItem.Icon>
+                        <FontIcon Glyph="&#xE7BE;"/>
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
             </NavigationView.MenuItems>

@@ -1,20 +1,34 @@
 ﻿using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Controls.Primitives;
+using Microsoft.UI.Xaml.Data;
+using Microsoft.UI.Xaml.Input;
+using Microsoft.UI.Xaml.Media;
+using Microsoft.UI.Xaml.Navigation;
 using PnPOrganizer.Core;
+using PnPOrganizer.ViewModels.Interfaces;
 using PnPOrganizer.ViewModels;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
+using Windows.Foundation;
+using Windows.Foundation.Collections;
 using PnPOrganizer.Views.Interfaces;
 
 namespace PnPOrganizer.Views
 {
-    public sealed partial class RulesPage : Page, IViewFor<RulesPageViewModel>
+    // HACK use base class and only change the url for Rules / Elements
+    public sealed partial class ElementsPage : Page, IViewFor<ElementsPageViewModel>
     {
-        public RulesPageViewModel ViewModel { get; }
+        public ElementsPageViewModel ViewModel { get; }
 
-        public RulesPage()
+        public ElementsPage()
         {
-            InitializeComponent();
-            ViewModel = Ioc.Default.GetService<RulesPageViewModel>()!;
+            this.InitializeComponent();
+            ViewModel = Ioc.Default.GetService<ElementsPageViewModel>()!;
             ButtonShadow.Receivers.Add(MyWebView2);
         }
 

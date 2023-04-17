@@ -8,6 +8,7 @@
     xmlns:char="using:PnPOrganizer.Core.Character"
     xmlns:attr="using:PnPOrganizer.Core.Attributes"
     xmlns:controls="using:PnPOrganizer.Controls"
+    xmlns:toolkit="using:CommunityToolkit.WinUI.UI.Controls"
     xmlns:vm="using:PnPOrganizer.ViewModels"
     xmlns:conv="using:PnPOrganizer.Converters"
     xmlns:ak="using:AK.Toolkit.WinUI3"
@@ -399,6 +400,180 @@
                         <TextBlock x:Uid="CharacterPage_HeaderAttributeChecks"
                                    Style="{StaticResource ExpanderHeaderTextBlock}"/>
                     </Expander.Header>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <CommandBar Grid.Row="0"/>
+                        <Grid Grid.Row="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" MinWidth="400"/>
+                                <ColumnDefinition Width="0.8*" MinWidth="480"/>
+                            </Grid.ColumnDefinitions>
+                            <toolkit:GridSplitter GripperCursor="SizeWestEast"
+                                                  HorizontalAlignment="Left"
+                                                  Grid.Column="1"
+                                                  ResizeDirection="Columns"
+                                                  ResizeBehavior="BasedOnAlignment"
+                                                  CursorBehavior="ChangeOnSplitterHover"
+                                                  Background="{ThemeResource ControlFillColorTertiaryBrush}"
+                                                  GripperForeground="{ThemeResource TextFillColorTertiaryBrush}"
+                                                  BackgroundSizing="InnerBorderEdge"
+                                                  Width="16">
+                                <toolkit:GridSplitter.RenderTransform>
+                                    <TranslateTransform X="-8"/>
+                                </toolkit:GridSplitter.RenderTransform>
+                            </toolkit:GridSplitter>
+                            <Grid Grid.Column="0"
+                                  Margin="16,8">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="0"
+                                           Text="Checks"
+                                           Style="{StaticResource ExpanderHeaderTextBlock}"
+                                           Margin="8,0,0,0"/>
+                                <NavigationViewItemSeparator Margin="0,32,16,0"/>
+                                <GridView Grid.Row="1"
+                                          x:Name="AttributeChecksGridView"
+                                          HorizontalAlignment="Center"
+                                          ItemsSource="{x:Bind AttributeChecksView, Mode=OneWay}"
+                                          Margin="16">
+                                    <GridView.ItemTemplate>
+                                        <DataTemplate x:DataType="attr:AttributeCheck">
+                                            <Grid Background="{ThemeResource ControlFillColorDefaultBrush}"
+                                                  Width="300"
+                                                  Height="48"
+                                                  CornerRadius="8"
+                                                  Margin="8">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                    <ColumnDefinition Width="0.5*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Viewbox Grid.Column="0"
+                                                         MaxHeight="20"
+                                                         HorizontalAlignment="Left"
+                                                         VerticalAlignment="Center"
+                                                         Margin="16,0">
+                                                    <TextBlock Text="{x:Bind DisplayName, Mode=OneWay}"
+                                                               VerticalAlignment="Center"
+                                                               FontWeight="SemiBold"/>
+                                                </Viewbox>
+                                                <TextBlock Grid.Column="1"
+                                                           Text="{x:Bind Attribute.ShortName, Mode=OneWay}"
+                                                           Foreground="{x:Bind Attribute.Color, Mode=OneWay, Converter={StaticResource ColorToBrushConverter}}"
+                                                           VerticalAlignment="Center"
+                                                           FontWeight="ExtraBold"/>
+                                                <TextBlock Grid.Column="2"
+                                                           Text="{x:Bind BonusText, Mode=OneWay}"
+                                                           VerticalAlignment="Center"
+                                                           HorizontalAlignment="Right"
+                                                           Foreground="{x:Bind MinRollBonusSum, Mode=OneWay, Converter={StaticResource AttributeBonusToColorConverter}}"
+                                                           FontWeight="Bold"
+                                                           Margin="16,0"/>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </GridView.ItemTemplate>
+                                </GridView>
+                            </Grid>
+                            <Grid Grid.Column="1"
+                                  Margin="46,8,16,8"
+                                  VerticalAlignment="Top"
+                                  MaxHeight="600">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="0.75*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="0"
+                                           Text="Professions &amp; Skill Boni"
+                                           Style="{StaticResource ExpanderHeaderTextBlock}"
+                                           Margin="16,0,0,0"/>
+                                <NavigationViewItemSeparator Margin="8,32,0,0"
+                                                             Grid.ColumnSpan="2"/>
+                                <DropDownButton Grid.Row="1"
+                                                Margin="0,16"
+                                                VerticalAlignment="Top"
+                                                HorizontalAlignment="Left"
+                                                Content="Add Profession">
+                                    <DropDownButton.Flyout>
+                                        <Flyout>
+                                            <ListView x:Name="AttributeCheckChoiceListView"
+                                                      ItemsSource="{x:Bind ViewModel.AttributeChecks}"
+                                                      Background="{ThemeResource AcrylicBackgroundFillColorDefaultBrush}"
+                                                      IsItemClickEnabled="True"
+                                                      ItemClick="AttributeCheckChoiceListView_ItemClick"
+                                                      MaxHeight="240">
+                                                <ListView.ItemTemplate>
+                                                    <DataTemplate x:DataType="attr:AttributeCheck">
+                                                        <TextBlock Text="{x:Bind DisplayName}"/>
+                                                    </DataTemplate>
+                                                </ListView.ItemTemplate>
+                                            </ListView>
+                                        </Flyout>
+                                    </DropDownButton.Flyout>
+                                </DropDownButton>
+                                <GridView Grid.Row="2"
+                                          x:Name="ProfessionsGridView"
+                                          ItemsSource="{x:Bind ViewModel.Professions, Mode=OneWay}"
+                                          IsItemClickEnabled="False"
+                                          SelectionMode="None"
+                                          HorizontalAlignment="Stretch"
+                                          HorizontalContentAlignment="Center">
+                                    <GridView.ItemTemplate>
+                                        <DataTemplate x:DataType="attr:Profession">
+                                            <Border Background="{ThemeResource ControlFillColorDefaultBrush}"
+                                                    CornerRadius="4"
+                                                    Margin="0,4">
+                                                <Grid Width="240"
+                                                      Margin="8">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="Auto"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <Viewbox Grid.Column="0"
+                                                             MaxHeight="20"
+                                                             Margin="8,0,16,0"
+                                                             HorizontalAlignment="Right"
+                                                             VerticalAlignment="Center">
+                                                        <TextBlock Grid.Column="0"
+                                                                   Text="{x:Bind AttributeCheck.DisplayName,Mode=OneWay}"
+                                                                   FontSize="16"
+                                                                   FontWeight="SemiBold"/>
+                                                    </Viewbox>
+                                                    <ak:NumberBoxEx Grid.Column="1"
+                                                                    Value="{x:Bind Bonus,Mode=TwoWay}"
+                                                                    IsDeleteButtonVisible="False"
+                                                                    SpinButtonPlacementMode="Compact"
+                                                                    Minimum="0"
+                                                                    Maximum="999"/>
+                                                    <Button x:Name="RemoveProfessionButton"
+                                                            Grid.Column="2"
+                                                            Width="32"
+                                                            Height="32"
+                                                            Margin="8,0,0,0"
+                                                            Padding="0"
+                                                            Click="RemoveProfessionButton_Click">
+                                                        <FontIcon Glyph="&#xE74D;"
+                                                                  FontSize="16"
+                                                                  Foreground="{ThemeResource TextFillColorSecondaryBrush}"/>
+                                                    </Button>
+                                                </Grid>
+                                            </Border>
+                                        </DataTemplate>
+                                    </GridView.ItemTemplate>
+                                </GridView>
+                            </Grid>
+                        </Grid>
+                    </Grid>
                 </Expander>
             </StackPanel>
         </ScrollViewer>

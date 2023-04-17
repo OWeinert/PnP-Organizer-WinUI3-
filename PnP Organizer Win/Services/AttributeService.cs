@@ -19,7 +19,7 @@ namespace PnPOrganizer.Services
             var resourceLoader = ResourceLoader.GetForViewIndependentUse();
             _attributes = new Dictionary<AttributeType, Core.Attributes.Attribute>()
             {
-                { AttributeType.Strength, new Core.Attributes.Attribute(resourceLoader.GetString("Attributes_Strength"), Colors.LightSalmon)},
+                { AttributeType.Strength, new Core.Attributes.Attribute(resourceLoader.GetString("Attributes_Strength"), Colors.Coral)},
                 { AttributeType.Constitution, new Core.Attributes.Attribute(resourceLoader.GetString("Attributes_Constitution"), Colors.LightGreen)},
                 { AttributeType.Dexterity, new Core.Attributes.Attribute(resourceLoader.GetString("Attributes_Dexterity"), Colors.LightSkyBlue)},
                 { AttributeType.Intelligence, new Core.Attributes.Attribute(resourceLoader.GetString("Attributes_Intelligence"), Colors.Moccasin)},

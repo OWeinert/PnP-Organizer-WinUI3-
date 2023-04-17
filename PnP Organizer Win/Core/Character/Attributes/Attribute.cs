@@ -19,10 +19,13 @@ namespace PnPOrganizer.Core.Attributes
         [ObservableProperty]
         private Color _color;
 
+        public string ShortName { get; }
+
         public Attribute(string displayName, Color color = default)
         {
             DisplayName = displayName;
             Color = color;
+            ShortName = DisplayName.Substring(0, 2);
         }
 
         partial void OnValueChanged(int value)

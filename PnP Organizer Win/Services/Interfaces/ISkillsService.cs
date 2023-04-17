@@ -28,5 +28,11 @@ namespace PnPOrganizer.Core.Character.SkillSystem
         public IReadOnlyDictionary<SkillIdentifier, Skill> GetSkillsFromStatModifier(IStatModifier statModifier);
 
         public void ResetSkills();
+
+        public List<Skill> GetFromStatModifierType<TStatModifier>() where TStatModifier : IStatModifier;
+
+        public List<TStatModifier> GetStatModifiers<TStatModifier>() where TStatModifier : IStatModifier;
+
+        public List<TStatModifier> GetActiveStatModifiers<TStatModifier>() where TStatModifier : IStatModifier;
     }
 }

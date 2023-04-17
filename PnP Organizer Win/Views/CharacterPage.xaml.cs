@@ -1,10 +1,16 @@
 ﻿using CommunityToolkit.Mvvm.DependencyInjection;
+using CommunityToolkit.WinUI.UI;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Imaging;
+using Microsoft.UI.Xaml.Navigation;
 using PnPOrganizer.Core;
+using PnPOrganizer.Core.Attributes;
+using PnPOrganizer.Services.Interfaces;
 using PnPOrganizer.ViewModels;
 using PnPOrganizer.Views.Interfaces;
 using System;
+using System.Linq;
+using System.Threading.Tasks;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.ApplicationModel.Resources;
 using Windows.Globalization.NumberFormatting;
@@ -17,11 +23,26 @@ namespace PnPOrganizer.Views
     {
         public CharacterPageViewModel ViewModel { get; }
 
+        private AdvancedCollectionView? _attributeChecksView;
+        public AdvancedCollectionView AttributeChecksView 
+        {
+            get
+            {
+                _attributeChecksView ??= new AdvancedCollectionView(ViewModel.AttributeChecks!);
+                return _attributeChecksView;
+            }
+        }
+
         public CharacterPage()
         {
             ViewModel = Ioc.Default.GetRequiredService<CharacterPageViewModel>();
             InitializeComponent();
             SetNumberBoxNumberFormatter(HeightNumberBox);
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            ViewModel?.RefreshAttributeCheckBoni();
         }
 
         private void SetNumberBoxNumberFormatter(NumberBox numberBox)
@@ -94,6 +115,22 @@ namespace PnPOrganizer.Views
                 await bitmapImage.SetSourceAsync(await file.OpenAsync(FileAccessMode.Read));
                 CharacterImage.Source = bitmapImage;
                 ViewModel.CharacterData!.CharacterImage = await Core.Utils.BitmapToBytesAsync(bitmapImage);
+            }
+        }
+
+        private void AttributeCheckChoiceListView_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            if(e.ClickedItem is AttributeCheck attributeCheck)
+            {
+                ViewModel.CreateProfession(attributeCheck);
+            }
+        }
+
+        private void RemoveProfessionButton_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+        {
+            if(sender is Profession profession)
+            {
+                ViewModel.RemoveProfession(profession);
             }
         }
     }
