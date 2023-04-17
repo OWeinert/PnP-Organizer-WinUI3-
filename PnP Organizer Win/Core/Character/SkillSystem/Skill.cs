@@ -8,6 +8,9 @@ using System.Text;
 
 namespace PnPOrganizer.Core.Character.SkillSystem
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public partial class Skill : ObservableObject
     {
         public static Skill Empty => new(new SkillIdentifier() { SkillCategory = SkillCategory.Character, Name = "" }, "", 0, "");
@@ -229,27 +232,6 @@ namespace PnPOrganizer.Core.Character.SkillSystem
 
             if(e.PropertyName is nameof(IsActive))
                 IsActiveInverted = !IsActive;
-        }
-
-        public static string CreateTooltip(Skill skill)
-        {
-            var sb = new StringBuilder(skill.Description);
-            /*
-            if (skill.StaminaCost > 0 || skill.EnergyCost > 0)
-            {
-                sb.Append($"\n{Resources.Skills_Cost}: ");
-
-                if (skill.StaminaCost > 0)
-                    sb.Append($"{skill.StaminaCost} {Resources.Overview_Stamina}");
-
-                if (skill.StaminaCost > 0 && skill.EnergyCost > 0)
-                    sb.Append(", ");
-
-                if (skill.EnergyCost > 0)
-                    sb.Append($"{skill.StaminaCost} {Resources.Overview_Energy}");
-            }
-            */
-            return sb.ToString();
         }
 
         public Skill SetRepeatable(bool repeatable = true)
