@@ -162,6 +162,7 @@ namespace PnPOrganizer.ViewModels
 
         public void RemoveProfession(Profession profession)
         {
+            profession.RemoveFromAttributeCheck();
             Professions!.Remove(profession);
         }
     }

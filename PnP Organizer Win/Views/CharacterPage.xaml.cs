@@ -128,7 +128,8 @@ namespace PnPOrganizer.Views
 
         private void RemoveProfessionButton_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
         {
-            if(sender is Profession profession)
+            var button = (Button)sender;
+            if(button.DataContext is Profession profession)
             {
                 ViewModel.RemoveProfession(profession);
             }

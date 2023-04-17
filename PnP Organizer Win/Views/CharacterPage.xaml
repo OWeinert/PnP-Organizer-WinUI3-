@@ -485,7 +485,7 @@
                                   MaxHeight="600">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="0.75*"/>
+                                    <ColumnDefinition Width="0.7*"/>
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto"/>
@@ -526,13 +526,18 @@
                                           IsItemClickEnabled="False"
                                           SelectionMode="None"
                                           HorizontalAlignment="Stretch"
-                                          HorizontalContentAlignment="Center">
+                                          HorizontalContentAlignment="Stretch"
+                                          Background="{ThemeResource ControlFillColorDisabledBrush}"
+                                          MinHeight="480"
+                                          CornerRadius="8"
+                                          Padding="16,8">
                                     <GridView.ItemTemplate>
                                         <DataTemplate x:DataType="attr:Profession">
                                             <Border Background="{ThemeResource ControlFillColorDefaultBrush}"
                                                     CornerRadius="4"
-                                                    Margin="0,4">
-                                                <Grid Width="240"
+                                                    Margin="0,4"
+                                                    MinWidth="240">
+                                                <Grid MinWidth="240"
                                                       Margin="8">
                                                     <Grid.ColumnDefinitions>
                                                         <ColumnDefinition Width="*"/>

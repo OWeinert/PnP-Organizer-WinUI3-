@@ -16,8 +16,8 @@ namespace PnPOrganizer.Core.Attributes
             AttributeCheck = attributeCheck;
             attributeCheck.ProfessionBoni.Add(this);
         }
-
-        ~Profession()
+        
+        public void RemoveFromAttributeCheck()
         {
             AttributeCheck.ProfessionBoni.Remove(this);
         }
