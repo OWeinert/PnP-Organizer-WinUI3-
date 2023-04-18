@@ -63,8 +63,7 @@
             <StackPanel Grid.Row="1"
                         Margin="12,8,12,12">
                 <StackPanel x:Name="AttackModePanel">
-                    <TextBlock x:Uid="InventoryWeapon_AttackMode"
-                               Text="Attack Mode"
+                    <TextBlock x:Uid="ItemStat_AttackMode"
                                Style="{StaticResource FieldHeaderTextBlock}"/>
                     <ComboBox ItemsSource="{toolkit:EnumValues Type=battle:AttackMode}"
                               SelectedItem="{x:Bind AttackMode, Mode=TwoWay}"
@@ -74,8 +73,7 @@
                 <StackPanel x:Name="DamagePanel"
                             RelativePanel.Below="AttackModePanel"
                             Margin="0,16,0,0">
-                    <TextBlock x:Uid="InventoryWeapon_Damage"
-                               Text="Damage"
+                    <TextBlock x:Uid="ItemStat_Damage"
                                Style="{StaticResource FieldHeaderTextBlock}"/>
                     <StackPanel Orientation="Horizontal">
                         <ak:NumberBoxEx Value="{x:Bind DiceRollCount, Mode=TwoWay}"
@@ -107,44 +105,7 @@
                     </StackPanel>
                 </StackPanel>
                 <StackPanel Margin="0,16,0,0">
-                    <TextBlock x:Uid="InventoryWeapon_Armorpen"
-                               Text="Armorpen"
-                               Style="{StaticResource FieldHeaderTextBlock}"/>
-                    <ak:NumberBoxEx Value="{x:Bind Armorpen, Mode=TwoWay}"
-                                    HorizontalAlignment="Left"
-                                    Text="1"
-                                    IsDeleteButtonVisible="False"
-                                    SpinButtonPlacementMode="Compact"
-                                    Minimum="0"
-                                    Maximum="99"/>
-                </StackPanel>
-                <StackPanel Margin="0,16,0,0">
-                    <TextBlock x:Uid="InventoryWeapon_IsTwoHanded"
-                           Text="Is Two-Handed"
-                           Style="{StaticResource FieldHeaderTextBlock}"/>
-                    <ToggleSwitch OnContent=""
-                              OffContent=""/>
-                </StackPanel>
-            </StackPanel>
-            <StackPanel Grid.Row="1"
-                        Grid.Column="1"
-                        Margin="12,8">
-                <StackPanel HorizontalAlignment="Right">
-                    <TextBlock x:Uid="InventoryWeapon_Armorpen"
-                               Text="Armorpen"
-                               Style="{StaticResource FieldHeaderTextBlock}"/>
-                    <ak:NumberBoxEx Value="{x:Bind Armorpen, Mode=TwoWay}"
-                                    HorizontalAlignment="Left"
-                                    Text="1"
-                                    IsDeleteButtonVisible="False"
-                                    SpinButtonPlacementMode="Compact"
-                                    Minimum="0"
-                                    Maximum="99"/>
-                </StackPanel>
-                <StackPanel Margin="0,16,0,0"
-                            HorizontalAlignment="Right">
-                    <TextBlock x:Uid="InventoryWeapon_HitBonus"
-                               Text="Hit Bonus"
+                    <TextBlock x:Uid="ItemStat_HitBonus"
                                Style="{StaticResource FieldHeaderTextBlock}"/>
                     <ak:NumberBoxEx Value="{x:Bind HitBonus, Mode=TwoWay}"
                                     HorizontalAlignment="Left"
@@ -154,10 +115,31 @@
                                     Minimum="0"
                                     Maximum="99"/>
                 </StackPanel>
+                <StackPanel Margin="0,16,0,0">
+                    <TextBlock x:Uid="ItemStat_TwoHanded"
+                           Style="{StaticResource FieldHeaderTextBlock}"/>
+                    <ToggleSwitch OnContent=""
+                                  OffContent=""
+                                  IsOn="{x:Bind IsTwoHanded, Mode=TwoWay}"/>
+                </StackPanel>
+            </StackPanel>
+            <StackPanel Grid.Row="1"
+                        Grid.Column="1"
+                        Margin="12,8">
+                <StackPanel HorizontalAlignment="Right">
+                    <TextBlock x:Uid="ItemStat_Armorpen"
+                               Style="{StaticResource FieldHeaderTextBlock}"/>
+                    <ak:NumberBoxEx Value="{x:Bind Armorpen, Mode=TwoWay}"
+                                    HorizontalAlignment="Left"
+                                    Text="1"
+                                    IsDeleteButtonVisible="False"
+                                    SpinButtonPlacementMode="Compact"
+                                    Minimum="0"
+                                    Maximum="99"/>
+                </StackPanel>
                 <StackPanel Margin="0,16,0,0"
                             HorizontalAlignment="Right">
-                    <TextBlock x:Uid="InventoryWeapon_HitBonus"
-                               Text="Weight"
+                    <TextBlock x:Uid="ItemStat_Weight"
                                Style="{StaticResource FieldHeaderTextBlock}"/>
                     <ak:NumberBoxEx Value="{x:Bind Weight, Mode=TwoWay}"
                                     HorizontalAlignment="Left"
@@ -194,8 +176,7 @@
             <StackPanel Grid.Row="1"
                         Margin="12,8,12,12">
                 <StackPanel>
-                    <TextBlock x:Uid="InventoryWeapon_Armor"
-                               Text="Armor"
+                    <TextBlock x:Uid="ItemStat_Armor"
                                Style="{StaticResource FieldHeaderTextBlock}"/>
                     <ak:NumberBoxEx Value="{x:Bind Armor, Mode=TwoWay}"
                                     HorizontalAlignment="Left"
@@ -206,8 +187,7 @@
                                     Maximum="99"/>
                 </StackPanel>
                 <StackPanel Margin="0,16,0,0">
-                    <TextBlock x:Uid="InventoryWeapon_PutOnTime"
-                               Text="Put-On Time"
+                    <TextBlock x:Uid="ItemStat_PutOnTime"
                                Style="{StaticResource FieldHeaderTextBlock}"/>
                     <ak:NumberBoxEx Value="{x:Bind PutOnTime, Mode=TwoWay}"
                                     HorizontalAlignment="Left"
@@ -223,8 +203,7 @@
                         HorizontalAlignment="Left"
                         Margin="12,8,12,12">
                 <StackPanel>
-                    <TextBlock x:Uid="InventoryWeapon_Loudness"
-                               Text="Loudness"
+                    <TextBlock x:Uid="ItemStat_Loudness"
                                Style="{StaticResource FieldHeaderTextBlock}"/>
                     <ak:NumberBoxEx Value="{x:Bind Loudness, Mode=TwoWay}"
                                     HorizontalAlignment="Left"
@@ -236,8 +215,7 @@
                                     Maximum="99"/>
                 </StackPanel>
                 <StackPanel Margin="0,16,0,0">
-                    <TextBlock x:Uid="InventoryWeapon_HitBonus"
-                               Text="Weight"
+                    <TextBlock x:Uid="ItemStat_Weight"
                                Style="{StaticResource FieldHeaderTextBlock}"/>
                     <ak:NumberBoxEx Value="{x:Bind Weight, Mode=TwoWay}"
                                     HorizontalAlignment="Left"
@@ -270,8 +248,7 @@
             <StackPanel Grid.Row="1"
                         Margin="12,8,12,12">
                 <StackPanel>
-                    <TextBlock x:Uid="InventoryWeapon_Parade"
-                               Text="Parade Bonus"
+                    <TextBlock x:Uid="ItemStat_ParadeBonus"
                                Style="{StaticResource FieldHeaderTextBlock}"/>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="1D"
@@ -297,8 +274,7 @@
                     </StackPanel>
                 </StackPanel>
                 <StackPanel Margin="0,16,0,0">
-                    <TextBlock x:Uid="InventoryWeapon_Loudness"
-                               Text="Loudness"
+                    <TextBlock x:Uid="ItemStat_Weight"
                                Style="{StaticResource FieldHeaderTextBlock}"/>
                     <ak:NumberBoxEx Value="{x:Bind Weight, Mode=TwoWay}"
                                     HorizontalAlignment="Left"

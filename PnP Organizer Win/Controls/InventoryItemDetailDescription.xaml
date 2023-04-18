@@ -18,5 +18,6 @@
                      PlaceholderText="Description"
                      Text="{x:Bind ItemViewModel.Description, Mode=TwoWay}"
                      Margin="12" />
+        
     </Grid>
 </UserControl>

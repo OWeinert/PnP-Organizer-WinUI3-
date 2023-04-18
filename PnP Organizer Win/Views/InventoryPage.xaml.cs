@@ -42,12 +42,6 @@ namespace PnPOrganizer.Views
             NavigationCacheMode = NavigationCacheMode.Enabled;
             SharedShadow.Receivers.Add(ItemsScrollViewer);
             SharedShadow.Receivers.Add(ItemsGridView);
-
-            ViewModel.ItemModels?.Add(new InventoryItemViewModel()
-            {
-                Name = "Test Item",
-                Description = "Short Description..."
-            });
         }
 
         #region Item Detail View
@@ -236,5 +230,23 @@ namespace PnPOrganizer.Views
 
         private void CancelColor_Click(object sender, RoutedEventArgs e) => PickColorButton.Flyout.Hide();
         #endregion
+
+        private void KeyboardAccelerator_Invoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args) => SearchItemBox.Focus(FocusState.Programmatic);
+
+        public static double GetInventoryItemDescriptionHeight(InventoryItemViewModel inventoryItemViewModel, int itemModelHeight, int nonItemModelHeight, int shieldModelHeight)
+        {
+            if (inventoryItemViewModel is InventoryShieldViewModel)
+                return shieldModelHeight;
+            if (inventoryItemViewModel is InventoryWeaponViewModel or InventoryArmorViewModel)
+                return nonItemModelHeight;
+            return itemModelHeight;
+        }
+
+        public static Visibility BaseInventoryItemVisibility(InventoryItemViewModel inventoryItemViewModel)
+        {
+            if((inventoryItemViewModel is InventoryWeaponViewModel or InventoryArmorViewModel or InventoryShieldViewModel))
+                return Visibility.Visible;
+            return Visibility.Collapsed;
+        }
     }
 }

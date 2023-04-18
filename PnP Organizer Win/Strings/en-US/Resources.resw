@@ -288,6 +288,36 @@
   <data name="InventoryPage_Header.Text" xml:space="preserve">
     <value>Inventory</value>
   </data>
+  <data name="ItemStat_Armor.Text" xml:space="preserve">
+    <value>Armor</value>
+  </data>
+  <data name="ItemStat_Armorpen.Text" xml:space="preserve">
+    <value>Armorpen</value>
+  </data>
+  <data name="ItemStat_AttackMode.Text" xml:space="preserve">
+    <value>Attack Type</value>
+  </data>
+  <data name="ItemStat_Damage.Text" xml:space="preserve">
+    <value>Damage</value>
+  </data>
+  <data name="ItemStat_HitBonus.Text" xml:space="preserve">
+    <value>Hit Bonus</value>
+  </data>
+  <data name="ItemStat_Loudness.Text" xml:space="preserve">
+    <value>Loudness</value>
+  </data>
+  <data name="ItemStat_ParadeBonus.Text" xml:space="preserve">
+    <value>Parade Bonus</value>
+  </data>
+  <data name="ItemStat_PutOnTime.Text" xml:space="preserve">
+    <value>Put-On Time</value>
+  </data>
+  <data name="ItemStat_TwoHanded.Text" xml:space="preserve">
+    <value>Two-Handed</value>
+  </data>
+  <data name="ItemStat_Weight.Text" xml:space="preserve">
+    <value>Weight</value>
+  </data>
   <data name="ja" xml:space="preserve">
     <value>日本語</value>
   </data>
@@ -332,6 +362,9 @@
   </data>
   <data name="MainWindow_Title.Text" xml:space="preserve">
     <value>PnP Organizer</value>
+  </data>
+  <data name="NavigationViewItem_Character.Content" xml:space="preserve">
+    <value>Character</value>
   </data>
   <data name="NavigationViewItem_Elements.Content" xml:space="preserve">
     <value>Elements</value>

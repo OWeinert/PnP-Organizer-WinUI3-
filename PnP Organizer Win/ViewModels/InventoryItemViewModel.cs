@@ -1,11 +1,13 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.WinUI.Helpers;
+using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Imaging;
 using PnPOrganizer.Core;
 using PnPOrganizer.Core.Character.Inventory;
 using PnPOrganizer.Helpers;
 using System.ComponentModel;
+using System.Diagnostics;
 
 namespace PnPOrganizer.Models
 {
@@ -22,6 +24,9 @@ namespace PnPOrganizer.Models
             get { return _inventoryItem; }
             set { _inventoryItem = value; }
         }
+
+        [ObservableProperty]
+        private string _typeName = string.Empty;
 
         [ObservableProperty]
         private string _name = string.Empty;
@@ -44,7 +49,8 @@ namespace PnPOrganizer.Models
             PropertyChanged += OnItemPropertyChanged;
             InventoryItem = inventoryItem;
 
-            Name = _inventoryItem!.Name;
+            TypeName = GetType().Name.Replace("Inventory", "").Replace("ViewModel", "");
+            Name = string.IsNullOrEmpty(_inventoryItem!.Name) ? TypeName : _inventoryItem!.Name;
             Description = _inventoryItem.Description;
             if (_inventoryItem.ItemImageBytes != null)
                 ItemImage = Utils.BitmapFromBytes(_inventoryItem.ItemImageBytes);

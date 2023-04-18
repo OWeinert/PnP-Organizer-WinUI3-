@@ -172,5 +172,7 @@ namespace PnPOrganizer.Views
                     sender.ItemsSource = suitableSkills.ConvertAll(skill => skill.DisplayName);
             }
         }
+
+        private void KeyboardAccelerator_Invoked(Microsoft.UI.Xaml.Input.KeyboardAccelerator sender, Microsoft.UI.Xaml.Input.KeyboardAcceleratorInvokedEventArgs args) => SearchSkillBox.Focus(FocusState.Programmatic);
     }
 }

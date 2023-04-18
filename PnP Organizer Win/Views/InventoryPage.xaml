@@ -23,12 +23,11 @@
             <Flyout x:Key="ColorPickerFlyout">
                 <RelativePanel>
                     <ColorPicker x:Name="ItemColorPicker"
-                         ColorSpectrumShape="Ring"
-                         IsMoreButtonVisible="True"
-                         IsColorSliderVisible="False"
-                         IsColorChannelTextInputVisible="False"
-                         IsHexInputVisible="True"
-                         IsAlphaEnabled="False"/>
+                                 ColorSpectrumShape="Ring"
+                                 IsMoreButtonVisible="True"
+                                 IsColorSliderVisible="True"
+                                 IsHexInputVisible="True"
+                                 IsAlphaEnabled="False"/>
                     <Grid RelativePanel.Below="ItemColorPicker"
                       RelativePanel.AlignLeftWithPanel="True"
                       RelativePanel.AlignRightWithPanel="True">
@@ -68,6 +67,22 @@
                           Click="CommandFlyoutDeleteButton_Click" />
             </CommandBarFlyout>
 
+            <MenuFlyout x:Key="AddItemFlyout"
+                        Placement="Bottom">
+                <MenuFlyoutItem x:Uid="InventoryPage_AddItemButton"
+                                            Command="{x:Bind ViewModel.AddItemCommand}"
+                                            CommandParameter="Item"/>
+                <MenuFlyoutItem x:Uid="InventoryPage_AddWeaponButton"
+                                            Command="{x:Bind ViewModel.AddItemCommand}"
+                                            CommandParameter="Weapon"/>
+                <MenuFlyoutItem x:Uid="InventoryPage_AddArmorButton"
+                                            Command="{x:Bind ViewModel.AddItemCommand}"
+                                            CommandParameter="Armor"/>
+                <MenuFlyoutItem x:Uid="InventoryPage_AddShieldButton"
+                                            Command="{x:Bind ViewModel.AddItemCommand}"
+                                            CommandParameter="Shield"/>
+            </MenuFlyout>
+
             <ThemeShadow x:Name="SharedShadow"/>
 
             <sel:InventoryItemTemplateSelector x:Key="InventoryItemDetailSelector"
@@ -86,6 +101,19 @@
     <Grid x:Name="ContentGrid"
           Style="{StaticResource PageBodyGridStyle}"
           Margin="0">
+        <Grid.ContextFlyout>
+            <Flyout>
+                <Flyout.FlyoutPresenterStyle>
+                    <Style TargetType="FlyoutPresenter">
+                        <Setter Property="Padding" Value="4,0,4,0"/>
+                        <Setter Property="BorderThickness" Value="0"/>
+                        <Setter Property="CornerRadius" Value="8"/>
+                    </Style>
+                </Flyout.FlyoutPresenterStyle>
+                <DropDownButton x:Uid="InventoryPage_AddItemMenuButton"
+                                Flyout="{StaticResource AddItemFlyout}"/>
+            </Flyout>
+        </Grid.ContextFlyout>
         
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -110,29 +138,17 @@
                                 HorizontalAlignment="Center"
                                 QueryIcon="Find"
                                 PlaceholderText="Search Item"
-                                TextChanged="SearchItemBox_TextChanged"/>
+                                TextChanged="SearchItemBox_TextChanged">
+                    <AutoSuggestBox.KeyboardAccelerators>
+                        <KeyboardAccelerator Key="F" Modifiers="Control" Invoked="KeyboardAccelerator_Invoked"/>
+                    </AutoSuggestBox.KeyboardAccelerators>
+                </AutoSuggestBox>
             </AppBarElementContainer>
             <AppBarSeparator Margin="16,0"/>
             <AppBarElementContainer VerticalAlignment="Center"
                                     Margin="0,0,32,0">
-                <DropDownButton x:Uid="InventoryPage_AddItemMenuButton">
-                    <DropDownButton.Flyout>
-                        <MenuFlyout>
-                            <MenuFlyoutItem x:Uid="InventoryPage_AddItemButton"
-                                            Command="{x:Bind ViewModel.AddItemCommand}"
-                                            CommandParameter="Item"/>
-                            <MenuFlyoutItem x:Uid="InventoryPage_AddWeaponButton"
-                                            Command="{x:Bind ViewModel.AddItemCommand}"
-                                            CommandParameter="Weapon"/>
-                            <MenuFlyoutItem x:Uid="InventoryPage_AddArmorButton"
-                                            Command="{x:Bind ViewModel.AddItemCommand}"
-                                            CommandParameter="Armor"/>
-                            <MenuFlyoutItem x:Uid="InventoryPage_AddShieldButton"
-                                            Command="{x:Bind ViewModel.AddItemCommand}"
-                                            CommandParameter="Shield"/>
-                        </MenuFlyout>
-                    </DropDownButton.Flyout>
-                </DropDownButton>
+                <DropDownButton x:Uid="InventoryPage_AddItemMenuButton"
+                                Flyout="{StaticResource AddItemFlyout}"/>
             </AppBarElementContainer>
         </CommandBar>
 
@@ -156,14 +172,15 @@
                 <GridView.ItemTemplate>
                     <DataTemplate x:DataType="models:InventoryItemViewModel">
                         <Grid x:Name="Item"
-                              AutomationProperties.Name="{x:Bind Name}">
+                              AutomationProperties.Name="{x:Bind Name}"
+                              ContextFlyout="{StaticResource EditItemFlyout}">
                             <Border Background="{x:Bind Brush}"
                                     BorderBrush="{ThemeResource AccentAAFillColorDefaultBrush}"
                                     CornerRadius="6"
                                     AutomationProperties.Name="{x:Bind Name}"
                                     Margin="-4"> <!-- Items where too far apart. I don't know why there is a default margin between the GridViewItems -->
-                                <Grid Width="240" 
-                                      Height="240">
+                                <Grid Width="240"
+                                      Height="252">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto"/>
                                         <RowDefinition Height="*"/>
@@ -181,18 +198,42 @@
                                         
                                         <ScrollViewer HorizontalAlignment="Stretch"
                                                       VerticalAlignment="Stretch"
-                                                      Margin="0,4,0,4">
-                                            <StackPanel Margin="6,6,36,0">
-                                                <TextBlock Text = '{x:Bind Description}' Style = '{ThemeResource CaptionTextBlockStyle}'
-                                                           FontSize="16"/>
-                                                <ContentControl ContentTemplateSelector="{StaticResource InventoryItemGridSelector}"
+                                                      Margin="0,4,0,6">
+                                            <Grid Margin="6,4,12,0">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="Auto"/>
+                                                    <RowDefinition Height="Auto"/>
+                                                </Grid.RowDefinitions>
+                                                <ScrollViewer Height="{x:Bind local:InventoryPage.GetInventoryItemDescriptionHeight(BindableInstance, 158, 64, 94)}"
+                                                              CornerRadius="6"
+                                                              VerticalScrollBarVisibility="Visible">
+                                                    <ScrollViewer.Background>
+                                                        <SolidColorBrush Color="{ThemeResource SolidBackgroundFillColorBase}"
+                                                                         Opacity="0.4"/>
+                                                    </ScrollViewer.Background>
+                                                    <TextBlock Text = '{x:Bind Description}' Style = '{ThemeResource CaptionTextBlockStyle}'
+                                                               FontSize="16"
+                                                               VerticalAlignment="Center"
+                                                               Margin="8,0"/>
+                                                </ScrollViewer>
+                                                <Grid Grid.Row="1"
+                                                      CornerRadius="6"
+                                                      Margin="0,6,0,0"
+                                                      Visibility="{x:Bind local:InventoryPage.BaseInventoryItemVisibility(BindableInstance)}">
+                                                    <Grid.Background>
+                                                        <SolidColorBrush Color="{ThemeResource SolidBackgroundFillColorBase}"
+                                                                         Opacity="0.4"/>
+                                                    </Grid.Background>
+                                                    <ContentControl ContentTemplateSelector="{StaticResource InventoryItemGridSelector}"
                                                                 Content="{x:Bind BindableInstance, Mode=OneWay}"
                                                                 HorizontalAlignment="Stretch"
                                                                 HorizontalContentAlignment="Stretch"
                                                                 VerticalAlignment="Stretch"
-                                                                VerticalContentAlignment="Stretch">
-                                                </ContentControl>
-                                            </StackPanel>
+                                                                VerticalContentAlignment="Stretch"
+                                                                    Margin="8,4,8,0">
+                                                    </ContentControl>
+                                                </Grid>
+                                            </Grid>
                                         </ScrollViewer>
 
                                         <Button x:Name="EditItemButton"

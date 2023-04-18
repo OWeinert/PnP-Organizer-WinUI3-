@@ -8,27 +8,132 @@
                     xmlns:toolkit="using:CommunityToolkit.WinUI.UI"
                     xmlns:ak="using:AK.Toolkit.WinUI3">
 
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary>
+            <Style TargetType="TextBlock" x:Key="FieldHeaderTextBlock">
+                <Style.Setters>
+                    <Setter Property="Margin" Value="0,0,0,8"/>
+                    <Setter Property="FontWeight" Value="SemiBold"/>
+                </Style.Setters>
+            </Style>
+            <conv:BoolToAcceptCancelGlyphConverter x:Key="BoolToAcceptCancelGlyphConverter"/>
+        </ResourceDictionary>
+    </ResourceDictionary.MergedDictionaries>
+    
     <DataTemplate x:Key="InventoryItemTemplate" x:DataType="models:InventoryItemViewModel">
         <Grid>
-            
+            <!-- DUMMY -->
         </Grid>
     </DataTemplate>
 
     <DataTemplate x:Key="InventoryWeaponTemplate" x:DataType="models:InventoryWeaponViewModel">
-        <Grid>
-
-        </Grid>
+        <StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock x:Uid="ItemStat_AttackMode"
+                           Style="{StaticResource FieldHeaderTextBlock}"/>
+                <TextBlock Text=":"
+                           Margin="0,0,4,0"/>
+                <TextBlock Text="{x:Bind AttackMode, Mode=OneWay}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock x:Uid="ItemStat_Damage"
+                       Style="{StaticResource FieldHeaderTextBlock}"/>
+                <TextBlock Text=":"
+                           Margin="0,0,4,0"/>
+                <TextBlock Text="{x:Bind DiceRollCount, Mode=OneWay}"/>
+                <TextBlock Text="D"/>
+                <TextBlock Text="{x:Bind BaseDamageDice.Value.Name, TargetNullValue=?, Mode=OneWay}"/>
+                <TextBlock Text=" +"/>
+                <TextBlock Text="{x:Bind BaseDamageBonus, Mode=OneWay}"
+                           Margin="3,0,0,0"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock x:Uid="ItemStat_HitBonus"
+                           Style="{StaticResource FieldHeaderTextBlock}"/>
+                <TextBlock Text=":"
+                           Margin="0,0,4,0"/>
+                <TextBlock Text="{x:Bind HitBonus, Mode=OneWay}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock x:Uid="ItemStat_Armorpen"
+                           Style="{StaticResource FieldHeaderTextBlock}"/>
+                <TextBlock Text=":"
+                           Margin="0,0,4,0"/>
+                <TextBlock Text="{x:Bind Armorpen, Mode=OneWay}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock x:Uid="ItemStat_Weight"
+                           Style="{StaticResource FieldHeaderTextBlock}"/>
+                <TextBlock Text=":"
+                           Margin="0,0,4,0"/>
+                <TextBlock Text="{x:Bind Weight, Mode=OneWay}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock x:Uid="ItemStat_TwoHanded"
+                           Style="{StaticResource FieldHeaderTextBlock}"/>
+                <TextBlock Text=":"
+                           Margin="0,0,4,0"/>
+                <FontIcon Glyph="{x:Bind IsTwoHanded, Mode=OneWay, Converter={StaticResource BoolToAcceptCancelGlyphConverter}}"
+                          FontSize="14"
+                          VerticalAlignment="Top"
+                          Margin="0,3,0,0"/>
+            </StackPanel>
+        </StackPanel>
     </DataTemplate>
 
     <DataTemplate x:Key="InventoryArmorTemplate" x:DataType="models:InventoryArmorViewModel">
-        <Grid>
-
-        </Grid>
+        <StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock x:Uid="ItemStat_Armor"
+                           Style="{StaticResource FieldHeaderTextBlock}"/>
+                <TextBlock Text=":"
+                           Margin="0,0,4,0"/>
+                <TextBlock Text="{x:Bind Armor, Mode=OneWay}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock x:Uid="ItemStat_PutOnTime"
+                           Style="{StaticResource FieldHeaderTextBlock}"/>
+                <TextBlock Text=":"
+                           Margin="0,0,4,0"/>
+                <TextBlock Text="{x:Bind PutOnTime, Mode=OneWay}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock x:Uid="ItemStat_Loudness"
+                           Style="{StaticResource FieldHeaderTextBlock}"/>
+                <TextBlock Text=":"
+                           Margin="0,0,4,0"/>
+                <TextBlock Text="{x:Bind Loudness, Mode=OneWay}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock x:Uid="ItemStat_Weight"
+                           Style="{StaticResource FieldHeaderTextBlock}"/>
+                <TextBlock Text=":"
+                           Margin="0,0,4,0"/>
+                <TextBlock Text="{x:Bind Weight, Mode=OneWay}"/>
+            </StackPanel>
+        </StackPanel>
     </DataTemplate>
 
     <DataTemplate x:Key="InventoryShieldTemplate" x:DataType="models:InventoryShieldViewModel">
-        <Grid>
-
-        </Grid>
+        <StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock x:Uid="ItemStat_ParadeBonus"
+                           Style="{StaticResource FieldHeaderTextBlock}"/>
+                <TextBlock Text=":"
+                           Margin="0,0,4,0"/>
+                <TextBlock Text="1D"/>
+                <TextBlock Text="{x:Bind ParadeDiceBonus.Value.Name, TargetNullValue=?, Mode=OneWay}"/>
+                <TextBlock Text=" +"/>
+                <TextBlock Text="{x:Bind ParadeBonus, Mode=OneWay}"
+                           Margin="3,0,0,0"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock x:Uid="ItemStat_Weight"
+                           Style="{StaticResource FieldHeaderTextBlock}"/>
+                <TextBlock Text=":"
+                           Margin="0,0,4,0"/>
+                <TextBlock Text="{x:Bind Weight, Mode=OneWay}"/>
+            </StackPanel>
+        </StackPanel>
     </DataTemplate>
 </ResourceDictionary>
