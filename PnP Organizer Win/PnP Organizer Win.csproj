@@ -59,6 +59,7 @@
     <None Remove="Views\ExternalElementsPage.xaml" />
     <None Remove="Views\ExternalRulesPage.xaml" />
     <None Remove="Views\InventoryItemDetailTemplates.xaml" />
+    <None Remove="Views\InventoryItemGridTemplates.xaml" />
     <None Remove="Views\InventoryPage.xaml" />
     <None Remove="Views\MainPage.xaml" />
     <None Remove="Views\MapPage.xaml" />
@@ -141,6 +142,9 @@
     <None Update="Assets\applicationIcon.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Page Update="Views\InventoryItemGridTemplates.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Views\ExternalElementsPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

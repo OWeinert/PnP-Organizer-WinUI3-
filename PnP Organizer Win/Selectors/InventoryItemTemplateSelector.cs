@@ -1,10 +1,12 @@
 ﻿using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using PnPOrganizer.Core.Character.Inventory;
 using PnPOrganizer.Models;
+using System.Diagnostics;
 
 namespace PnPOrganizer.Selectors
 {
-    public class InventoryItemDetailSelector : DataTemplateSelector
+    public class InventoryItemTemplateSelector : DataTemplateSelector
     {
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         public DataTemplate Item { get; set; }
@@ -15,14 +17,15 @@ namespace PnPOrganizer.Selectors
 
         protected override DataTemplate SelectTemplateCore(object item, DependencyObject container)
         {
-            if(item != null && item is InventoryItemViewModel)
+            if(item != null && item is InventoryItemViewModel itemViewModel)
             {
-                return item switch
+                return itemViewModel.InventoryItem switch
                 {
-                    InventoryWeaponViewModel => Weapon,
-                    InventoryArmorViewModel => Armor,
-                    InventoryShieldViewModel => Shield,
-                    _ => Item,
+                    InventoryWeapon => Weapon,
+                    InventoryArmor => Armor,
+                    InventoryShield => Shield,
+                    InventoryItem => Item,
+                    _ => base.SelectTemplateCore(item)
                 };
             }
             return base.SelectTemplateCore(item);

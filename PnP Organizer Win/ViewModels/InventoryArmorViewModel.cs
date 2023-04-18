@@ -37,5 +37,21 @@ namespace PnPOrganizer.Models
             inventoryArmor.Weight = Weight;
             inventoryArmor.Loudness = Loudness;
         }
+
+        internal override InventoryItemViewModel Copy()
+        {
+            return new InventoryArmorViewModel()
+            {
+                Name = Name,
+                Description = Description,
+                InventoryItem = InventoryItem,
+                ItemImage = ItemImage,
+                Brush = Brush,
+                Armor = Armor,
+                PutOnTime = PutOnTime,
+                Weight = Weight,
+                Loudness = Loudness,
+            };
+        }
     }
 }

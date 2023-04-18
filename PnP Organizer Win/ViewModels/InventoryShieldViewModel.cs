@@ -10,20 +10,15 @@ namespace PnPOrganizer.Models
         [ObservableProperty]
         private int _paradeBonus = 0;
         [ObservableProperty]
-        private Dice _paradeDiceBonus = Dice.D4;
+        private Dice? _paradeDiceBonus = Dice.D4;
         [ObservableProperty]
         private float _weight = 1.0f;
-
-        [ObservableProperty]
-        private List<Dice>? _dices;
 
         public InventoryShieldViewModel() : this (new InventoryShield()) { }
 
         public InventoryShieldViewModel(InventoryShield inventoryShield) : base(inventoryShield)
         {
             IsInitialized = false;
-
-            Dices = Dice.Dices;
 
             ParadeBonus = inventoryShield.ParadeBonus;
             ParadeDiceBonus = inventoryShield.ParadeDiceBonus;
@@ -40,6 +35,21 @@ namespace PnPOrganizer.Models
             inventoryShield.ParadeBonus = ParadeBonus;
             inventoryShield.ParadeDiceBonus = ParadeDiceBonus;
             inventoryShield.Weight = Weight;
+        }
+
+        internal override InventoryItemViewModel Copy()
+        {
+            return new InventoryShieldViewModel()
+            {
+                Name = Name,
+                Description = Description,
+                InventoryItem = InventoryItem,
+                ItemImage = ItemImage,
+                Brush = Brush,
+                ParadeBonus = ParadeBonus,
+                Weight = Weight,
+                ParadeDiceBonus = ParadeDiceBonus
+            };
         }
     }
 }

@@ -70,11 +70,16 @@
 
             <ThemeShadow x:Name="SharedShadow"/>
 
-            <sel:InventoryItemDetailSelector x:Key="InventoryItemDetailSelector"
+            <sel:InventoryItemTemplateSelector x:Key="InventoryItemDetailSelector"
                                          Item="{StaticResource InventoryItemDetailsTemplate}"
                                          Weapon="{StaticResource InventoryWeaponDetailsTemplate}"
                                          Armor="{StaticResource InventoryArmorDetailsTemplate}"
-                                         Shield="{StaticResource InventoryArmorDetailsTemplate}"/>
+                                         Shield="{StaticResource InventoryShieldDetailsTemplate}"/>
+            <sel:InventoryItemTemplateSelector x:Key="InventoryItemGridSelector"
+                                               Item="{StaticResource InventoryItemTemplate}"
+                                               Weapon="{StaticResource InventoryWeaponTemplate}"
+                                               Armor="{StaticResource InventoryArmorTemplate}"
+                                               Shield="{StaticResource InventoryShieldTemplate}"/>
         </ResourceDictionary>
     </Page.Resources>
 
@@ -180,6 +185,13 @@
                                             <StackPanel Margin="6,6,36,0">
                                                 <TextBlock Text = '{x:Bind Description}' Style = '{ThemeResource CaptionTextBlockStyle}'
                                                            FontSize="16"/>
+                                                <ContentControl ContentTemplateSelector="{StaticResource InventoryItemGridSelector}"
+                                                                Content="{x:Bind BindableInstance, Mode=OneWay}"
+                                                                HorizontalAlignment="Stretch"
+                                                                HorizontalContentAlignment="Stretch"
+                                                                VerticalAlignment="Stretch"
+                                                                VerticalContentAlignment="Stretch">
+                                                </ContentControl>
                                             </StackPanel>
                                         </ScrollViewer>
 
@@ -224,8 +236,7 @@
             <Grid x:Name="ItemDetails" 
                   HorizontalAlignment="Center" 
                   VerticalAlignment="Center" 
-                  Width="480" 
-                  Height="520"
+                  Width="400"
                   CornerRadius="8"
                   Shadow="{StaticResource SharedShadow}"
                   Translation="0,0,25"

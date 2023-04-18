@@ -78,15 +78,15 @@ namespace PnPOrganizer.Models
             }            
         }
 
-        internal InventoryItemViewModel Copy()
+        internal virtual InventoryItemViewModel Copy()
         {
             return new InventoryItemViewModel()
             {
-                Name = Name,
-                Description = Description,
-                ItemImage = ItemImage,
-                Brush = Brush,
-                InventoryItem = _inventoryItem
+                Name = this.Name,
+                Description = this.Description,
+                InventoryItem = this.InventoryItem,
+                ItemImage = this.ItemImage,
+                Brush = this.Brush
             };
         }
     }

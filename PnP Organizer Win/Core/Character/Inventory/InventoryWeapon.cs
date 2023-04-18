@@ -8,7 +8,7 @@ namespace PnPOrganizer.Core.Character.Inventory
     {
         public AttackMode AttackMode { get; set; }
         public int DiceRollCount { get; set; }
-        public Dice BaseDamageDice { get; set; }
+        public Dice? BaseDamageDice { get; set; }
         public int BaseDamageBonus { get; set; }
         public int Armorpen { get; set; }
         public int HitBonus { get; set; }

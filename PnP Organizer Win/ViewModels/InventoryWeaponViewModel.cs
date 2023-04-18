@@ -13,7 +13,7 @@ namespace PnPOrganizer.Models
         [ObservableProperty]
         private int _diceRollCount = 1;
         [ObservableProperty]
-        private Dice _baseDamageDice = Dice.D6;
+        private Dice? _baseDamageDice = Dice.D6;
         [ObservableProperty]
         private int _baseDamageBonus = 0;
         [ObservableProperty]
@@ -29,16 +29,11 @@ namespace PnPOrganizer.Models
         [ObservableProperty]
         private Symbol _trueFalseSymbol = Symbol.Cancel;
 
-        [ObservableProperty]
-        private List<Dice>? _dices;
-
         public InventoryWeaponViewModel() : this (new InventoryWeapon()) { }
 
         public InventoryWeaponViewModel(InventoryWeapon inventoryWeapon) : base(inventoryWeapon)
         {
             IsInitialized = false;
-
-            Dices = Dice.Dices;
 
             AttackMode = inventoryWeapon.AttackMode;
             DiceRollCount = inventoryWeapon.DiceRollCount;
@@ -58,7 +53,7 @@ namespace PnPOrganizer.Models
         private void InventoryWeaponModel_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             var inventoryWeapon = (InventoryWeapon)InventoryItem;
-            if (e.PropertyName is not nameof(TrueFalseSymbol) and not nameof(Dices))
+            if (e.PropertyName is not nameof(TrueFalseSymbol))
             {
                 inventoryWeapon.AttackMode = AttackMode;
                 inventoryWeapon.DiceRollCount = DiceRollCount;
@@ -71,6 +66,26 @@ namespace PnPOrganizer.Models
 
                 TrueFalseSymbol = IsTwoHanded ? Symbol.Accept : Symbol.Cancel;
             }
+        }
+
+        internal override InventoryItemViewModel Copy()
+        {
+            return new InventoryWeaponViewModel()
+            {
+                Name = Name,
+                Description = Description,
+                InventoryItem = InventoryItem,
+                ItemImage = ItemImage,
+                Brush = Brush,
+                AttackMode = AttackMode,
+                DiceRollCount = DiceRollCount,
+                BaseDamageDice = BaseDamageDice,
+                BaseDamageBonus = BaseDamageBonus,
+                Armorpen = Armorpen,
+                HitBonus = HitBonus,
+                Weight = Weight,
+                IsTwoHanded = IsTwoHanded
+            };
         }
     }
 }

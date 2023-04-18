@@ -9,11 +9,6 @@
 
     <Grid HorizontalAlignment="Stretch" 
               VerticalAlignment="Stretch">
-        <Grid.Background>
-            <SolidColorBrush Color="{ThemeResource SolidBackgroundFillColorBase}" 
-                                 Opacity="0.5"/>
-        </Grid.Background>
-
         <TextBox x:Name="DetailContentDescr"
                      AutomationProperties.Name="DetailDescrTextBox"
                      HorizontalAlignment="Stretch"

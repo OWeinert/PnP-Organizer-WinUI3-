@@ -7,7 +7,7 @@ namespace PnPOrganizer.Core.Character.Inventory
     public class InventoryShield : InventoryItem
     {
         public int ParadeBonus { get; set; }
-        public Dice ParadeDiceBonus { get; set; }
+        public Dice? ParadeDiceBonus { get; set; }
         public float Weight { get; set; }
 
         public InventoryShield() : base()
