@@ -46,6 +46,10 @@
         <conv:ColorToBrushConverter x:Key="ColorToBrushConverter"/>
         <conv:PearlsColorConverter x:Key="PearlsColorConverter"/>
         <conv:AttributeBonusToColorConverter x:Key="AttributeBonusToColorConverter"/>
+
+        <ItemsPanelTemplate x:Key="ItemStackPanelTemplate">
+            <ItemsStackPanel/>
+        </ItemsPanelTemplate>
     </Page.Resources>
 
     <Grid Style="{ThemeResource PageBodyGridStyle}"
@@ -447,7 +451,7 @@
                                             <Grid Background="{ThemeResource ControlFillColorDefaultBrush}"
                                                   Width="300"
                                                   Height="48"
-                                                  CornerRadius="8"
+                                                  CornerRadius="4"
                                                   Margin="8">
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition Width="*"/>
@@ -494,7 +498,12 @@
                                     <RowDefinition Height="*"/>
                                 </Grid.RowDefinitions>
                                 <TextBlock Grid.Row="0"
-                                           Text="Professions &amp; Skill Boni"
+                                           Text="Professions"
+                                           Style="{StaticResource ExpanderHeaderTextBlock}"
+                                           Margin="16,0,0,0"/>
+                                <TextBlock Grid.Row="0"
+                                           Grid.Column="1"
+                                           Text="Skill Boni"
                                            Style="{StaticResource ExpanderHeaderTextBlock}"
                                            Margin="16,0,0,0"/>
                                 <NavigationViewItemSeparator Margin="8,32,0,0"
@@ -521,7 +530,7 @@
                                         </Flyout>
                                     </DropDownButton.Flyout>
                                 </DropDownButton>
-                                <GridView Grid.Row="2"
+                                <ListView Grid.Row="2"
                                           x:Name="ProfessionsGridView"
                                           ItemsSource="{x:Bind ViewModel.Professions, Mode=OneWay}"
                                           IsItemClickEnabled="False"
@@ -531,15 +540,13 @@
                                           Background="{ThemeResource ControlFillColorDisabledBrush}"
                                           MinHeight="480"
                                           CornerRadius="8"
-                                          Padding="16,8">
-                                    <GridView.ItemTemplate>
+                                          Padding="0,12,4,12">
+                                    <ListView.ItemTemplate>
                                         <DataTemplate x:DataType="attr:Profession">
                                             <Border Background="{ThemeResource ControlFillColorDefaultBrush}"
                                                     CornerRadius="4"
-                                                    Margin="0,4"
-                                                    MinWidth="240">
-                                                <Grid MinWidth="240"
-                                                      Margin="8">
+                                                    Margin="0,4">
+                                                <Grid Margin="8">
                                                     <Grid.ColumnDefinitions>
                                                         <ColumnDefinition Width="*"/>
                                                         <ColumnDefinition Width="*"/>
@@ -575,8 +582,40 @@
                                                 </Grid>
                                             </Border>
                                         </DataTemplate>
-                                    </GridView.ItemTemplate>
-                                </GridView>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                                <ListView Grid.Column="1"
+                                          Grid.Row="2"
+                                          x:Name="SkillBoniGridView"
+                                          ItemsSource="{x:Bind ViewModel.ActiveSkills}"
+                                          IsItemClickEnabled="False"
+                                          SelectionMode="None"
+                                          HorizontalAlignment="Stretch"
+                                          HorizontalContentAlignment="Stretch"
+                                          Background="{ThemeResource ControlFillColorDisabledBrush}"
+                                          MinHeight="480"
+                                          CornerRadius="8"
+                                          Padding="0,12,4,12"
+                                          Margin="8,0,0,0"
+                                          ItemsPanel="{StaticResource ItemStackPanelTemplate}">
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate x:DataType="vm:SkillAttrCheckStatModContainer">
+                                            <Border Background="{ThemeResource ControlFillColorDefaultBrush}"
+                                                    HorizontalAlignment="Stretch"
+                                                    VerticalAlignment="Stretch"
+                                                    CornerRadius="4"
+                                                    Height="34">
+                                                <Viewbox MaxHeight="34">
+                                                    <TextBlock Text="{x:Bind SkillName, Mode=OneWay}"
+                                                           Margin="8"
+                                                           VerticalAlignment="Center"
+                                                           HorizontalAlignment="Center"
+                                                               FontWeight="SemiBold"/>
+                                                </Viewbox>
+                                            </Border>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
                             </Grid>
                         </Grid>
                     </Grid>

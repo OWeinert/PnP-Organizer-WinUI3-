@@ -40,6 +40,7 @@ namespace PnPOrganizer.Views
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             ViewModel?.RefreshAttributeCheckBoni();
+            ViewModel?.RefreshActiveSkills();
         }
 
         private void SetNumberBoxNumberFormatter(NumberBox numberBox)

@@ -2,6 +2,8 @@
 using PnPOrganizer.Core.Attributes;
 using PnPOrganizer.Core.Character;
 using PnPOrganizer.Core.Character.Attributes;
+using PnPOrganizer.Core.Character.SkillSystem;
+using PnPOrganizer.Core.Character.StatModifiers;
 using PnPOrganizer.Services.Interfaces;
 using PnPOrganizer.ViewModels.Interfaces;
 using System;
@@ -24,6 +26,9 @@ namespace PnPOrganizer.ViewModels
 
         [ObservableProperty]
         private ObservableCollection<Profession>? _professions;
+
+        [ObservableProperty]
+        private ObservableCollection<SkillAttrCheckStatModContainer>? _activeSkills;
 
         [ObservableProperty]
         private CharacterData? _characterData;
@@ -52,14 +57,16 @@ namespace PnPOrganizer.ViewModels
         private readonly IPearlService _pearlService;
         private readonly IAttributeService _attributeService;
         private readonly IAttributeCheckService _attributeCheckService;
+        private readonly ISkillsService _skillsService;
 
         public CharacterPageViewModel(ISaveDataService saveDataService, IPearlService pearlService, IAttributeService attributeService,
-            IAttributeCheckService attributeCheckService)
+            IAttributeCheckService attributeCheckService, ISkillsService skillsService)
         {
             _saveDataService = saveDataService;
             _pearlService = pearlService;
             _attributeService = attributeService;
             _attributeCheckService = attributeCheckService;
+            _skillsService = skillsService;
 
             Initialize();
         }
@@ -163,6 +170,24 @@ namespace PnPOrganizer.ViewModels
             _attributeCheckService.RefreshAll();
         }
 
+        public void RefreshActiveSkills()
+        {
+            ActiveSkills ??= new();
+            ActiveSkills?.Clear();
+            var validStatMods = _skillsService.GetActiveStatModifiers<AttributeCheckStatModifier>();
+            var validSkills = _skillsService.GetFromStatModifierType<AttributeCheckStatModifier>()
+                .Where(skill =>
+                {
+                    if(skill.StatModifiers != null)
+                    {
+                        return skill.StatModifiers.Any(statMod => statMod is AttributeCheckStatModifier attrCheckStatMod && validStatMods.Contains(attrCheckStatMod));
+                    }
+                    return false;
+                });
+            var result = validSkills.Zip(validStatMods).ToList().ConvertAll(t => new SkillAttrCheckStatModContainer(t.First, t.Second));
+            ActiveSkills = new (result);
+        }
+
         public void CreateProfession(AttributeCheck attributeCheck)
         {
             Professions!.Add(new Profession(attributeCheck));
@@ -172,6 +197,18 @@ namespace PnPOrganizer.ViewModels
         {
             profession.RemoveFromAttributeCheck();
             Professions!.Remove(profession);
+        }
+    }
+
+    public readonly struct SkillAttrCheckStatModContainer
+    {
+        public string SkillName { get; }
+        public IStatModifier StatModifier { get; }
+
+        public SkillAttrCheckStatModContainer(Skill skill, AttributeCheckStatModifier statModifier)
+        {
+            SkillName = skill.DisplayName;
+            StatModifier = statModifier;
         }
     }
 }
