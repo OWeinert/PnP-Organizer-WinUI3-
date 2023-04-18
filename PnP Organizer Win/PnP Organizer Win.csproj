@@ -110,7 +110,6 @@
   <ItemGroup>
     <Folder Include="Core\BattleAssistant\Events\" />
     <Folder Include="Strings\" />
-    <Folder Include="Themes\" />
   </ItemGroup>
   <ItemGroup>
     <Content Update="Assets\appIcon\appIcon-512.png">
